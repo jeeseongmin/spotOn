@@ -20,5 +20,6 @@
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
-  ]
+  ],
+  "compilerOptions": { "baseUrl": ".", "paths": { "@/*": ["./src/*"] } }
 }
