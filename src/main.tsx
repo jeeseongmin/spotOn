@@ -2,11 +2,18 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
-import App from "./App.tsx";
-import "./index.css";
+import App from "@/App";
+import "@/index.css";
+import { onStartWorker } from "@/mocks/index.tsx";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+(async () => {
+  if (process.env.NODE_ENV === "development") {
+    onStartWorker();
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+})();
