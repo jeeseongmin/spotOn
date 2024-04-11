@@ -2,10 +2,9 @@ import React from "react";
 
 import ReactDOM from "react-dom/client";
 
+import App from "@/App";
+import "@/index.css";
 import { onStartWorker } from "@/mocks/index.tsx";
-
-import App from "./App.tsx";
-import "./index.css";
 
 (async () => {
   if (process.env.NODE_ENV === "development") {
