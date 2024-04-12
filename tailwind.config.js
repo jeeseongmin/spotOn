@@ -3,7 +3,22 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        primary: {
+          DEFAULT: "#06367A",
+          lighten: "#96C2FF",
+        },
+        black: "#1A1A1A",
+        sunday: "#FF6161",
+        saturday: "#4D54FF",
+      },
+      fontSize: {
+        base: "15px",
+        small: "13px",
+      },
+      fontFamily: {
+        sans: ["Noto Sans KR"],
+      },
     },
   },
   plugins: [],
