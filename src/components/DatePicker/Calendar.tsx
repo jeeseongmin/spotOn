@@ -27,7 +27,7 @@ const CalendarItem = ({
         inactive && "opacity-50",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-sunday",
-        selected && "border-primary bg-primary-lighten/[.34] rounded-[5px]",
+        selected && "rounded-[5px] border-primary bg-primary-lighten/[.34]",
         className,
       )}
       {...props}
@@ -42,7 +42,11 @@ const daysOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"];
 const CalendarHead = () => (
   <div className="flex items-center justify-around">
     {daysOfTheWeek.map((dayOfTheWeek, i) => (
-      <CalendarItem key={dayOfTheWeek} dayOfTheWeek={i} className="font-medium">
+      <CalendarItem
+        key={dayOfTheWeek}
+        dayOfTheWeek={i}
+        className="cursor-default font-medium"
+      >
         {dayOfTheWeek}
       </CalendarItem>
     ))}

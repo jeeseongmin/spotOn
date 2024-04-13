@@ -27,7 +27,7 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
   }, [date]);
 
   return (
-    <div className="text-small flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-2 text-small">
       <div className="flex items-center justify-center gap-2">
         <img
           src={LeftArrow}
