@@ -1,5 +1,13 @@
+import { BrowserRouter } from "react-router-dom";
+
+import Router from "@/Router";
+
 const App = () => {
-  return <div className="w-full border border-red-500">Home</div>;
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  );
 };
 
 export default App;
