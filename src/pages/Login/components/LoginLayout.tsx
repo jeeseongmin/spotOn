@@ -14,7 +14,7 @@ const LoginLayout = ({ children }: PropsWithChildren) => {
           <div className="absolute right-0 top-0 h-full w-full rounded-l-md bg-blue-900/30 px-12 py-8 text-white xl:py-20">
             <p className="text-md font-bold">Shalom!</p>
             <p className="text-xl font-bold">평택 온누리교회 장소 예약</p>
-            <div className="absolute left-0 top-0 hidden h-full w-full flex-col items-center justify-end px-12 pb-16 text-center md:flex xl:justify-center">
+            <div className="absolute left-0 top-0 hidden h-full w-full flex-col items-center justify-end px-12 pb-16 text-center md:flex xl:justify-center xl:pb-0">
               <div className="flex flex-col items-center justify-center">
                 <p className="text-sm">
                   “하나님의 나라를 전파하며 주 예수 그리스도에 관한 모든 것을
