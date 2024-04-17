@@ -84,7 +84,7 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
     return (
       <div ref={dropdownRef} className={cn(dropdownCSS({ variant }))}>
         <div
-          className={`absolute left-0 top-11 z-20 flex h-32 w-full flex-col overflow-hidden`}
+          className={`absolute left-0 top-11 z-20 flex h-auto w-full flex-col overflow-hidden`}
         >
           <div
             className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-32 animate-dropdown-open" : "h-0"}`}
