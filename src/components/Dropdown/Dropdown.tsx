@@ -17,10 +17,10 @@ import { cn } from "@/utils/cn";
 import { organization } from "../../constants/common";
 
 /* 추가되는 다른 dropdown에 따라 variant 추가 예정 */
-const dropdownCSS = cva("relative", {
+const dropdownCSS = cva("relative h-10", {
   variants: {
     variant: {
-      default: "rounded-sm border border-gray-500",
+      default: "",
     },
   },
   defaultVariants: {
@@ -83,32 +83,34 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
 
     return (
       <div ref={dropdownRef} className={cn(dropdownCSS({ variant }))}>
+        <div
+          className={`absolute left-0 top-11 z-20 flex h-32 w-full flex-col overflow-hidden`}
+        >
+          <div
+            className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "animate-dropdown-open h-32" : "h-0"}`}
+          >
+            {options.map(option => {
+              return (
+                <Option
+                  key={option}
+                  option={option}
+                  isSelected={selectedOption === option}
+                  onClick={onClickOption}
+                />
+              );
+            })}
+          </div>
+        </div>
+
         <button
           type="button"
-          className={`z-40 flex w-full cursor-pointer select-none flex-row items-center justify-between gap-4 rounded-sm px-3 py-2.5 disabled:bg-gray-200 disabled:text-gray-500 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
+          className={`absolute top-0 z-40 flex h-10 w-full cursor-pointer select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-200 disabled:text-gray-500 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
           onClick={() => optionsModal.onToggle()}
           disabled={disabled}
         >
           <span className={`text-sm`}>{selectedOption}</span>
           <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
         </button>
-
-        {optionsModal.isOpen && (
-          <div className="absolute left-0 top-10 z-20 flex h-auto max-h-32 w-full flex-col overflow-hidden bg-white shadow-lg">
-            <div className="scrollbar-hide flex h-auto flex-col overflow-scroll">
-              {options.map(option => {
-                return (
-                  <Option
-                    key={option}
-                    option={option}
-                    isSelected={selectedOption === option}
-                    onClick={onClickOption}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        )}
 
         {/* useForm hooks 사용을 위한 input 값 사용 */}
         <input ref={ref} type="hidden" {...props} />
