@@ -8,7 +8,7 @@ import {
 
 import { VariantProps, cva } from "class-variance-authority";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
-import { SlArrowDown } from "react-icons/sl";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
@@ -87,7 +87,7 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
           className={`absolute left-0 top-11 z-20 flex h-32 w-full flex-col overflow-hidden`}
         >
           <div
-            className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "animate-dropdown-open h-32" : "h-0"}`}
+            className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-32 animate-dropdown-open" : "h-0"}`}
           >
             {options.map(option => {
               return (
@@ -109,7 +109,11 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
           disabled={disabled}
         >
           <span className={`text-sm`}>{selectedOption}</span>
-          <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
+          {optionsModal.isOpen ? (
+            <SlArrowUp size={14} className="py-0 text-xl text-gray-600" />
+          ) : (
+            <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
+          )}
         </button>
 
         {/* useForm hooks 사용을 위한 input 값 사용 */}
