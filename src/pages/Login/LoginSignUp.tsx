@@ -74,7 +74,9 @@ const LoginSignUp = () => {
           </div>
         </div>
 
-        <Button variant="primary" type="submit" text="회원가입" />
+        <Button variant="primary" type="submit">
+          회원가입
+        </Button>
       </form>
     </LoginLayout>
   );

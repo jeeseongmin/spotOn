@@ -26,8 +26,9 @@ const LoginWait = () => {
             navigate("/login/main");
           }}
           variant="primary"
-          text="뒤로가기"
-        />
+        >
+          뒤로가기
+        </Button>
       </div>
     </LoginLayout>
   );

@@ -21,14 +21,15 @@ const buttonCSS = cva("rounded-sm px-3 py-2 shadow-md", {
     },
   },
 });
+type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonCSS>;
 
-interface ButtonProps
-  extends ComponentProps<"button">,
-    VariantProps<typeof buttonCSS> {
-  text: string;
-}
-
-const Button = ({ variant, type, className, text, ...props }: ButtonProps) => {
+const Button = ({
+  variant,
+  type,
+  className,
+  children,
+  ...props
+}: ButtonProps) => {
   return (
     <button
       type={type || "button"}
@@ -37,7 +38,7 @@ const Button = ({ variant, type, className, text, ...props }: ButtonProps) => {
     >
       {variant === "add" && <BsPlusLg size={20} />}
       {variant === "kakao" && <IoChatbubbleSharp size={20} />}
-      {text}
+      {children}
     </button>
   );
 };
