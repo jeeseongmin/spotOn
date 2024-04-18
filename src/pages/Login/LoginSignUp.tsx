@@ -55,7 +55,6 @@ const LoginSignUp = () => {
                 disabled={false}
                 {...register("community")}
                 setValue={setValue}
-                variant={"default"}
               />
               <Dropdown
                 category="team"
@@ -63,7 +62,6 @@ const LoginSignUp = () => {
                 disabled={false}
                 {...register("team")}
                 setValue={setValue}
-                variant={"default"}
               />
               <Dropdown
                 category="cell"
@@ -71,7 +69,6 @@ const LoginSignUp = () => {
                 disabled={false}
                 {...register("cell")}
                 setValue={setValue}
-                variant={"default"}
               />
             </div>
           </div>
