@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
@@ -9,18 +10,22 @@ import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginSignUp = () => {
   const { register, handleSubmit, setValue } = useForm();
+  const navigate = useNavigate();
 
   return (
     <LoginLayout>
       <form
-        className="flex h-full w-96 flex-col items-center justify-between py-12 2xl:py-24"
-        onSubmit={handleSubmit(data => alert(JSON.stringify(data)))}
+        className="flex h-full w-96 flex-col items-center justify-between py-12 "
+        onSubmit={handleSubmit(data => {
+          console.log(JSON.stringify(data));
+          navigate("/login/wait");
+        })}
       >
         <div className="mb-12 flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-bold">회원가입</h1>
           <p>회원 정보를 입력해주세요.</p>
         </div>
-        <div className="flex h-full w-full flex-col gap-4 2xl:gap-8">
+        <div className="flex h-full w-full flex-col gap-4 ">
           <div className="flex w-full flex-col gap-2">
             <InputLabel text="이름" htmlFor="name" isRequired={true} />
             <Input

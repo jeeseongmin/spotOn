@@ -17,8 +17,8 @@ const LoginLayout = ({ children }: PropsWithChildren) => {
             <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center px-12 pb-0 text-center">
               <div className="flex flex-col items-center justify-center">
                 <p className="text-sm">
-                  “하나님의 나라를 전파하며 주 예수 그리스도에 관한 모든 것을
-                  담대하게 거침없이 가르치더라”
+                  “하나님의 나라를 전파하며 주 예수 그리스도에 관한 <br />
+                  모든 것을 담대하게 거침없이 가르치더라”
                 </p>
                 <br />
                 <p className="font-bold">사도행전 28:31</p>

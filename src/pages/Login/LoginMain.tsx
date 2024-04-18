@@ -1,21 +1,15 @@
 import { IoChatbubbleSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+import Button from "@/components/Button";
 import { LOGIN_SIGNUP_URL } from "@/constants/routes";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginMain = () => {
-  const KakaoButton = () => {
-    return (
-      <Link to={LOGIN_SIGNUP_URL}>
-        <button className="flex w-full flex-row items-center justify-center gap-2 rounded-sm bg-yellow-300 py-3 font-bold">
-          <span>
-            <IoChatbubbleSharp size={20} />
-          </span>
-          카카오톡으로 로그인 / 회원가입
-        </button>
-      </Link>
-    );
+  const navigate = useNavigate();
+
+  const onLogin = () => {
+    navigate("/login/signup");
   };
 
   return (
@@ -26,9 +20,11 @@ const LoginMain = () => {
           <p>계정과 비밀번호 입력없이</p>
           <p>카카오톡으로 로그인 해보세요.</p>
         </div>
-        <div className="w-60 lg:w-72 xl:w-96 ">
-          <KakaoButton />
-        </div>
+        <Button
+          variant="kakao"
+          onClick={onLogin}
+          text="카카오톡으로 로그인 / 회원가입"
+        />
       </div>
     </LoginLayout>
   );
