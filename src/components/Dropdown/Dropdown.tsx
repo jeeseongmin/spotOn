@@ -34,7 +34,6 @@ interface DropdownProps
   setValue: UseFormSetValue<FieldValues>;
   category: string; // 드롭다운 카테고리
   options: string[]; // 드롭다운 별 옵션 배열
-  disabled: boolean; // 미사용 여부
 }
 
 /* Option Component in Dropdown */
@@ -63,7 +62,7 @@ const Option = ({
 
 /* Main Component */
 const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
-  ({ variant, setValue, category, options, disabled, ...props }, ref) => {
+  ({ variant, setValue, category, options, ...props }, ref) => {
     const placeholder = organization[category];
     const [selectedOption, setSelectedOption] = useState(placeholder); // 선택된 option 관리 State입니다. (초기 세팅은 placeholder)
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -106,7 +105,6 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
           type="button"
           className={`absolute top-0 z-40 flex h-10 w-full cursor-pointer select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-200 disabled:text-gray-500 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
           onClick={() => optionsModal.onToggle()}
-          disabled={disabled}
         >
           <span className={`text-sm`}>{selectedOption}</span>
           {optionsModal.isOpen ? (
