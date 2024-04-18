@@ -56,9 +56,9 @@ export const Outlined: Story = {
 export const Underlined: Story = {
   name: "Underlined 버튼",
   args: {
-    children: "확인하기",
+    children: "승인",
     variant: "underlined",
-    text: "확인하기",
+    text: "승인",
   },
 };
 
@@ -67,6 +67,15 @@ export const Add: Story = {
   args: {
     children: "추가하기",
     variant: "add",
-    text: "확인하기",
+    text: "추가하기",
+  },
+};
+
+export const Kakao: Story = {
+  name: "Kakao Login 버튼",
+  args: {
+    children: "카카오톡으로 로그인 / 회원가입",
+    variant: "kakao",
+    text: "카카오톡으로 로그인 / 회원가입",
   },
 };
