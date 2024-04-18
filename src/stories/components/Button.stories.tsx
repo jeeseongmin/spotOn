@@ -6,6 +6,29 @@ const meta: Meta<typeof Button> = {
   title: "components/Button",
   tags: ["autodocs"],
   component: Button,
+  argTypes: {
+    variant: {
+      description:
+        "상황에 따라 원하는 버튼 스타일을 선택 사용할 수 있는 상태값입니다.",
+      table: {
+        type: { summary: "string", reuqired: true },
+      },
+      control: {
+        type: "radio",
+        options: ["primary", "radio"],
+      },
+    },
+    disabled: {
+      description: "버튼 사용 상태를 제어할 수 있는 disabled 상태값입니다.",
+      table: {
+        type: { summary: "boolean" },
+      },
+      control: {
+        type: "boolean",
+        options: [true, false],
+      },
+    },
+  },
 };
 
 export default meta;
@@ -17,15 +40,6 @@ export const Primary: Story = {
   args: {
     children: "확인하기",
     variant: "primary",
-    text: "확인하기",
-  },
-};
-
-export const Disabled: Story = {
-  name: "Disabled 버튼",
-  args: {
-    children: "확인하기",
-    variant: "disabled",
     text: "확인하기",
   },
 };
