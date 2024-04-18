@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import qr from "@/assets/images/qr.png";
 import Button from "@/components/Button";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginWait = () => {
+  const navigate = useNavigate();
+
   return (
     <LoginLayout>
       <div className="flex h-full flex-col items-center justify-between py-20">
@@ -17,7 +21,13 @@ const LoginWait = () => {
           <img src={qr} />
         </div>
         <p>승인 관련 문의는 평택온누리 카카오 채널을 이용해주세요.</p>
-        <Button variant="primary" text="뒤로가기" />
+        <Button
+          onClick={() => {
+            navigate("/login/main");
+          }}
+          variant="primary"
+          text="뒤로가기"
+        />
       </div>
     </LoginLayout>
   );
