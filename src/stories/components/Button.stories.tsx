@@ -40,7 +40,6 @@ export const Primary: Story = {
   args: {
     children: "확인하기",
     variant: "primary",
-    text: "확인하기",
   },
 };
 
@@ -49,7 +48,6 @@ export const Outlined: Story = {
   args: {
     children: "확인하기",
     variant: "outlined",
-    text: "확인하기",
   },
 };
 
@@ -58,7 +56,6 @@ export const Underlined: Story = {
   args: {
     children: "승인",
     variant: "underlined",
-    text: "승인",
   },
 };
 
@@ -67,7 +64,6 @@ export const Add: Story = {
   args: {
     children: "추가하기",
     variant: "add",
-    text: "추가하기",
   },
 };
 
@@ -76,6 +72,5 @@ export const Kakao: Story = {
   args: {
     children: "카카오톡으로 로그인 / 회원가입",
     variant: "kakao",
-    text: "카카오톡으로 로그인 / 회원가입",
   },
 };
