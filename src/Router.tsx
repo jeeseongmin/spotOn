@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { Route, Routes, useLocation } from "react-router-dom";
 
