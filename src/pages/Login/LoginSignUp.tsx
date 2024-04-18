@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 
+import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
@@ -71,7 +72,7 @@ const LoginSignUp = () => {
           </div>
         </div>
 
-        <button type="submit">회원가입</button>
+        <Button variant="primary" type="submit" text="회원가입" />
       </form>
     </LoginLayout>
   );
