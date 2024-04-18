@@ -10,7 +10,6 @@ const buttonCSS = cva("rounded-sm px-3 py-2 shadow-md", {
     variant: {
       primary: "cursor-pointer bg-blue-900 font-light text-white",
       disabled: "bg-gray-200 font-normal text-gray-400",
-      cancel: "border border-gray-300 bg-white font-normal text-gray-800",
       outlined: "border border-gray-300 bg-white font-normal text-gray-800",
       underlined: "font-normal underline underline-offset-4 shadow-none", // underline의 경우 custom으로 색상 조정하기
       add: "flex flex-row items-center gap-1.5 border border-blue-900 bg-white font-normal text-blue-900",
