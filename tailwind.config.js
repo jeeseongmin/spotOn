@@ -19,7 +19,16 @@ export default {
       fontFamily: {
         sans: ["Noto Sans KR"],
       },
+      keyframes: {
+        dropdownOpen: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        "dropdown-open": "dropdownOpen 0.4s ease",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
