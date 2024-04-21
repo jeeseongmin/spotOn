@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import dayjs from "dayjs";
 
@@ -8,12 +8,17 @@ import RightArrow from "@/assets/icons/teenyicons_right-outline.svg";
 import Calendar from "./Calendar";
 
 interface DatePickerProps {
-  date?: Date | undefined;
+  date?: Date;
+  limit?: number;
   onChange: (day: Date) => void;
 }
 
-const DatePicker = ({ date, onChange }: DatePickerProps) => {
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs().date(1));
+const DatePicker = ({
+  date = new Date(),
+  limit,
+  onChange,
+}: DatePickerProps) => {
+  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs(date).date(1));
 
   const goPreviousMonth = () =>
     setFirstDayOfMonth(prevState => prevState.date(0).date(1));
@@ -21,10 +26,6 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
     setFirstDayOfMonth(prevState =>
       prevState.date(prevState.daysInMonth() + 1),
     );
-
-  useEffect(() => {
-    setFirstDayOfMonth(dayjs(date).date(1));
-  }, [date]);
 
   return (
     <div className="flex w-full flex-col gap-2 text-small">
@@ -48,7 +49,9 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
       <Calendar
         firstDayOfMonth={firstDayOfMonth}
         selectedDate={date}
+        limit={limit}
         onChange={onChange}
+        onClick={setFirstDayOfMonth}
       />
     </div>
   );

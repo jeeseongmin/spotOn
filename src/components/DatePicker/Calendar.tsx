@@ -24,7 +24,7 @@ const CalendarItem = ({
     <div
       className={cn(
         "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border border-transparent font-light",
-        inactive && "opacity-50",
+        inactive && "cursor-auto opacity-50",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-sunday",
         selected && "rounded-[5px] border-primary bg-primary-lighten/[.34]",
@@ -56,13 +56,17 @@ const CalendarHead = () => (
 interface CalendarProps {
   firstDayOfMonth: Dayjs;
   selectedDate?: Date;
+  limit?: number;
   onChange: (day: Date) => void;
+  onClick: (day: Dayjs) => void;
 }
 
 const Calendar = ({
   firstDayOfMonth,
   selectedDate,
+  limit,
   onChange,
+  onClick,
 }: CalendarProps) => {
   const getWeeks = () => {
     const days: Dayjs[] = [];
@@ -100,6 +104,16 @@ const Calendar = ({
     return weeks;
   };
 
+  const handleClickDate = (day: Dayjs, isInactive: boolean) => {
+    if (isInactive) return;
+
+    if (!day.isSame(firstDayOfMonth, "month")) {
+      onClick(day.date(1));
+    }
+
+    onChange(day.toDate());
+  };
+
   return (
     <div className="flex w-full flex-col gap-2 text-black">
       <CalendarHead />
@@ -108,17 +122,25 @@ const Calendar = ({
           key={week[0].valueOf()}
           className="flex items-center justify-around"
         >
-          {week.map(day => (
-            <CalendarItem
-              key={day.valueOf()}
-              dayOfTheWeek={day.day()}
-              inactive={day.month() !== firstDayOfMonth.month()}
-              selected={dayjs(selectedDate)?.isSame(day)}
-              onClick={() => onChange(day.toDate())}
-            >
-              {day.date()}
-            </CalendarItem>
-          ))}
+          {week.map(day => {
+            const today = dayjs();
+            const isBefore = day.isBefore(today, "day");
+            const isLimitPassed = limit
+              ? day.isAfter(today.add(limit, "day"), "day")
+              : false;
+
+            return (
+              <CalendarItem
+                key={day.valueOf()}
+                dayOfTheWeek={day.day()}
+                inactive={isBefore || isLimitPassed}
+                selected={dayjs(selectedDate)?.isSame(day)}
+                onClick={() => handleClickDate(day, isBefore || isLimitPassed)}
+              >
+                {day.date()}
+              </CalendarItem>
+            );
+          })}
         </div>
       ))}
     </div>
