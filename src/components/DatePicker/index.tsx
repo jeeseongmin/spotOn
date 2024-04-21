@@ -1,9 +1,7 @@
 import { useState } from "react";
 
 import dayjs from "dayjs";
-
-import LeftArrow from "@/assets/icons/teenyicons_left-outline.svg";
-import RightArrow from "@/assets/icons/teenyicons_right-outline.svg";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 import Calendar from "./Calendar";
 
@@ -30,20 +28,18 @@ const DatePicker = ({
   return (
     <div className="flex w-full flex-col gap-2 text-small">
       <div className="flex items-center justify-center gap-2">
-        <img
-          src={LeftArrow}
-          alt="이전 월로 이동"
-          onClick={goPreviousMonth}
+        <SlArrowLeft
+          size={10}
           className="cursor-pointer"
+          onClick={goPreviousMonth}
         />
         <div className="flex font-light">
           {firstDayOfMonth.format("YYYY. MM")}
         </div>
-        <img
-          src={RightArrow}
-          alt="다음 월로 이동"
-          onClick={goNextMonth}
+        <SlArrowRight
+          size={10}
           className="cursor-pointer"
+          onClick={goNextMonth}
         />
       </div>
       <Calendar
