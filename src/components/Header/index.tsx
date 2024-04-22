@@ -4,7 +4,11 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "@/assets/images/logo.png";
 import Button from "@/components/Button";
 
-const Header = () => {
+type HeaderProps = {
+  onOpen: () => void;
+};
+
+const Header = ({ onOpen }: HeaderProps) => {
   return (
     <nav className="flex h-16 flex-row items-center justify-between border-b border-gray-200 px-12 shadow-sm md:px-20 lg:px-32 xl:px-60 2xl:px-96">
       <Button variant="custom">
@@ -36,7 +40,7 @@ const Header = () => {
       </div>
 
       <div className="flex md:hidden">
-        <Button variant="custom">
+        <Button variant="custom" onClick={onOpen}>
           <RxHamburgerMenu size={26} />
         </Button>
       </div>
