@@ -18,6 +18,7 @@ const buttonCSS = cva("rounded-sm px-3 py-2 shadow-md", {
       add: "flex flex-row items-center gap-1.5 border border-blue-900 bg-white font-normal text-blue-900 disabled:border-gray-300 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
       kakao:
         "flex flex-row items-center gap-1.5 border border-yellow-300 bg-yellow-300 px-12 font-bold text-orange-900 disabled:border-gray-300 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
+      menu: "text-md text-gray-500 shadow-none",
     },
   },
 });
