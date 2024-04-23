@@ -26,7 +26,7 @@ const DatePicker = ({
     );
 
   return (
-    <div className="flex w-full flex-col gap-2 text-small">
+    <div className="flex w-full select-none flex-col gap-2 text-small">
       <div className="flex items-center justify-center gap-2">
         <SlArrowLeft
           size={10}
