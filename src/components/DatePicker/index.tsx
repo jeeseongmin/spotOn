@@ -46,8 +46,8 @@ const DatePicker = ({
         firstDayOfMonth={firstDayOfMonth}
         selectedDate={date}
         limit={limit}
-        onChange={onChange}
-        onClick={setFirstDayOfMonth}
+        onChangeSelectedDate={onChange}
+        onChangeFirstDayOfMonth={setFirstDayOfMonth}
       />
     </div>
   );

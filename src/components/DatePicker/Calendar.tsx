@@ -8,15 +8,15 @@ interface CalendarItemProps
   extends PropsWithChildren,
     ComponentPropsWithoutRef<"div"> {
   dayOfTheWeek: number;
-  inactive?: boolean;
-  selected?: boolean;
+  isInactive?: boolean;
+  isSelected?: boolean;
 }
 
 const CalendarItem = ({
   children,
   dayOfTheWeek,
-  inactive = false,
-  selected = false,
+  isInactive = false,
+  isSelected = false,
   className,
   ...props
 }: CalendarItemProps) => {
@@ -24,10 +24,10 @@ const CalendarItem = ({
     <div
       className={cn(
         "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border border-transparent font-light",
-        inactive && "cursor-auto opacity-50",
+        isInactive && "cursor-auto opacity-50",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-sunday",
-        selected && "rounded-[5px] border-primary bg-primary-lighten/[.34]",
+        isSelected && "rounded-[5px] border-primary bg-primary-lighten/[.34]",
         className,
       )}
       {...props}
@@ -57,16 +57,16 @@ interface CalendarProps {
   firstDayOfMonth: Dayjs;
   selectedDate?: Date;
   limit?: number;
-  onChange: (day: Date) => void;
-  onClick: (day: Dayjs) => void;
+  onChangeSelectedDate: (day: Date) => void;
+  onChangeFirstDayOfMonth: (day: Dayjs) => void;
 }
 
 const Calendar = ({
   firstDayOfMonth,
   selectedDate,
   limit,
-  onChange,
-  onClick,
+  onChangeSelectedDate,
+  onChangeFirstDayOfMonth,
 }: CalendarProps) => {
   const getWeeks = () => {
     const daysInMonth = firstDayOfMonth.daysInMonth();
@@ -99,10 +99,10 @@ const Calendar = ({
     if (isInactive) return;
 
     if (!day.isSame(firstDayOfMonth, "month")) {
-      onClick(day.date(1));
+      onChangeFirstDayOfMonth(day.date(1));
     }
 
-    onChange(day.toDate());
+    onChangeSelectedDate(day.toDate());
   };
 
   return (
@@ -119,14 +119,15 @@ const Calendar = ({
             const isLimitPassed = limit
               ? day.isAfter(today.add(limit, "day"), "day")
               : false;
+            const isInactive = isBefore || isLimitPassed;
 
             return (
               <CalendarItem
                 key={day.valueOf()}
                 dayOfTheWeek={day.day()}
-                inactive={isBefore || isLimitPassed}
-                selected={dayjs(selectedDate)?.isSame(day)}
-                onClick={() => handleClickDate(day, isBefore || isLimitPassed)}
+                isInactive={isInactive}
+                isSelected={dayjs(selectedDate)?.isSame(day, "day")}
+                onClick={() => handleClickDate(day, isInactive)}
               >
                 {day.date()}
               </CalendarItem>
