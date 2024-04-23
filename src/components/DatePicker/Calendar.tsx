@@ -69,33 +69,24 @@ const Calendar = ({
   onClick,
 }: CalendarProps) => {
   const getWeeks = () => {
-    const days: Dayjs[] = [];
     const daysInMonth = firstDayOfMonth.daysInMonth();
     const lastDayOfMonth = firstDayOfMonth.date(daysInMonth);
 
-    if (firstDayOfMonth.day() !== 0) {
-      const previousMonthDays = Array.from(
-        { length: firstDayOfMonth.day() },
-        (_, i) => firstDayOfMonth.date(firstDayOfMonth.day() * -1 + i + 1),
-      );
-
-      days.push(...previousMonthDays);
-    }
+    const previousMonthDays = Array.from(
+      { length: firstDayOfMonth.day() },
+      (_, i) => firstDayOfMonth.date(firstDayOfMonth.day() * -1 + i + 1),
+    );
 
     const currentMonthDays = Array.from({ length: daysInMonth }, (_, i) =>
       firstDayOfMonth.date(i + 1),
     );
 
-    days.push(...currentMonthDays);
+    const nextMonthDays = Array.from(
+      { length: 6 - lastDayOfMonth.day() },
+      (_, i) => firstDayOfMonth.date(daysInMonth + i + 1),
+    );
 
-    if (lastDayOfMonth.day() !== 6) {
-      const nextMonthDays = Array.from(
-        { length: 6 - lastDayOfMonth.day() },
-        (_, i) => firstDayOfMonth.date(daysInMonth + i + 1),
-      );
-
-      days.push(...nextMonthDays);
-    }
+    const days = [...previousMonthDays, ...currentMonthDays, ...nextMonthDays];
 
     const weeks = Array.from({ length: days.length / 7 }, (_, i) => [
       ...days.slice(i * 7, (i + 1) * 7),
