@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import qr from "@/assets/images/qr.png";
 import Button from "@/components/Button";
+import { LOGIN_MAIN_URL } from "@/constants/routes";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginWait = () => {
@@ -23,7 +24,7 @@ const LoginWait = () => {
         <p>승인 관련 문의는 평택온누리 카카오 채널을 이용해주세요.</p>
         <Button
           onClick={() => {
-            navigate("/login/main");
+            navigate(LOGIN_MAIN_URL);
           }}
           variant="primary"
         >

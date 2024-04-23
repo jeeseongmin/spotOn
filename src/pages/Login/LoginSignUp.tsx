@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
+import { LOGIN_QR_URL } from "@/constants/routes";
 import { cells, communities, teams } from "@/dummy/organization";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
@@ -18,7 +19,7 @@ const LoginSignUp = () => {
         className="flex h-full w-96 flex-col items-center justify-between py-12 "
         onSubmit={handleSubmit(data => {
           console.log(JSON.stringify(data));
-          navigate("/login/wait");
+          navigate(LOGIN_QR_URL);
         })}
       >
         <div className="mb-12 flex flex-col gap-2 text-center">
