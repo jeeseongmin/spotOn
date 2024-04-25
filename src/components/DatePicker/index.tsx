@@ -3,6 +3,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
+import Button from "../Button";
 import Calendar from "./Calendar";
 
 interface DatePickerProps {
@@ -28,19 +29,15 @@ const DatePicker = ({
   return (
     <div className="flex w-full select-none flex-col gap-2 text-small">
       <div className="flex items-center justify-center gap-2">
-        <SlArrowLeft
-          size={10}
-          className="cursor-pointer"
-          onClick={goPreviousMonth}
-        />
+        <Button variant="custom" onClick={goPreviousMonth}>
+          <SlArrowLeft size={10} />
+        </Button>
         <div className="flex font-light">
           {firstDayOfMonth.format("YYYY. MM")}
         </div>
-        <SlArrowRight
-          size={10}
-          className="cursor-pointer"
-          onClick={goNextMonth}
-        />
+        <Button variant="custom" onClick={goNextMonth}>
+          <SlArrowRight size={10} />
+        </Button>
       </div>
       <Calendar
         firstDayOfMonth={firstDayOfMonth}
