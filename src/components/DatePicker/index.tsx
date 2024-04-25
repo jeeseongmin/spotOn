@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import dayjs from "dayjs";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
-import LeftArrow from "@/assets/icons/teenyicons_left-outline.svg";
-import RightArrow from "@/assets/icons/teenyicons_right-outline.svg";
-
+import Button from "../Button";
 import Calendar from "./Calendar";
 
 interface DatePickerProps {
-  date?: Date | undefined;
+  date?: Date;
+  limit?: number;
   onChange: (day: Date) => void;
 }
 
-const DatePicker = ({ date, onChange }: DatePickerProps) => {
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs().date(1));
+const DatePicker = ({
+  date = new Date(),
+  limit,
+  onChange,
+}: DatePickerProps) => {
+  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs(date).date(1));
 
   const goPreviousMonth = () =>
     setFirstDayOfMonth(prevState => prevState.date(0).date(1));
@@ -22,33 +26,25 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
       prevState.date(prevState.daysInMonth() + 1),
     );
 
-  useEffect(() => {
-    setFirstDayOfMonth(dayjs(date).date(1));
-  }, [date]);
-
   return (
-    <div className="flex w-full flex-col gap-2 text-small">
+    <div className="flex w-full select-none flex-col gap-2 text-small">
       <div className="flex items-center justify-center gap-2">
-        <img
-          src={LeftArrow}
-          alt="이전 월로 이동"
-          onClick={goPreviousMonth}
-          className="cursor-pointer"
-        />
+        <Button variant="custom" onClick={goPreviousMonth}>
+          <SlArrowLeft size={10} />
+        </Button>
         <div className="flex font-light">
           {firstDayOfMonth.format("YYYY. MM")}
         </div>
-        <img
-          src={RightArrow}
-          alt="다음 월로 이동"
-          onClick={goNextMonth}
-          className="cursor-pointer"
-        />
+        <Button variant="custom" onClick={goNextMonth}>
+          <SlArrowRight size={10} />
+        </Button>
       </div>
       <Calendar
         firstDayOfMonth={firstDayOfMonth}
         selectedDate={date}
-        onChange={onChange}
+        limit={limit}
+        onChangeSelectedDate={onChange}
+        onChangeFirstDayOfMonth={setFirstDayOfMonth}
       />
     </div>
   );
