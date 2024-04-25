@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
 import Button from "@/components/Button";
+import { LOGIN_SIGNUP_URL } from "@/constants/routes";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginMain = () => {
   const navigate = useNavigate();
 
   const onLogin = () => {
-    navigate("/login/signup");
+    navigate(LOGIN_SIGNUP_URL);
   };
 
   return (

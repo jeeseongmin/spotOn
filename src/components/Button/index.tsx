@@ -6,18 +6,20 @@ import { IoChatbubbleSharp } from "react-icons/io5";
 
 import { cn } from "@/utils/cn";
 
-const buttonCSS = cva("rounded-sm px-3 py-2 shadow-md", {
+const buttonCSS = cva("rounded-sm ", {
   variants: {
     variant: {
       primary:
-        "cursor-pointer bg-blue-900 font-light text-white disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
+        "cursor-pointer bg-blue-900 px-3 py-2 font-light text-white shadow-md disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
       outlined:
-        "border border-gray-300 bg-white font-normal text-gray-800 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
+        "border border-gray-300 bg-white px-3 py-2 font-normal text-gray-800 shadow-md disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
       underlined:
-        "font-normal underline underline-offset-8 shadow-none disabled:font-normal disabled:text-gray-400", // underline의 경우 custom으로 색상 조정하기
-      add: "flex flex-row items-center gap-1.5 border border-blue-900 bg-white font-normal text-blue-900 disabled:border-gray-300 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
+        "px-3 py-2 font-normal underline underline-offset-8 shadow-md shadow-none disabled:font-normal disabled:text-gray-400", // underline의 경우 custom으로 색상 조정하기
+      add: "flex flex-row items-center gap-1.5 border border-blue-900 bg-white px-3 py-2 font-normal text-blue-900 shadow-md disabled:border-gray-300 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
       kakao:
-        "flex flex-row items-center gap-1.5 border border-yellow-300 bg-yellow-300 px-12 font-bold text-orange-900 disabled:border-gray-300 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
+        "flex flex-row items-center gap-1.5 border border-yellow-300 bg-yellow-300 px-12 px-3 py-2 font-bold text-orange-900 shadow-md disabled:border-gray-300 disabled:bg-gray-200 disabled:font-normal disabled:text-gray-400",
+      custom: "text-md",
+      icon: "text-md",
     },
   },
 });
