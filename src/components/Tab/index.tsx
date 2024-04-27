@@ -27,6 +27,10 @@ interface TabProps
   extends VariantProps<typeof tabContentCSS>,
     ComponentPropsWithRef<"div"> {}
 
+/**
+ *  className을 지정하여 Tab Content 영역 스타일을 변경할 수 있습니다.
+ */
+
 const Tab = ({ children, className, ...props }: TabProps) => {
   const { variant } = props;
 

@@ -27,7 +27,6 @@ export interface TabItemProps
   label?: string;
   icon?: IconType;
   isActive?: boolean;
-  isDisabled?: boolean;
 }
 
 const TabItem = ({
