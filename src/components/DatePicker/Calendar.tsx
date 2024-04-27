@@ -27,7 +27,7 @@ const CalendarItem = ({
         isInactive && "cursor-auto opacity-50",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-sunday",
-        isSelected && "rounded-[5px] border-primary bg-primary-lighten/[.34]",
+        isSelected && "bg-primary-light/[.34] rounded-[5px] border-primary",
         className,
       )}
       {...props}

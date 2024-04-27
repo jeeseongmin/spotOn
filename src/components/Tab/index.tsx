@@ -16,7 +16,7 @@ import TabItem, { TabItemProps } from "./TabItem";
 const tabContentCSS = cva("w-full text-base text-black", {
   variants: {
     variant: {
-      enclosed: "rounded-sm border border-[#CCCCCC] bg-[#F9F9F9] shadow",
+      enclosed: "border-gray-middle bg-white-dull rounded-sm border shadow",
       underlined: "",
       solid: "",
     },

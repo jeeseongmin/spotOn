@@ -9,14 +9,14 @@ const tabItemCSS = cva("", {
   variants: {
     variant: {
       enclosed:
-        "w-40 rounded-t-[5px] border border-b-0 border-[#CCCCCC] bg-[#F2F2F2] py-2",
-      underlined: "grow border-b-2 border-[#CCCCCC] py-6 text-[#CCCCCC]",
-      solid: "rounded-sm border border-[#CCCCCC] p-1.5",
+        "border-gray-middle bg-gray-light w-40 rounded-t-[5px] border border-b-0 py-2",
+      underlined: "border-gray-middle text-gray-middle grow border-b-2 py-6",
+      solid: "border-gray-middle rounded-sm border p-1.5",
     },
     active: {
-      enclosed: "bg-[#F9F9F9]",
-      underlined: "border-[#616161] text-black",
-      solid: "border-[#06367A] bg-[#06367A]",
+      enclosed: "bg-white-dull",
+      underlined: "border-gray-dark text-black",
+      solid: "border-primary bg-primary",
     },
   },
 });
@@ -46,14 +46,14 @@ const TabItem = ({
       className={cn(
         tabItemCSS({ variant }),
         isActive && tabItemCSS({ active: variant }),
-        isDisabled && "text-[#CCCCCC]",
+        isDisabled && "text-gray-middle",
         className,
       )}
       {...props}
     >
       {Icon ? (
         <Icon
-          className={cn("size-6 text-[#616161]", isActive && "text-white")}
+          className={cn("text-gray-dark size-6", isActive && "text-white")}
         />
       ) : (
         label

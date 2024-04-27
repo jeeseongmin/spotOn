@@ -5,10 +5,20 @@ export default {
     extend: {
       colors: {
         primary: {
+          light: "#96C2FF",
           DEFAULT: "#06367A",
-          lighten: "#96C2FF",
         },
         black: "#1A1A1A",
+        white: {
+          DEFAULT: "#FFFFFF",
+          dull: "#F9F9F9",
+        },
+        gray: {
+          light: "#F2F2F2",
+          middle: "#CCCCCC",
+          dull: "#9C9C9C",
+          dark: "#616161",
+        },
         sunday: "#FF6161",
         saturday: "#4D54FF",
       },
