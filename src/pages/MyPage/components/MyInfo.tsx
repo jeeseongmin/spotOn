@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
-import ConfirmModal from "@/components/Modal/ConfirmModal";
+import AlertModal from "@/components/Modal/AlertModal";
 import { cells, communities, teams } from "@/dummy/organization";
 import useModal from "@/hooks/useModal";
 import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
@@ -126,9 +126,9 @@ const MyInfo = () => {
       </form>
 
       {modal.isOpen && (
-        <ConfirmModal onClose={modal.onClose}>
+        <AlertModal onClose={modal.onClose}>
           회원정보가 수정되었습니다.
-        </ConfirmModal>
+        </AlertModal>
       )}
     </MyPageWrapper>
   );

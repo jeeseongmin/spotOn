@@ -23,7 +23,7 @@ interface ModalProps
 }
 
 /** Modal의 Wrapper에 해당하는 부분을 Layout Component로 개발했습니다.
-    기본적으로 primary variant 사용하면 되고, 모달 내 컨텐츠는 크기를 알맞게 커스텀해서 사용하면 됩니다. (ConfirmModal 참고)
+    기본적으로 primary variant 사용하면 되고, 모달 내 컨텐츠는 크기를 알맞게 커스텀해서 사용하면 됩니다. (AlertModal 참고)
 */
 const ModalLayout = ({
   children,

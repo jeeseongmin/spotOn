@@ -5,11 +5,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import Button from "@/components/Button";
 import ModalLayout from "@/components/Layout/ModalLayout";
 
-interface ConfirmModalProps extends PropsWithChildren {
+interface AlertModalProps extends PropsWithChildren {
   onClose: () => void;
 }
 
-const ConfirmModal = ({ children, onClose }: ConfirmModalProps) => {
+const AlertModal = ({ children, onClose }: AlertModalProps) => {
   return (
     <ModalLayout variant="primary" onClose={onClose}>
       <div className="flex h-56 w-96 flex-col items-center justify-between px-8 py-6">
@@ -27,4 +27,4 @@ const ConfirmModal = ({ children, onClose }: ConfirmModalProps) => {
   );
 };
 
-export default ConfirmModal;
+export default AlertModal;
