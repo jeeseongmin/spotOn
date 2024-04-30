@@ -5,7 +5,7 @@ const BGInModal = ({ ...props }: ComponentProps<"div">) => {
   return (
     <div
       id="modal-background"
-      className="absolute left-0 top-0 z-20 h-screen w-full bg-black opacity-50"
+      className="absolute left-0 top-0 z-20 h-full w-full bg-black opacity-50"
       {...props}
     ></div>
   );
