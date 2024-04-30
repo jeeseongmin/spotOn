@@ -2,6 +2,7 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
 import { placesByFloor } from "@/dummy/places";
+import { reservedTimes } from "@/dummy/reservation";
 import { ReservationLabel } from "@/pages/Reservation";
 
 import PlaceSelect from "../../PlaceSelect";
@@ -55,7 +56,7 @@ const PlaceSearchTab = () => {
             render={({ field: { value, onChange } }) => (
               <TimeSelect
                 selectedDate={getValues("date")}
-                reservedTimes={[19, 19.5, 20]}
+                reservedTimes={reservedTimes}
                 selectedTimes={value}
                 onChange={onChange}
               />
