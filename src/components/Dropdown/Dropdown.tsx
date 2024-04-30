@@ -33,6 +33,7 @@ interface DropdownProps
     VariantProps<typeof dropdownCSS> {
   value?: string; // value가 존재한다면 해당 value 값으로 option이 선택되고 아닌 경우 placeholder가 나타납니다.
   setValue: UseFormSetValue<FieldValues>;
+  disabled: boolean;
   category: string; // 드롭다운 카테고리
   options: string[]; // 드롭다운 별 옵션 배열
 }
@@ -64,10 +65,18 @@ const Option = ({
 /* Main Component */
 const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
   (
-    { variant, value, setValue, className, category, options, ...props },
+    {
+      variant,
+      value,
+      setValue,
+      className,
+      disabled,
+      category,
+      options,
+      ...props
+    },
     ref,
   ) => {
-    const disabledStyled = "bg-gray-200 cursor-default";
     const placeholder = organization[category];
     const [selectedOption, setSelectedOption] = useState(
       value ? value : placeholder,
@@ -113,10 +122,11 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
 
         <button
           type="button"
-          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-200 disabled:text-gray-500 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"} ${props.disabled ? disabledStyled : ""}`}
+          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-200 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
           onClick={() => {
-            if (!props.disabled) optionsModal.onToggle();
+            if (!disabled) optionsModal.onToggle();
           }}
+          disabled={disabled}
         >
           <span className={`text-sm`}>{selectedOption}</span>
           {optionsModal.isOpen ? (
