@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
 import { placesByFloor } from "@/dummy/places";
@@ -8,34 +8,60 @@ import PlaceSelect from "../../PlaceSelect";
 import TimeSelect from "./TimeSelect";
 
 const PlaceSearchTab = () => {
-  const [date, setDate] = useState(new Date());
-  const [selectedPlace, setSelectedPlace] = useState("");
-  const [selectedTimes, setSelectedTimes] = useState<number[]>([]);
+  const { control, getValues } = useFormContext();
+  useWatch({ name: "place" });
 
   return (
     <div>
       <div className="flex h-[432px] border-b border-b-gray-middle">
         <div className="flex flex-col gap-2 border-r border-r-gray-middle px-12 py-4">
           <ReservationLabel>날짜 선택</ReservationLabel>
-          <DatePicker date={date} onChange={setDate} />
+          <Controller
+            name="date"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <DatePicker date={value} onChange={onChange} />
+            )}
+          />
         </div>
         <div className="flex flex-col gap-2 px-8 py-4">
           <ReservationLabel>장소 선택</ReservationLabel>
-          <PlaceSelect
-            placesByFloor={placesByFloor}
-            selectedPlace={selectedPlace}
-            onChange={setSelectedPlace}
+          <Controller
+            name="place"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <PlaceSelect
+                placesByFloor={placesByFloor}
+                selectedPlace={value}
+                onChange={onChange}
+              />
+            )}
           />
         </div>
       </div>
       <div className="flex flex-col gap-2 px-12 py-4">
-        <ReservationLabel>예약 시간 선택</ReservationLabel>
-        <TimeSelect
-          selectedDate={new Date()}
-          reservedTimes={[19, 19.5, 20]}
-          selectedTimes={selectedTimes}
-          onChange={setSelectedTimes}
-        />
+        <div className="flex gap-10">
+          <ReservationLabel>예약 시간 선택</ReservationLabel>
+          {!getValues("place") && (
+            <div className="text-small text-[#FF8080]">
+              *날짜와 장소를 선택한 후 시간 선택이 가능합니다.
+            </div>
+          )}
+        </div>
+        {getValues("place") && (
+          <Controller
+            name="time"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <TimeSelect
+                selectedDate={getValues("date")}
+                reservedTimes={[19, 19.5, 20]}
+                selectedTimes={value}
+                onChange={onChange}
+              />
+            )}
+          />
+        )}
       </div>
     </div>
   );

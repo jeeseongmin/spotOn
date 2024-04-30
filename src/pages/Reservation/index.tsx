@@ -1,5 +1,8 @@
 import { ComponentPropsWithoutRef } from "react";
 
+import { FormProvider, useForm } from "react-hook-form";
+
+import Button from "@/components/Button";
 import Layout from "@/components/Layout";
 import { user } from "@/dummy/user";
 import { cn } from "@/utils/cn";
@@ -17,14 +20,45 @@ export const ReservationLabel = ({
   </div>
 );
 
+interface ReservationFormValues {
+  date: Date;
+  place: string;
+  time: number[];
+  userId: string;
+  purpose: string;
+}
+
 const ReservationPage = () => {
+  const methods = useForm<ReservationFormValues>({
+    defaultValues: {
+      date: new Date(),
+      place: "",
+      time: [],
+      userId: user.id.toString(),
+      purpose: "",
+    },
+  });
+
   return (
     <Layout>
-      <section className="flex flex-col gap-8">
-        <Banner />
-        <ReservationTab />
-        <ReservationInfo user={user} />
-      </section>
+      <FormProvider {...methods}>
+        <form
+          className="flex flex-col items-center gap-8"
+          onSubmit={methods.handleSubmit(data => console.log(data))}
+        >
+          <Banner />
+          <ReservationTab />
+          <ReservationInfo user={user} />
+          <Button
+            type="submit"
+            variant="outlined"
+            className="w-fit text-base"
+            disabled={!methods.formState.isValid}
+          >
+            예약하기
+          </Button>
+        </form>
+      </FormProvider>
     </Layout>
   );
 };
