@@ -22,8 +22,14 @@ type InputProps = ComponentPropsWithoutRef<"input"> &
   VariantProps<typeof inputCSS>;
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ variant, ...props }, ref) => {
-    return <input ref={ref} className={cn(inputCSS({ variant }))} {...props} />;
+  ({ variant, className, ...props }, ref) => {
+    return (
+      <input
+        ref={ref}
+        className={cn(inputCSS({ variant }), className)}
+        {...props}
+      />
+    );
   },
 );
 
