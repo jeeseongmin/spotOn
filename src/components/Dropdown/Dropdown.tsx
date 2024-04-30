@@ -67,7 +67,7 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
     { variant, value, setValue, className, category, options, ...props },
     ref,
   ) => {
-    const disabledStyled = "bg-gray-50 cursor-default";
+    const disabledStyled = "bg-gray-100 cursor-default";
     const placeholder = organization[category];
     const [selectedOption, setSelectedOption] = useState(
       value ? value : placeholder,
