@@ -64,30 +64,32 @@ const TimeSelect = ({
   ];
 
   const handleClickTime = (selectedTime: number) => {
-    // 최초 선택
-    if (selectedTimes.length === 0) {
+    const isSelectedNone = selectedTimes.length === 0;
+    const isUnselectable = startTime < selectedTime && selectedTime < endTime;
+    const isSelectable =
+      startTime - selectedTime === 0.5 || selectedTime - endTime === 0.5;
+    const isSelected = selectedTimes.includes(selectedTime);
+    const isOverTwoHours = selectedTimes.length === 4;
+
+    if (isSelectedNone) {
       onChange([selectedTime]);
       return;
     }
 
-    // 선택 해제 불가
-    if (startTime < selectedTime && selectedTime < endTime) {
+    if (isUnselectable) {
       return alert("해제할 수 없는 시간대입니다.");
     }
 
-    // 선택 해제
-    if (selectedTimes.includes(selectedTime)) {
+    if (isSelected) {
       onChange(selectedTimes.filter(time => time !== selectedTime));
       return;
     }
 
-    // 2시간 초과
-    if (selectedTimes.length === 4) {
+    if (isOverTwoHours) {
       return alert("2시간까지 선택 가능합니다.");
     }
 
-    // 선택
-    if (startTime - selectedTime === 0.5 || selectedTime - endTime === 0.5) {
+    if (isSelectable) {
       onChange([...selectedTimes, selectedTime]);
       return;
     }
