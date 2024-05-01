@@ -23,7 +23,7 @@ const MyReservation = () => {
           id="table"
           className="w-full border-collapse border border-gray-300"
         >
-          <thead id="table-head" className="h-12 bg-gray-200">
+          <thead id="table-head" className="h-12 bg-gray-light">
             <tr>
               <th className="border border-gray-300">날짜</th>
               <th className="border border-gray-300">시간</th>

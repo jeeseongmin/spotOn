@@ -122,7 +122,7 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
 
         <button
           type="button"
-          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-200 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
+          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-light ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
           onClick={() => {
             if (!disabled) optionsModal.onToggle();
           }}
