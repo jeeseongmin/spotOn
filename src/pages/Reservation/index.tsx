@@ -5,11 +5,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import Button from "@/components/Button";
 import Layout from "@/components/Layout";
 import { user } from "@/dummy/user";
+import Banner from "@/pages/Reservation/components/Banner";
+import ReservationInfo from "@/pages/Reservation/components/ReservationInfo";
+import ReservationTab from "@/pages/Reservation/components/ReservationTab";
 import { cn } from "@/utils/cn";
-
-import Banner from "./components/Banner";
-import ReservationInfo from "./components/ReservationInfo";
-import ReservationTab from "./components/ReservationTab";
 
 export const ReservationLabel = ({
   children,

@@ -4,8 +4,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
-
-import { ReservationLabel } from "../..";
+import { ReservationLabel } from "@/pages/Reservation";
 
 interface User {
   id: number;
