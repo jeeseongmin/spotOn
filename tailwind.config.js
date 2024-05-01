@@ -21,6 +21,8 @@ export default {
         },
         sunday: "#FF6161",
         saturday: "#4D54FF",
+        kakaoBG: "#FFE502",
+        kakaoFont: "#3C1E1D",
       },
       fontSize: {
         base: "15px",
@@ -34,6 +36,9 @@ export default {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(0)" },
         },
+      },
+      dropShadow: {
+        base: "0px 0px 2px rgba(0, 0, 0, 0.25)",
       },
       animation: {
         "dropdown-open": "dropdownOpen 0.4s ease",
