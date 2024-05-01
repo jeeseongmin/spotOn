@@ -48,8 +48,9 @@ const Option = ({
   isSelected: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) => {
-  const selectedStyle = "bg-blue-900 text-white border border-blue-900";
-  const nonSelectedStyle = "bg-white text-black border border-gray-300";
+  const selectedStyle = "bg-primary text-white border border-primary";
+  const nonSelectedStyle =
+    "bg-white text-black border-t border-l border-r border-gray-dull";
 
   return (
     <button
@@ -105,7 +106,7 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
           className={`absolute left-0 top-11 z-20 flex h-auto w-full flex-col overflow-hidden`}
         >
           <div
-            className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-32 animate-dropdown-open" : "h-0"}`}
+            className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-[124px] animate-dropdown-open border-b border-gray-dull" : "h-0"}`}
           >
             {options.map(option => {
               return (
@@ -122,7 +123,7 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
 
         <button
           type="button"
-          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-light ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
+          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:border-gray-dull disabled:bg-gray-light ${selectedOption === placeholder ? "font-light text-gray-middle" : "text-black"}`}
           onClick={() => {
             if (!disabled) optionsModal.onToggle();
           }}
