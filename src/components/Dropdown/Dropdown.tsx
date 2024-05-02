@@ -10,6 +10,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
+import Button from "@/components/Button";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
@@ -123,17 +124,21 @@ const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
 
         <button
           type="button"
-          className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:border-gray-dull disabled:bg-gray-light ${selectedOption === placeholder ? "font-light text-gray-middle" : "text-black"}`}
+          className={`disabled:bg-gray-white disabled:text-gray-black absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull ${selectedOption === placeholder ? "font-light text-gray-middle" : "text-black"}`}
           onClick={() => {
             if (!disabled) optionsModal.onToggle();
           }}
           disabled={disabled}
         >
           <span className={`text-sm`}>{selectedOption}</span>
-          {optionsModal.isOpen ? (
-            <SlArrowUp size={14} className="py-0 text-xl text-gray-600" />
-          ) : (
-            <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
+          {!disabled && (
+            <Button variant="icon" className="w-auto">
+              {optionsModal.isOpen ? (
+                <SlArrowUp size={14} className="py-0 text-xl text-gray-600" />
+              ) : (
+                <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
+              )}
+            </Button>
           )}
         </button>
 

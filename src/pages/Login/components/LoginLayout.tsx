@@ -5,13 +5,13 @@ import login from "@/assets/images/login.png";
 const LoginLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className="mx-auto my-auto flex h-screen w-max items-center justify-center overflow-scroll">
-      <section className="flex h-[600px] w-[1100px] flex-row rounded-md border border-gray-300 shadow-lg">
-        <div className="relative h-full w-1/2 ">
+      <section className="flex h-[641px] w-[953px] flex-row rounded-[5px] border border-gray-light shadow-md">
+        <div className="relative h-full w-[466px] ">
           <img
             src={login}
-            className="h-full w-full rounded-l-md object-cover"
+            className="h-full w-full rounded-l-[5px] object-cover"
           />
-          <div className="absolute right-0 top-0 h-full w-full rounded-l-md bg-blue-900/30 px-12 py-20 text-white">
+          <div className="bg-loginBG/45 absolute right-0 top-0 h-full w-full rounded-l-[5px] px-12 py-20 text-white">
             <p className="text-[16px]">Shalom!</p>
             <p className="text-[20px] font-bold">평택 온누리교회 장소 예약</p>
             <div className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center px-12 pb-0 text-center">

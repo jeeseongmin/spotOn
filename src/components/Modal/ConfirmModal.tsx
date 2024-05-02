@@ -20,7 +20,7 @@ const ConfirmModal = ({
   return (
     <ModalLayout variant="primary" onClose={onClose}>
       <div className="relative flex h-[211px] w-[385px] flex-col items-center justify-center px-8 py-6">
-        <div className="fixed right-0 top-0 p-2">
+        <div className="fixed right-3 top-3 p-2">
           <Button variant="icon">
             <AiOutlineClose size={18} onClick={onClose} />
           </Button>

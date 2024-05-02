@@ -18,7 +18,7 @@ const LoginWait = () => {
             <span>승인 완료까지 1~3일 소요될 수 있습니다.</span>
           </div>
         </div>
-        <div>
+        <div className="shadow-none drop-shadow-none">
           <img src={qr} />
         </div>
         <p className="text-base">
