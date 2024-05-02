@@ -16,13 +16,16 @@ export default {
         gray: {
           light: "#F2F2F2",
           middle: "#CCCCCC",
+          white: "#F9F9F9",
           dull: "#9C9C9C",
           dark: "#616161",
+          black: "#1A1A1A",
         },
         sunday: "#FF6161",
         saturday: "#4D54FF",
         kakaoBG: "#FFE502",
         kakaoFont: "#3C1E1D",
+        loginBG: "#06367A",
       },
       fontSize: {
         base: "15px",
