@@ -16,7 +16,7 @@ const Header = ({ onOpen }: HeaderProps) => {
   return (
     <nav className="flex h-16 flex-row items-center justify-between border-b border-gray-200 px-12 shadow-sm md:px-20 lg:px-32 xl:px-60 2xl:px-96">
       <Button variant="custom">
-        <img src={Logo} className="h-10 object-contain" />
+        <img src={Logo} className="h-10 w-10 object-contain" />
       </Button>
 
       <div className="hidden flex-row items-center gap-10 md:flex">

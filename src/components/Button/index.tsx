@@ -7,7 +7,7 @@ import { IoChatbubbleSharp } from "react-icons/io5";
 import { cn } from "@/utils/cn";
 
 const buttonCSS = cva(
-  "drop-shadow-base font-base	h-auto w-fit rounded-sm px-[11px] py-[8px] font-light",
+  "h-auto w-fit	rounded-sm px-[11px] py-[8px] text-base font-light drop-shadow-base",
   {
     variants: {
       variant: {
@@ -19,8 +19,8 @@ const buttonCSS = cva(
           "underline underline-offset-4 drop-shadow-none disabled:text-gray-400", // underline의 경우 custom으로 색상 조정하기
         add: "flex flex-row items-center gap-1.5 border border-primary bg-white text-primary drop-shadow-none disabled:border-gray-light disabled:bg-gray-light disabled:text-gray-dull",
         kakao:
-          "bg-kakaoBG text-kakaoFont flex flex-row items-center gap-1.5 px-16 py-3 font-semibold drop-shadow-none disabled:border-gray-light disabled:bg-gray-light disabled:text-gray-dull",
-        custom: "text-md",
+          "flex flex-row items-center gap-1.5 bg-kakaoBG px-16 py-3 font-semibold text-kakaoFont drop-shadow-none disabled:border-gray-light disabled:bg-gray-light disabled:text-gray-dull",
+        custom: "drop-shadow-none",
         icon: "text-md",
       },
     },
