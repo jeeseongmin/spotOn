@@ -21,7 +21,7 @@ const buttonCSS = cva(
         kakao:
           "flex flex-row items-center gap-1.5 bg-kakaoBG px-16 py-3 font-semibold text-kakaoFont drop-shadow-none disabled:border-gray-light disabled:bg-gray-light disabled:text-gray-dull",
         custom: "drop-shadow-none",
-        icon: "text-md",
+        icon: "drop-shadow-none",
       },
     },
   },

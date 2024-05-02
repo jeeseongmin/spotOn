@@ -19,18 +19,18 @@ const ConfirmModal = ({
 }: ConfirmModalProps) => {
   return (
     <ModalLayout variant="primary" onClose={onClose}>
-      <div className="flex h-60 w-96 flex-col items-center justify-between px-8 py-6">
-        <div className="flex w-full flex-row justify-end">
+      <div className="relative flex h-[211px] w-[385px] flex-col items-center justify-center px-8 py-6">
+        <div className="fixed right-0 top-0 p-2">
           <Button variant="icon">
-            <AiOutlineClose size={22} onClick={onClose} />
+            <AiOutlineClose size={18} onClick={onClose} />
           </Button>
         </div>
-        <div className="flex flex-col gap-4 text-center">
-          <p className="text-xl text-blue-800">{title}</p>
+        <div className="flex flex-col gap-2 pb-8 text-center">
+          <p className="text-xl text-primary">{title}</p>
           <p>{children}</p>
         </div>
 
-        <div className="flex flex-row gap-4">
+        <div className="fixed bottom-6 flex flex-row gap-4">
           <Button variant="outlined" onClick={onClose}>
             취소
           </Button>

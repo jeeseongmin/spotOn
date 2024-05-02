@@ -9,7 +9,7 @@ const modalCSS = cva("", {
   variants: {
     variant: {
       primary:
-        "absolute left-1/2 top-1/2 z-30 h-auto w-auto -translate-x-1/2 -translate-y-1/2 rounded-md bg-white shadow-lg",
+        "absolute left-1/2 top-1/2 z-30 h-auto w-auto -translate-x-1/2 -translate-y-1/2 rounded-sm bg-white shadow-lg",
       sidebar:
         "absolute right-0 top-0 z-30 flex h-full w-2/3 flex-col bg-white shadow-lg",
     },

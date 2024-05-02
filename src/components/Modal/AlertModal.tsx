@@ -12,16 +12,18 @@ interface AlertModalProps extends PropsWithChildren {
 const AlertModal = ({ children, onClose }: AlertModalProps) => {
   return (
     <ModalLayout variant="primary" onClose={onClose}>
-      <div className="flex h-56 w-96 flex-col items-center justify-between px-8 py-6">
-        <div className="flex w-full flex-row justify-end">
+      <div className="relative flex h-[211px] w-[385px] flex-col items-center justify-center px-8 py-6">
+        <div className="fixed right-0 top-0 p-2">
           <Button variant="icon">
-            <AiOutlineClose size={22} onClick={onClose} />
+            <AiOutlineClose size={18} onClick={onClose} />
           </Button>
         </div>
-        <p className="text-xl text-blue-800">{children}</p>
-        <Button variant="primary" onClick={onClose}>
-          확인
-        </Button>
+        <p className="pb-4 text-xl font-light text-primary">{children}</p>
+        <div className="fixed bottom-6">
+          <Button variant="primary" onClick={onClose}>
+            확인
+          </Button>
+        </div>
       </div>
     </ModalLayout>
   );
