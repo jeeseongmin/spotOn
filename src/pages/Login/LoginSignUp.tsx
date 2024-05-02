@@ -24,7 +24,7 @@ const LoginSignUp = () => {
       >
         <div className="mb-12 flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-bold">회원가입</h1>
-          <p>회원 정보를 입력해주세요.</p>
+          <p className="text-base">회원 정보를 입력해주세요.</p>
         </div>
         <div className="flex h-full w-full flex-col gap-4 ">
           <div className="flex w-full flex-col gap-2">
