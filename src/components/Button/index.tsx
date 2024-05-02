@@ -20,8 +20,8 @@ const buttonCSS = cva(
         add: "flex flex-row items-center gap-1.5 border border-primary bg-white text-primary drop-shadow-none disabled:border-gray-light disabled:bg-gray-light disabled:text-gray-dull",
         kakao:
           "flex flex-row items-center gap-1.5 bg-kakaoBG px-16 py-3 font-semibold text-kakaoFont drop-shadow-none disabled:border-gray-light disabled:bg-gray-light disabled:text-gray-dull",
-        custom: "drop-shadow-none",
-        icon: "drop-shadow-none",
+        custom: "px-0 py-0 drop-shadow-none",
+        icon: "px-0 py-0 drop-shadow-none",
       },
     },
   },
