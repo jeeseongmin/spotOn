@@ -16,11 +16,11 @@ const Layout = ({ children }: PropsWithChildren) => {
   const menuModal = useModal();
 
   const MainTitle = ({ children }: PropsWithChildren) => {
-    return <h1 className="text-2xl font-thin text-blue-800">{children}</h1>;
+    return <h1 className="text-xl font-thin text-primary">{children}</h1>;
   };
 
   const SubTitle = ({ children }: PropsWithChildren) => {
-    return <h2 className="text-3xl font-bold">{children}</h2>;
+    return <h2 className="text-[28px] font-semibold">{children}</h2>;
   };
 
   return (
