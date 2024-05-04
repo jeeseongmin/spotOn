@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import Button from "@/components/Button";
@@ -10,7 +10,15 @@ import { cells, communities, teams } from "@/dummy/organization";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginSignUp = () => {
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, control } = useForm({
+    defaultValues: {
+      name: "",
+      phone: "",
+      community: "",
+      team: "",
+      cell: "",
+    },
+  });
   const navigate = useNavigate();
 
   return (
@@ -50,26 +58,53 @@ const LoginSignUp = () => {
           <div className="flex w-full flex-col gap-2">
             <InputLabel text="소속" htmlFor="belong" isRequired={true} />
             <div className="grid grid-cols-3 gap-2">
-              <Dropdown
-                category="community"
-                options={communities}
-                disabled={false}
-                {...register("community")}
-                setValue={setValue}
+              <Controller
+                control={control}
+                name="community"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Dropdown
+                    category="community"
+                    options={communities}
+                    disabled={false}
+                    onChangeOption={onChange}
+                    selectedOption={value}
+                  />
+                )}
               />
-              <Dropdown
-                category="team"
-                options={teams}
-                disabled={false}
-                {...register("team")}
-                setValue={setValue}
+              <Controller
+                control={control}
+                name="team"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Dropdown
+                    category="team"
+                    options={teams}
+                    disabled={false}
+                    onChangeOption={onChange}
+                    selectedOption={value}
+                  />
+                )}
               />
-              <Dropdown
-                category="cell"
-                options={cells}
-                disabled={false}
-                {...register("cell")}
-                setValue={setValue}
+              <Controller
+                control={control}
+                name="cell"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Dropdown
+                    category="cell"
+                    options={cells}
+                    disabled={false}
+                    onChangeOption={onChange}
+                    selectedOption={value}
+                  />
+                )}
               />
             </div>
           </div>

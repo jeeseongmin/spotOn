@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
@@ -14,30 +14,19 @@ import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
 const MyInfo = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const modal = useModal();
-  const { register, handleSubmit, setValue } = useForm();
-  const defaultInfo = {
-    name: "김온누리",
-    phone: "010-1234-5678",
-    community: "믿음",
-    team: "1번 다락방",
-    cell: "누가 1순",
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
+  const { control, register, reset, handleSubmit } = useForm({
+    defaultValues: {
+      name: "김온누리",
+      phone: "010-1234-5678",
+      community: "믿음",
+      team: "1번 다락방",
+      cell: "누가 1순",
+    },
+  });
 
   const cancel = () => {
     setIsDisabled(true);
-    init();
-  };
-
-  const init = () => {
-    setValue("name", defaultInfo.name);
-    setValue("phone", defaultInfo.phone);
-    setValue("community", defaultInfo.community);
-    setValue("team", defaultInfo.team);
-    setValue("cell", defaultInfo.cell);
+    reset();
   };
 
   return (
@@ -77,29 +66,53 @@ const MyInfo = () => {
         <div className="flex w-full flex-col gap-2">
           <InputLabel text="소속" htmlFor="belong" isRequired={true} />
           <div className="grid grid-cols-3 gap-2">
-            <Dropdown
-              category="community"
-              options={communities}
-              disabled={isDisabled}
-              {...register("community")}
-              value={defaultInfo.community}
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="community"
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Dropdown
+                  category="community"
+                  options={communities}
+                  disabled={isDisabled}
+                  onChangeOption={onChange}
+                  selectedOption={value}
+                />
+              )}
             />
-            <Dropdown
-              category="team"
-              options={teams}
-              disabled={isDisabled}
-              {...register("team")}
-              value={defaultInfo.team}
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="team"
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Dropdown
+                  category="team"
+                  options={teams}
+                  disabled={isDisabled}
+                  onChangeOption={onChange}
+                  selectedOption={value}
+                />
+              )}
             />
-            <Dropdown
-              category="cell"
-              options={cells}
-              disabled={isDisabled}
-              {...register("cell")}
-              value={defaultInfo.cell}
-              setValue={setValue}
+            <Controller
+              control={control}
+              name="cell"
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, value } }) => (
+                <Dropdown
+                  category="cell"
+                  options={cells}
+                  disabled={isDisabled}
+                  onChangeOption={onChange}
+                  selectedOption={value}
+                />
+              )}
             />
           </div>
         </div>
