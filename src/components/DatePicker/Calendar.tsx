@@ -23,11 +23,13 @@ const CalendarItem = ({
   return (
     <div
       className={cn(
-        "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border border-transparent font-light",
+        "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border font-light",
         isInactive && "cursor-auto opacity-50",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-sunday",
-        isSelected && "bg-primary-light/[.34] rounded-[5px] border-primary",
+        isSelected
+          ? "rounded-[5px] border-primary bg-primary-light/[.34]"
+          : "border-transparent",
         className,
       )}
       {...props}
