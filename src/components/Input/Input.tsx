@@ -5,7 +5,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/utils/cn";
 
 const inputCSS = cva(
-  "disabled:bg-gray-white disabled:text-gray-black flex flex-row items-center justify-center rounded-sm border border-gray-dull px-3 py-2.5 text-sm font-light text-black placeholder:text-gray-middle disabled:font-light",
+  "disabled:text-gray-black flex flex-row items-center justify-center rounded-sm border border-gray-dull px-3 py-2.5 text-sm font-light text-black placeholder:text-gray-middle disabled:bg-white-dull disabled:font-light",
   {
     variants: {
       variant: {
