@@ -1,15 +1,9 @@
-import {
-  ComponentPropsWithoutRef,
-  MouseEventHandler,
-  forwardRef,
-  useRef,
-  useState,
-} from "react";
+import { ComponentPropsWithoutRef, MouseEventHandler, useRef } from "react";
 
 import { VariantProps, cva } from "class-variance-authority";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
+import Button from "@/components/Button";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
@@ -31,9 +25,11 @@ const dropdownCSS = cva("relative h-10", {
 interface DropdownProps
   extends ComponentPropsWithoutRef<"input">,
     VariantProps<typeof dropdownCSS> {
-  setValue: UseFormSetValue<FieldValues>;
+  onChangeOption: (option: string) => void;
+  disabled: boolean;
   category: string; // 드롭다운 카테고리
   options: string[]; // 드롭다운 별 옵션 배열
+  selectedOption: string;
 }
 
 /* Option Component in Dropdown */
@@ -46,8 +42,9 @@ const Option = ({
   isSelected: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) => {
-  const selectedStyle = "bg-blue-900 text-white border border-blue-900";
-  const nonSelectedStyle = "bg-white text-black border border-gray-300";
+  const selectedStyle = "bg-primary text-white border border-primary";
+  const nonSelectedStyle =
+    "bg-white text-black border-t border-l border-r border-gray-dull";
 
   return (
     <button
@@ -61,64 +58,74 @@ const Option = ({
 };
 
 /* Main Component */
-const Dropdown = forwardRef<HTMLInputElement, DropdownProps>(
-  ({ variant, setValue, category, options, ...props }, ref) => {
-    const placeholder = organization[category];
-    const [selectedOption, setSelectedOption] = useState(placeholder); // 선택된 option 관리 State입니다. (초기 세팅은 placeholder)
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const optionsModal = useModal();
-    useOutSideClick(dropdownRef, () => optionsModal.onClose());
+const Dropdown = ({
+  variant,
+  onChangeOption,
+  className,
+  disabled,
+  category,
+  options,
+  selectedOption,
+}: DropdownProps) => {
+  const placeholder = organization[category];
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const optionsModal = useModal();
+  useOutSideClick(dropdownRef, () => optionsModal.onClose());
 
-    /* 옵션 클릭 시 event */
-    const onClickOption = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-      const target = e.currentTarget;
-      const value = target.innerText;
-      setSelectedOption(value);
-      setValue(category, value); // 실제 form 훅에 저장
-      optionsModal.onClose(); // 모달  닫기
-    };
+  /* 옵션 클릭 시 event */
+  const onClickOption = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    const target = e.currentTarget;
+    const value = target.innerText;
+    onChangeOption(value); // 실제 form 훅에 저장
+    optionsModal.onClose(); // 모달  닫기
+  };
 
-    return (
-      <div ref={dropdownRef} className={cn(dropdownCSS({ variant }))}>
+  return (
+    <div ref={dropdownRef} className={cn(dropdownCSS({ variant }), className)}>
+      <div
+        className={`absolute left-0 top-11 z-20 flex h-auto w-full flex-col overflow-hidden`}
+      >
         <div
-          className={`absolute left-0 top-11 z-20 flex h-auto w-full flex-col overflow-hidden`}
+          className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-[124px] animate-dropdown-open border-b border-gray-dull" : "h-0"}`}
         >
-          <div
-            className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-32 animate-dropdown-open" : "h-0"}`}
-          >
-            {options.map(option => {
-              return (
-                <Option
-                  key={option}
-                  option={option}
-                  isSelected={selectedOption === option}
-                  onClick={onClickOption}
-                />
-              );
-            })}
-          </div>
+          {options.map(option => {
+            return (
+              <Option
+                key={option}
+                option={option}
+                isSelected={selectedOption === option}
+                onClick={onClickOption}
+              />
+            );
+          })}
         </div>
-
-        <button
-          type="button"
-          className={`absolute top-0 z-40 flex h-10 w-full cursor-pointer select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 disabled:bg-gray-200 disabled:text-gray-500 ${selectedOption === placeholder ? "font-light text-gray-300" : "text-black"}`}
-          onClick={() => optionsModal.onToggle()}
-        >
-          <span className={`text-sm`}>{selectedOption}</span>
-          {optionsModal.isOpen ? (
-            <SlArrowUp size={14} className="py-0 text-xl text-gray-600" />
-          ) : (
-            <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
-          )}
-        </button>
-
-        {/* useForm hooks 사용을 위한 input 값 사용 */}
-        <input ref={ref} type="hidden" {...props} />
       </div>
-    );
-  },
-);
+
+      <button
+        type="button"
+        className={`disabled:bg-gray-white disabled:text-gray-black absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
+        onClick={() => {
+          if (!disabled) optionsModal.onToggle();
+        }}
+        disabled={disabled}
+      >
+        <span className={`text-sm`}>
+          {selectedOption ? selectedOption : placeholder}
+        </span>
+        {!disabled && (
+          <Button variant="icon" className="w-auto">
+            {optionsModal.isOpen ? (
+              <SlArrowUp size={14} className="py-0 text-xl text-gray-600" />
+            ) : (
+              <SlArrowDown size={14} className="py-0 text-xl text-gray-600" />
+            )}
+          </Button>
+        )}
+      </button>
+    </div>
+  );
+};
 
 export default Dropdown;

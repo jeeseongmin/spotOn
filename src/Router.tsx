@@ -14,6 +14,7 @@ import {
 import LoginMain from "@/pages/Login/LoginMain";
 import LoginSignUp from "@/pages/Login/LoginSignUp";
 import LoginWait from "@/pages/Login/LoginWait";
+import MyPage from "@/pages/MyPage";
 
 import ReservationPage from "./pages/Reservation";
 
@@ -31,7 +32,7 @@ const Router: FC = () => {
 
       <Route path={RESERVATION_MAIN_URL} element={<ReservationPage />} />
       <Route path={HOME_MAIN_URL} element={<></>} />
-      <Route path={MYPAGE_MAIN_URL} element={<></>} />
+      <Route path={MYPAGE_MAIN_URL} element={<MyPage />} />
       <Route path={ADMIN_MAIN_URL} element={<></>} />
     </Routes>
   );
