@@ -27,7 +27,7 @@ const ReservationCard = ({ date, list }: ReservationCardProps) => {
             {list.map(element => {
               return (
                 <tr className="border-b border-gray-middle p-4 align-top text-small last:border-none">
-                  <td className="h-[94px] w-24  border-r border-gray-middle py-2 text-center font-semibold">
+                  <td className="h-[94px] w-[100px] border-r border-gray-middle py-2 text-center font-semibold">
                     {element.time}
                   </td>
                   <td className="flex h-[94px] flex-col gap-1 pl-2 pt-2">
