@@ -5,7 +5,7 @@ import { placesByFloor } from "@/dummy/places";
 import { reservedTimes } from "@/dummy/reservation";
 import { ReservationLabel } from "@/pages/Reservation";
 
-import PlaceSelect from "../../PlaceSelect";
+import PlaceSelect from "../../PlacePicker";
 import TimeSelect from "./TimeSelect";
 
 const PlaceSearchTab = () => {
