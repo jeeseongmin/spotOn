@@ -5,7 +5,7 @@ import RightPanel from "@/pages/Home/components/RightPanel";
 const Home = () => {
   return (
     <Layout>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-6 pb-32">
         <Schedule />
         <RightPanel />
       </div>
