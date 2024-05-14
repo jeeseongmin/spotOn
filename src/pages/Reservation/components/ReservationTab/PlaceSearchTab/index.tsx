@@ -3,10 +3,10 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import DatePicker from "@/components/DatePicker";
 import { placesByFloor } from "@/dummy/places";
 import { reservedTimes } from "@/dummy/reservation";
+import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 
-import PlaceSelect from "../../PlacePicker";
 import ReservationTabLayout from "../ReservationTabLayout";
-import TimeSelect from "./TimeSelect";
+import TimeTablePicker from "./TimeTablePicker";
 
 const PlaceSearchTab = () => {
   const { control, getValues } = useFormContext();
@@ -32,7 +32,7 @@ const PlaceSearchTab = () => {
           name="place"
           control={control}
           render={({ field: { value, onChange } }) => (
-            <PlaceSelect
+            <PlacePicker
               placesByFloor={placesByFloor}
               selectedPlace={value}
               onChange={onChange}
@@ -49,7 +49,7 @@ const PlaceSearchTab = () => {
             name="time"
             control={control}
             render={({ field: { value, onChange } }) => (
-              <TimeSelect
+              <TimeTablePicker
                 selectedDate={getValues("date")}
                 reservedTimes={reservedTimes}
                 selectedTimes={value}

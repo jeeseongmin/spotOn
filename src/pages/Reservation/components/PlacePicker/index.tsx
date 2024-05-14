@@ -6,17 +6,17 @@ type PlacesByFloor = {
   places: string[];
 };
 
-interface PlaceSelectProps {
+interface PlacePickerProps {
   placesByFloor: PlacesByFloor[];
   selectedPlace?: string;
   onChange: (value: string) => void;
 }
 
-const PlaceSelect = ({
+const PlacePicker = ({
   placesByFloor,
   selectedPlace,
   onChange,
-}: PlaceSelectProps) => (
+}: PlacePickerProps) => (
   <div className="overflow-auto rounded-sm bg-white px-4">
     {placesByFloor.map(({ floor, places }, index) => (
       <div
@@ -50,4 +50,4 @@ const PlaceSelect = ({
   </div>
 );
 
-export default PlaceSelect;
+export default PlacePicker;

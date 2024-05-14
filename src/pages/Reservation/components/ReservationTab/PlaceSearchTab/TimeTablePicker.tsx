@@ -45,19 +45,19 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
   );
 };
 
-interface TimeSelectProps {
+interface TimeTablePickerProps {
   selectedDate: Date;
   reservedTimes: number[];
   selectedTimes: number[];
   onChange: (newSelectedTimes: number[]) => void;
 }
 
-const TimeSelect = ({
+const TimeTablePicker = ({
   selectedDate,
   reservedTimes,
   selectedTimes,
   onChange,
-}: TimeSelectProps) => {
+}: TimeTablePickerProps) => {
   const [startTime, endTime] = [
     Math.min(...selectedTimes),
     Math.max(...selectedTimes),
@@ -140,4 +140,4 @@ const TimeSelect = ({
   );
 };
 
-export default TimeSelect;
+export default TimeTablePicker;
