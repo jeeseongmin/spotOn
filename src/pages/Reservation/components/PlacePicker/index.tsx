@@ -36,7 +36,8 @@ const PlaceSelect = ({
               variant="outlined"
               className={cn(
                 "text-small",
-                selectedPlace === place && "bg-primary text-white",
+                selectedPlace === place &&
+                  "border-primary bg-primary text-white",
               )}
               onClick={() => onChange(place)}
             >

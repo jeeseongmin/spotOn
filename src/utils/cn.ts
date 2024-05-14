@@ -4,7 +4,21 @@ import { extendTailwindMerge } from "tailwind-merge";
 const customTwMerge = extendTailwindMerge({
   override: {
     theme: {
-      colors: ["primary", "black", "white", "gray", "sunday", "saturday"],
+      colors: [
+        "primary",
+        "primary-light",
+        "black",
+        "white",
+        "white-dull",
+        {
+          gray: ["light", "tinted", "middle", "dull", "dark"],
+        },
+        "sunday",
+        "saturday",
+        "kakaoBG",
+        "kakaoFont",
+        "loginBG",
+      ],
     },
     classGroups: {
       "font-size": [{ text: ["base", "small"] }],
