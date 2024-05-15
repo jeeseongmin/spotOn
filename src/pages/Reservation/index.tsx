@@ -21,7 +21,7 @@ export const ReservationLabel = ({
 
 interface ReservationFormValues {
   date: Date;
-  place: string;
+  place: number;
   time: number[];
   userId: string;
   purpose: string;
@@ -31,7 +31,7 @@ const ReservationPage = () => {
   const methods = useForm<ReservationFormValues>({
     defaultValues: {
       date: new Date(),
-      place: "",
+      place: undefined,
       time: [],
       userId: user.id.toString(),
       purpose: "",

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
-import { placesByFloor } from "@/dummy/places";
+import { availablePlaces, placesByFloor } from "@/dummy/places";
 
 import DropdownTimePicker from "../DropdownTimePicker";
 import PlacePicker from "../PlacePicker";
@@ -63,6 +63,7 @@ const TimeSearchTab = () => {
                 placesByFloor={placesByFloor}
                 selectedPlace={value}
                 onChange={onChange}
+                availablePlaces={availablePlaces}
               />
             )}
           />
