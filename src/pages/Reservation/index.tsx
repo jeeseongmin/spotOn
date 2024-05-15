@@ -14,7 +14,7 @@ export const ReservationLabel = ({
   children,
   className,
 }: ComponentPropsWithoutRef<"div">) => (
-  <div className={cn("min-w-16 text-base text-primary", className)}>
+  <div className={cn("min-w-28 text-base text-primary", className)}>
     {children}
   </div>
 );

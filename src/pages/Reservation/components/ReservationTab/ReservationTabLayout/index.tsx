@@ -19,7 +19,7 @@ const Left = ({ children, title }: LayoutProps) => (
 );
 
 const Right = ({ children, title }: LayoutProps) => (
-  <div className="flex flex-col gap-2 px-8 py-4">
+  <div className="flex w-full flex-col gap-2 px-8 py-4">
     <ReservationLabel>{title}</ReservationLabel>
     {children}
   </div>
@@ -27,9 +27,9 @@ const Right = ({ children, title }: LayoutProps) => (
 
 const Bottom = ({ children, title, errorMessage }: LayoutProps) => (
   <div className="flex flex-col gap-2 px-12 py-4">
-    <div className="flex gap-10">
+    <div className="flex gap-6">
       <ReservationLabel>{title}</ReservationLabel>
-      <div className="text-small text-[#FF8080]">{errorMessage}</div>
+      <div className="text-small text-red-light">{errorMessage}</div>
     </div>
     {children}
   </div>
@@ -41,7 +41,7 @@ const ReservationTabLayout = ({ children }: PropsWithRequiredChildren) => {
 
   return (
     <div>
-      <div className="flex h-[432px] border-b border-b-gray-middle">
+      <div className="flex h-96 border-b border-b-gray-middle">
         {leftChildren}
         {rightChildren}
       </div>

@@ -13,7 +13,8 @@ const customTwMerge = extendTailwindMerge({
         {
           gray: ["light", "tinted", "middle", "dull", "dark"],
         },
-        "sunday",
+        "red",
+        "red-light",
         "saturday",
         "kakaoBG",
         "kakaoFont",

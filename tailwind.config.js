@@ -20,7 +20,10 @@ export default {
           dull: "#9C9C9C",
           dark: "#616161",
         },
-        sunday: "#FF6161",
+        red: {
+          DEFAULT: "#FF6161",
+          light: "#FF8080"
+        },
         saturday: "#4D54FF",
         kakaoBG: "#FFE502",
         kakaoFont: "#3C1E1D",
