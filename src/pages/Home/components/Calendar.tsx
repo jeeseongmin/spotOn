@@ -1,12 +1,9 @@
 import dayjs from "dayjs";
 
 import Reservation from "@/components/Schedule/Reservation";
-import {
-  CalendarItemProps,
-  CalendarProps,
-  daysOfTheWeek,
-} from "@/constants/calendar";
+import { CalendarItemProps, daysOfTheWeek } from "@/constants/calendar";
 import { TempType, reservations } from "@/dummy/reservation";
+import useCalendarStore from "@/store/calendarStore";
 import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
 
@@ -76,12 +73,10 @@ const CalendarItem = ({
   );
 };
 
-const Calendar = ({
-  firstDayOfMonth,
-  selectedDate,
-  onChangeSelectedDate,
-  onChangeFirstDayOfMonth,
-}: CalendarProps) => {
+const Calendar = () => {
+  const { date, setDate, firstDayOfMonth, setFirstDayOfMonth } =
+    useCalendarStore(state => state);
+
   return (
     <table className="flex h-full w-full border-collapse flex-col">
       <CalendarHead />
@@ -92,8 +87,7 @@ const Calendar = ({
             className="flex grow border-b border-gray-light last-of-type:border-none"
           >
             {week.map(day => {
-              const isCurrentMonth =
-                dayjs(selectedDate).month() === day.month();
+              const isCurrentMonth = dayjs(date).month() === day.month();
               const isInactive = !isCurrentMonth;
 
               return (
@@ -102,10 +96,10 @@ const Calendar = ({
                   type="body"
                   dayOfTheWeek={day.day()}
                   isInactive={isInactive}
-                  isSelected={dayjs(selectedDate)?.isSame(day, "day")}
+                  isSelected={dayjs(date)?.isSame(day, "day")}
                   onClick={() => {
-                    onChangeSelectedDate(day);
-                    if (isInactive) onChangeFirstDayOfMonth(day.date(1));
+                    setDate(day);
+                    if (isInactive) setFirstDayOfMonth(day.date(1));
                   }}
                 >
                   {day.date()}

@@ -1,35 +1,28 @@
-import { useState } from "react";
-
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 import Button from "@/components/Button";
 import Reservation from "@/components/Schedule/Reservation";
 import Calendar from "@/pages/Home/components/Calendar";
+import useCalendarStore from "@/store/calendarStore";
 
 const Schedule = () => {
-  const [date, setDate] = useState(dayjs(new Date()));
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs(date).date(1));
+  const { date, setDate, firstDayOfMonth, setFirstDayOfMonth } =
+    useCalendarStore(state => state);
 
   const goPreviousMonth = () => {
-    setFirstDayOfMonth(prevState => prevState.date(0).date(1));
-    setDate(prevState => prevState.date(0).date(1));
+    setFirstDayOfMonth(date.date(0).date(1));
+    setDate(date.date(0).date(1));
   };
 
   const goNextMonth = () => {
-    setFirstDayOfMonth(prevState =>
-      prevState.date(prevState.daysInMonth() + 1),
-    );
-    setDate(prevState => prevState.date(prevState.daysInMonth() + 1));
+    setFirstDayOfMonth(date.date(date.daysInMonth() + 1));
+    setDate(date.date(date.daysInMonth() + 1));
   };
 
   const reset = () => {
     setDate(dayjs(new Date()));
     setFirstDayOfMonth(dayjs(new Date()).date(1));
-  };
-
-  const onChange = (day: Dayjs) => {
-    setDate(day);
   };
 
   return (
@@ -63,12 +56,7 @@ const Schedule = () => {
         </div>
 
         {/* Calendar */}
-        <Calendar
-          firstDayOfMonth={firstDayOfMonth}
-          selectedDate={date}
-          onChangeSelectedDate={onChange}
-          onChangeFirstDayOfMonth={setFirstDayOfMonth}
-        />
+        <Calendar />
       </div>
     </div>
   );
