@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { daysOfTheWeek } from "@/constants/calendar";
 import { TempType, reservations } from "@/dummy/reservation";
 import ReservationCard from "@/pages/Home/components/ReservationCard";
 import useCalendarStore from "@/store/calendarStore";
@@ -27,7 +28,7 @@ const ReservationList = () => {
         reservationList.map(element => {
           return (
             <ReservationCard
-              date={element.day.format("MM / DD")}
+              date={`${element.day.format("MM / DD")} (${daysOfTheWeek[element.day.day()]})`}
               list={element.data}
             />
           );
