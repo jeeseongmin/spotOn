@@ -1,13 +1,23 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
 import { placesByFloor } from "@/dummy/places";
 
+import DropdownTimePicker from "../DropdownTimePicker";
 import PlacePicker from "../PlacePicker";
 import ReservationTabLayout from "./ReservationTabLayout";
 
 const TimeSearchTab = () => {
-  const { control } = useFormContext();
+  const { control, getValues } = useFormContext();
+  useWatch({ name: ["date", "time"] });
+
+  const isSelectedTime =
+    getValues("time").length > 0 &&
+    getValues("time").every((value: number) => !Number.isNaN(value));
+
+  const placeSelectErrorMessage = isSelectedTime
+    ? ""
+    : "*날짜와 시간을 선택한 후 장소 선택이 가능합니다.";
 
   return (
     <ReservationTabLayout>
@@ -21,20 +31,35 @@ const TimeSearchTab = () => {
         />
       </ReservationTabLayout.Left>
       <ReservationTabLayout.Right title="시간 선택">
-        <div></div>
-      </ReservationTabLayout.Right>
-      <ReservationTabLayout.Bottom title="장소 선택">
         <Controller
-          name="place"
+          name="time"
           control={control}
           render={({ field: { value, onChange } }) => (
-            <PlacePicker
-              placesByFloor={placesByFloor}
-              selectedPlace={value}
+            <DropdownTimePicker
+              selectedDate={getValues("date")}
+              selectedTimes={value}
               onChange={onChange}
             />
           )}
         />
+      </ReservationTabLayout.Right>
+      <ReservationTabLayout.Bottom
+        title="장소 선택"
+        errorMessage={placeSelectErrorMessage}
+      >
+        {isSelectedTime && (
+          <Controller
+            name="place"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <PlacePicker
+                placesByFloor={placesByFloor}
+                selectedPlace={value}
+                onChange={onChange}
+              />
+            )}
+          />
+        )}
       </ReservationTabLayout.Bottom>
     </ReservationTabLayout>
   );
