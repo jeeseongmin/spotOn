@@ -6,12 +6,14 @@ interface DropdownTimePickerProps {
   selectedDate: Date;
   selectedTimes: number[];
   onChange: (newSelectedTimes: number[]) => void;
+  limitTime?: number;
 }
 
 const DropdownTimePicker = ({
   selectedDate,
   selectedTimes,
   onChange,
+  limitTime,
 }: DropdownTimePickerProps) => {
   const [startTime, endTime] = selectedTimes;
   const getStartTime = () => {
@@ -27,8 +29,8 @@ const DropdownTimePicker = ({
   };
 
   const handleChangeEndTime = (time: number) => {
-    if (time - startTime > 2) {
-      alert("2시간까지 선택 가능합니다.");
+    if (limitTime && time - startTime > limitTime) {
+      alert(`${limitTime}시간까지 선택 가능합니다.`);
       return;
     }
 

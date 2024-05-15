@@ -46,6 +46,7 @@ const TimeSearchTab = () => {
               selectedDate={getValues("date")}
               selectedTimes={value}
               onChange={onChange}
+              limitTime={2}
             />
           )}
         />
