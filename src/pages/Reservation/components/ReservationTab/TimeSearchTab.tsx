@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
@@ -8,7 +10,7 @@ import PlacePicker from "../PlacePicker";
 import ReservationTabLayout from "./ReservationTabLayout";
 
 const TimeSearchTab = () => {
-  const { control, getValues } = useFormContext();
+  const { control, getValues, reset } = useFormContext();
   useWatch({ name: ["date", "time"] });
 
   const isSelectedTime =
@@ -18,6 +20,11 @@ const TimeSearchTab = () => {
   const placeSelectErrorMessage = isSelectedTime
     ? ""
     : "*날짜와 시간을 선택한 후 장소 선택이 가능합니다.";
+
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ReservationTabLayout>
