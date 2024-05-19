@@ -52,7 +52,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
           <div className="text-small text-red-light">
-            *예약 시간 및 장소를 선택한 후 진행해주세요.
+            *예약 시간과 장소를 선택한 후 진행해주세요.
           </div>
         )}
       </div>
