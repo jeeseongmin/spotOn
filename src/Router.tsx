@@ -9,8 +9,10 @@ import {
   LOGIN_QR_URL,
   LOGIN_SIGNUP_URL,
   MYPAGE_MAIN_URL,
+  REDIRECT_URI,
   RESERVATION_MAIN_URL,
 } from "@/constants/routes";
+import KakaoLogin from "@/pages/Login/KakaoLogin";
 import LoginMain from "@/pages/Login/LoginMain";
 import LoginSignUp from "@/pages/Login/LoginSignUp";
 import LoginWait from "@/pages/Login/LoginWait";
@@ -34,6 +36,7 @@ const Router: FC = () => {
       <Route path={HOME_MAIN_URL} element={<></>} />
       <Route path={MYPAGE_MAIN_URL} element={<MyPage />} />
       <Route path={ADMIN_MAIN_URL} element={<></>} />
+      <Route path={REDIRECT_URI} element={<KakaoLogin />} />
     </Routes>
   );
 };

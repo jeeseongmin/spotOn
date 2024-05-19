@@ -1,14 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import Button from "@/components/Button";
-import { LOGIN_SIGNUP_URL } from "@/constants/routes";
+import { KAKAO_AUTH_URL } from "@/constants/login";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginMain = () => {
-  const navigate = useNavigate();
+  useEffect(() => {
+    resetToken();
+  }, []);
 
-  const onLogin = () => {
-    navigate(LOGIN_SIGNUP_URL);
+  const resetToken = () => {
+    window.sessionStorage.setItem("token", "");
   };
 
   return (
@@ -19,13 +21,8 @@ const LoginMain = () => {
           <p>계정과 비밀번호 입력없이</p>
           <p>카카오톡으로 로그인 해보세요.</p>
         </div>
-        {/* <Button
-          variant="kakao"
-          onClick={onLogin}
-          text="카카오톡으로 로그인 / 회원가입"
-        /> */}
-        <Button variant="kakao" onClick={onLogin}>
-          카카오톡으로 로그인 / 회원가입
+        <Button variant="kakao">
+          <a href={KAKAO_AUTH_URL}>카카오톡으로 로그인 / 회원가입</a>
         </Button>
       </div>
     </LoginLayout>
