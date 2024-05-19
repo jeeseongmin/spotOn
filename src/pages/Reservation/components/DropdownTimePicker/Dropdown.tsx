@@ -60,7 +60,7 @@ const Dropdown = ({
   endTime,
   totalTime,
 }: DropdownProps) => {
-  const placeholder = "-- --:--";
+  const placeholder = "--:--";
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsModal = useModal();
   useOutSideClick(dropdownRef, () => optionsModal.onClose());
@@ -138,14 +138,14 @@ const Dropdown = ({
 
   return (
     <div ref={dropdownRef} className="relative h-10">
-      <div className="absolute left-0 top-11 z-50 flex h-auto w-fit flex-col overflow-hidden">
+      <div className="absolute left-0 top-11 z-50 -m-4 flex w-fit flex-col overflow-hidden p-4">
         <div
           className={cn(
-            "hidden max-h-[245px] w-[97px] animate-dropdown-open bg-white drop-shadow-lg *:grow",
+            "hidden max-h-[245px] w-[97px] animate-dropdown-open bg-white shadow *:grow",
             optionsModal.isOpen && "flex",
           )}
         >
-          <div className={cn("flex-col overflow-y-scroll scrollbar-hide")}>
+          <div className="flex-col overflow-y-scroll overscroll-contain scrollbar-hide">
             {hourOptions.map(option => (
               <Option
                 key={option}
@@ -156,7 +156,7 @@ const Dropdown = ({
               />
             ))}
           </div>
-          <div className="flex-col overflow-y-scroll scrollbar-hide">
+          <div className="flex-col overflow-y-scroll overscroll-contain scrollbar-hide">
             {minuteOptions.map(option => (
               <Option
                 key={option}
