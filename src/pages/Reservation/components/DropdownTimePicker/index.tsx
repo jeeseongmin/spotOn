@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import dayjs from "dayjs";
 
 import Dropdown from "@/pages/Reservation/components/DropdownTimePicker/Dropdown";
@@ -36,6 +38,11 @@ const DropdownTimePicker = ({
 
     onChange([startTime, time]);
   };
+
+  useEffect(() => {
+    onChange([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate]);
 
   return (
     <div className="mt-6 flex flex-col gap-10">
