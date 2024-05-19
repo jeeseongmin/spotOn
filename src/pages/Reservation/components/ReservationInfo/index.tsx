@@ -42,9 +42,9 @@ interface ReservationInfoProps {
 const ReservationInfo = ({ user }: ReservationInfoProps) => {
   const { name, phoneNumber, community } = user;
   const { register, getValues } = useFormContext();
-  useWatch({ name: "time" });
+  useWatch({ name: ["time", "place"] });
 
-  const isShow = getValues("time").length !== 0;
+  const isShow = getValues("time").length !== 0 && getValues("place");
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
@@ -52,7 +52,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
           <div className="text-small text-red-light">
-            *예약 시간을 선택한 후 진행해주세요.
+            *예약 시간 및 장소를 선택한 후 진행해주세요.
           </div>
         )}
       </div>
