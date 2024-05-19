@@ -4,10 +4,9 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
 import { availablePlaces, placesByFloor } from "@/dummy/places";
-
-import DropdownTimePicker from "../DropdownTimePicker";
-import PlacePicker from "../PlacePicker";
-import ReservationTabLayout from "./ReservationTabLayout";
+import DropdownTimePicker from "@/pages/Reservation/components/DropdownTimePicker";
+import PlacePicker from "@/pages/Reservation/components/PlacePicker";
+import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 
 const TimeSearchTab = () => {
   const { control, getValues, reset } = useFormContext();

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import Dropdown from "./Dropdown";
+import Dropdown from "@/pages/Reservation/components/DropdownTimePicker/Dropdown";
 
 interface DropdownTimePickerProps {
   selectedDate: Date;

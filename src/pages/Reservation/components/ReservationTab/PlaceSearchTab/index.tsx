@@ -6,9 +6,8 @@ import DatePicker from "@/components/DatePicker";
 import { placesByFloor } from "@/dummy/places";
 import { reservedTimes } from "@/dummy/reservation";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
-
-import ReservationTabLayout from "../ReservationTabLayout";
-import TimeTablePicker from "./TimeTablePicker";
+import TimeTablePicker from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
+import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 
 const PlaceSearchTab = () => {
   const { control, getValues, reset } = useFormContext();
