@@ -35,7 +35,6 @@ const CalendarItem = ({
   const isHeader = type === "header";
   const isBody = type === "body";
   const isToday = dayData?.isSame(dayjs(), "day");
-  console.log("isToday : ", isToday, dayData, dayjs());
   const dailyReservation = reservations.filter((reservationList: TempType) => {
     return children === reservationList.day.date() && !isInactive;
   });
@@ -63,7 +62,7 @@ const CalendarItem = ({
       }
 
       {isBody && (
-        <div className="h-4 w-full">
+        <div className="z-40 h-4 w-full">
           {dailyReservation.length > 0 && (
             <Reservation reservations={dailyReservation}>
               {dailyReservation[0].data[0].place}
