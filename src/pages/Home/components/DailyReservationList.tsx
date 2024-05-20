@@ -8,31 +8,31 @@ import useCalendarStore from "@/store/calendarStore";
 const DailyReservationList = () => {
   const { date } = useCalendarStore(state => state);
 
-  const [reservationList, setReservationList] = useState(
+  const [dailyReservations, setDailyReservations] = useState(
     reservations.filter((reservation: TempType) => {
       return date.date() === reservation.day.date();
-    }),
+    })[0],
   );
 
   useEffect(() => {
-    setReservationList(
+    setDailyReservations(
       reservations.filter((reservation: TempType) => {
         return date.date() === reservation.day.date();
-      }),
+      })[0],
     );
   }, [date]);
 
   return (
     <div className="flex h-[540px] w-full flex-col items-center justify-start gap-4 overflow-y-scroll px-2 py-8">
-      {reservationList &&
-        reservationList.map(element => {
-          return (
-            <ReservationCard
-              date={`${element.day.format("MM / DD")} (${daysOfTheWeek[element.day.day()]})`}
-              list={element.data}
-            />
-          );
-        })}
+      <ReservationCard
+        key={date.format("MM / DD")}
+        date={`${date.format("MM / DD")} (${daysOfTheWeek[date.day()]})`}
+        reservationList={
+          dailyReservations && dailyReservations.data
+            ? dailyReservations.data
+            : []
+        }
+      />
     </div>
   );
 };
