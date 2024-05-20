@@ -14,14 +14,14 @@ export const ReservationLabel = ({
   children,
   className,
 }: ComponentPropsWithoutRef<"div">) => (
-  <div className={cn("min-w-16 text-base text-primary", className)}>
+  <div className={cn("min-w-28 text-base text-primary", className)}>
     {children}
   </div>
 );
 
 interface ReservationFormValues {
   date: Date;
-  place: string;
+  place: number;
   time: number[];
   userId: string;
   purpose: string;
@@ -31,7 +31,7 @@ const ReservationPage = () => {
   const methods = useForm<ReservationFormValues>({
     defaultValues: {
       date: new Date(),
-      place: "",
+      place: undefined,
       time: [],
       userId: user.id.toString(),
       purpose: "",

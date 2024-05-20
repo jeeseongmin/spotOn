@@ -15,13 +15,15 @@ export default {
         },
         gray: {
           light: "#F2F2F2",
+          tinted: "#E6E6E6",
           middle: "#CCCCCC",
-          white: "#F9F9F9",
           dull: "#9C9C9C",
           dark: "#616161",
-          black: "#1A1A1A",
         },
-        sunday: "#FF6161",
+        red: {
+          DEFAULT: "#FF6161",
+          light: "#FF8080"
+        },
         saturday: "#4D54FF",
         kakaoBG: "#FFE502",
         kakaoFont: "#3C1E1D",

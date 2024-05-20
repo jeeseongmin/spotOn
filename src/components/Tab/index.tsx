@@ -9,14 +9,13 @@ import {
 
 import { VariantProps, cva } from "class-variance-authority";
 
+import TabItem, { TabItemProps } from "@/components/Tab/TabItem";
 import { cn } from "@/utils/cn";
-
-import TabItem, { TabItemProps } from "./TabItem";
 
 const tabContentCSS = cva("w-full text-base text-black", {
   variants: {
     variant: {
-      enclosed: "border-gray-middle bg-white-dull rounded-sm border shadow",
+      enclosed: "rounded-sm border border-gray-middle bg-white-dull shadow",
       underlined: "",
       solid: "",
     },

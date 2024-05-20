@@ -34,9 +34,9 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
   return (
     <Button
       className={cn(
-        "rounded-none",
-        isPast && "bg-gray-light",
-        isReserved && "bg-[#FF9A9A]",
+        "rounded-none p-0 drop-shadow-none",
+        isPast && "bg-gray-tinted",
+        isReserved && "bg-red-light",
         isSelected && "bg-primary",
       )}
       disabled={isPast || isReserved}
@@ -45,19 +45,19 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
   );
 };
 
-interface TimeSelectProps {
+interface TimeTablePickerProps {
   selectedDate: Date;
   reservedTimes: number[];
   selectedTimes: number[];
   onChange: (newSelectedTimes: number[]) => void;
 }
 
-const TimeSelect = ({
+const TimeTablePicker = ({
   selectedDate,
   reservedTimes,
   selectedTimes,
   onChange,
-}: TimeSelectProps) => {
+}: TimeTablePickerProps) => {
   const [startTime, endTime] = [
     Math.min(...selectedTimes),
     Math.max(...selectedTimes),
@@ -140,4 +140,4 @@ const TimeSelect = ({
   );
 };
 
-export default TimeSelect;
+export default TimeTablePicker;

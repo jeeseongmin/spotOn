@@ -26,7 +26,7 @@ const CalendarItem = ({
         "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border font-light",
         isInactive && "cursor-auto opacity-50",
         dayOfTheWeek === 6 && "text-saturday",
-        dayOfTheWeek === 0 && "text-sunday",
+        dayOfTheWeek === 0 && "text-red",
         isSelected
           ? "rounded-[5px] border-primary bg-primary-light/[.34]"
           : "border-transparent",
