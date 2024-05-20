@@ -26,7 +26,7 @@ const Schedule = () => {
   };
 
   return (
-    <div className="border-gray-white h-[622px] flex-1 overflow-hidden rounded-[2px] border px-4 py-6">
+    <div className="h-[622px] flex-1 overflow-hidden rounded-[2px] border border-gray-light px-4 py-6">
       <div className="relative flex h-full w-full flex-col gap-6">
         {/* Date Select Action */}
         <div className="flex h-8 items-center justify-center gap-12">
