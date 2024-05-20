@@ -1,5 +1,6 @@
+import { useState } from "react";
+
 import { Meta } from "@storybook/react";
-import { useForm } from "react-hook-form";
 
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { cells, communities, teams } from "@/dummy/organization";
@@ -18,12 +19,13 @@ const meta: Meta<typeof Dropdown> = {
 export default meta;
 
 export const Default = () => {
-  const { setValue } = useForm();
+  const [value, setValue] = useState("");
   const options = ["누가순", "마태순", "마가순", "요한순"];
 
   return (
     <Dropdown
-      setValue={setValue}
+      selectedOption={value}
+      onChangeOption={setValue}
       category={"community"}
       options={options}
       disabled={false}
@@ -32,25 +34,30 @@ export const Default = () => {
 };
 
 export const ExampleInSignUpPage = () => {
-  const { setValue } = useForm();
+  const [community, setCommunity] = useState("");
+  const [team, setTeam] = useState("");
+  const [cell, setCell] = useState("");
 
   return (
     <div className="grid w-96 grid-cols-3 gap-2">
       <Dropdown
-        setValue={setValue}
+        selectedOption={community}
+        onChangeOption={setCommunity}
         category={"community"}
         options={communities}
         disabled={false}
       />
       <Dropdown
-        setValue={setValue}
+        selectedOption={team}
+        onChangeOption={setTeam}
         category={"team"}
         options={teams}
         disabled={false}
       />
 
       <Dropdown
-        setValue={setValue}
+        selectedOption={cell}
+        onChangeOption={setCell}
         category={"cell"}
         options={cells}
         disabled={false}
@@ -60,12 +67,13 @@ export const ExampleInSignUpPage = () => {
 };
 
 export const DisabledDropdown = () => {
-  const { setValue } = useForm();
+  const [value, setValue] = useState("");
   const options = ["누가순", "마태순", "마가순", "요한순"];
 
   return (
     <Dropdown
-      setValue={setValue}
+      selectedOption={value}
+      onChangeOption={setValue}
       category={"community"}
       options={options}
       disabled={true}

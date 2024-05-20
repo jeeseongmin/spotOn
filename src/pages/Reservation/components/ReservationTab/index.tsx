@@ -1,8 +1,7 @@
 import Tab from "@/components/Tab";
-
-import PlaceSearchTab from "./PlaceSearchTab";
-import RecurringReservationTab from "./RecurringReservationTab";
-import TimeSearchTab from "./TimeSearchTab";
+import PlaceSearchTab from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab";
+import RecurringReservationTab from "@/pages/Reservation/components/ReservationTab/RecurringReservationTab";
+import TimeSearchTab from "@/pages/Reservation/components/ReservationTab/TimeSearchTab";
 
 const ReservationTab = () => {
   return (

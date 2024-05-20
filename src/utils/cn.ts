@@ -5,12 +5,20 @@ const customTwMerge = extendTailwindMerge({
   override: {
     theme: {
       colors: [
-        { primary: ["light", "DEFAULT"] },
+        "primary",
+        "primary-light",
         "black",
-        { white: ["DEFAULT", "dull"] },
-        { gray: ["light", "middle", "dull", "dark"] },
-        "sunday",
+        "white",
+        "white-dull",
+        {
+          gray: ["light", "tinted", "middle", "dull", "dark"],
+        },
+        "red",
+        "red-light",
         "saturday",
+        "kakaoBG",
+        "kakaoFont",
+        "loginBG",
       ],
     },
     classGroups: {

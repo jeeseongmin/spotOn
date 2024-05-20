@@ -9,9 +9,9 @@ const tabItemCSS = cva("", {
   variants: {
     variant: {
       enclosed:
-        "border-gray-middle bg-gray-light w-40 rounded-t-[5px] border border-b-0 py-2",
-      underlined: "border-gray-middle text-gray-middle grow border-b-2 py-6",
-      solid: "border-gray-middle rounded-sm border p-1.5",
+        "w-40 rounded-t-[5px] border border-b-0 border-gray-middle bg-gray-light py-2",
+      underlined: "grow border-b-2 border-gray-middle py-6 text-gray-middle",
+      solid: "rounded-sm border border-gray-middle p-1.5",
     },
     active: {
       enclosed: "bg-white-dull",
@@ -52,7 +52,7 @@ const TabItem = ({
     >
       {Icon ? (
         <Icon
-          className={cn("text-gray-dark size-6", isActive && "text-white")}
+          className={cn("size-6 text-gray-dark", isActive && "text-white")}
         />
       ) : (
         label
