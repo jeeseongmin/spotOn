@@ -26,6 +26,7 @@ const CalendarItem = ({
   children,
   type,
   dayOfTheWeek,
+  dayData,
   isInactive = false,
   isSelected = false,
   className,
@@ -33,6 +34,8 @@ const CalendarItem = ({
 }: CalendarItemProps) => {
   const isHeader = type === "header";
   const isBody = type === "body";
+  const isToday = dayData?.isSame(dayjs(), "day");
+  console.log("isToday : ", isToday, dayData, dayjs());
   const dailyReservation = reservations.filter((reservationList: TempType) => {
     return children === reservationList.day.date() && !isInactive;
   });
@@ -40,25 +43,24 @@ const CalendarItem = ({
   return (
     <div
       className={cn(
-        `flex w-full cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-[15px] font-light text-black last-of-type:border-none`,
+        `relative flex w-full cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-[15px] font-light text-black last-of-type:border-none`,
         isHeader && "h-10 items-center",
         isBody && "pt-1",
         isInactive && "text-opacity-30",
+        // isSelected && "border border-primary",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-sunday",
         className,
       )}
       {...props}
     >
-      {isBody && isSelected ? (
-        <div className="flex h-[31px] w-[31px] items-center justify-center rounded-full bg-primary text-white">
+      {
+        <div
+          className={`z-40 flex h-[31px] w-[31px] items-center justify-center ${isToday && "rounded-full bg-primary text-white"}`}
+        >
           {children}
         </div>
-      ) : (
-        <div className="flex h-[31px] w-[31px] items-center justify-center ">
-          {children}
-        </div>
-      )}
+      }
 
       {isBody && (
         <div className="h-4 w-full">
@@ -69,6 +71,10 @@ const CalendarItem = ({
           )}
         </div>
       )}
+
+      <div
+        className={`absolute left-0 top-0 h-full w-full ${isSelected && "rounded-sm border border-primary bg-primary-light bg-opacity-30 text-black"}`}
+      ></div>
     </div>
   );
 };
@@ -95,6 +101,7 @@ const Calendar = () => {
                   key={day.valueOf()}
                   type="body"
                   dayOfTheWeek={day.day()}
+                  dayData={day}
                   isInactive={isInactive}
                   isSelected={dayjs(date)?.isSame(day, "day")}
                   onClick={() => {

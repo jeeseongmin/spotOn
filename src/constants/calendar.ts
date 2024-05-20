@@ -16,6 +16,7 @@ export interface CalendarItemProps
   extends PropsWithChildren,
     ComponentPropsWithoutRef<"div"> {
   dayOfTheWeek: number;
+  dayData?: Dayjs;
   type?: string;
   isInactive?: boolean;
   isSelected?: boolean;
