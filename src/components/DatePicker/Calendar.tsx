@@ -5,6 +5,7 @@ import {
   CalendarProps,
   daysOfTheWeek,
 } from "@/constants/calendar";
+import useCalendarStore from "@/store/calendarStore";
 import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
 
@@ -50,20 +51,20 @@ const CalendarHead = () => (
 );
 
 const Calendar = ({
-  firstDayOfMonth,
   selectedDate,
   limit,
   onChangeSelectedDate,
-  onChangeFirstDayOfMonth,
 }: CalendarProps) => {
+  const { firstDayOfMonth, setFirstDayOfMonth } = useCalendarStore();
+
   const handleClickDate = (day: Dayjs, isInactive: boolean) => {
     if (isInactive) return;
 
     if (!day.isSame(firstDayOfMonth, "month")) {
-      onChangeFirstDayOfMonth(day.date(1));
+      setFirstDayOfMonth(day.date(1));
     }
 
-    onChangeSelectedDate(dayjs(day));
+    onChangeSelectedDate(day);
   };
 
   return (
