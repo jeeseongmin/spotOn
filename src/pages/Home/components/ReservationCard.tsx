@@ -1,12 +1,8 @@
+import { TempDataType } from "@/dummy/reservation";
+
 type ReservationCardProps = {
   date: string;
-  list: {
-    time: string;
-    place: string;
-    description: string;
-    name: string;
-    phone: string;
-  }[];
+  list: TempDataType;
 };
 
 const ReservationCard = ({ date, list }: ReservationCardProps) => {
@@ -27,8 +23,15 @@ const ReservationCard = ({ date, list }: ReservationCardProps) => {
             {list.map(element => {
               return (
                 <tr className="border-b border-gray-middle p-4 align-top text-small last:border-none">
-                  <td className="h-[94px] w-[100px] border-r border-gray-middle py-2 text-center font-semibold">
-                    {element.time}
+                  <td className="h-[94px] w-[100px] gap-2 border-r border-gray-middle py-2 pl-2 text-left font-semibold">
+                    {element.status && (
+                      <p
+                        className={`mb-1 ${element.status === "승인완료" ? "text-primary" : "text-[#A30000]"}`}
+                      >
+                        {element.status}
+                      </p>
+                    )}
+                    <p>{element.time}</p>
                   </td>
                   <td className="flex h-[94px] flex-col gap-1 pl-2 pt-2">
                     <p className="font-semibold">{element.place}</p>

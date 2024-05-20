@@ -5,7 +5,7 @@ import { TempType, reservations } from "@/dummy/reservation";
 import ReservationCard from "@/pages/Home/components/ReservationCard";
 import useCalendarStore from "@/store/calendarStore";
 
-const ReservationList = () => {
+const DailyReservationList = () => {
   const { date } = useCalendarStore(state => state);
 
   const [reservationList, setReservationList] = useState(
@@ -37,4 +37,4 @@ const ReservationList = () => {
   );
 };
 
-export default ReservationList;
+export default DailyReservationList;
