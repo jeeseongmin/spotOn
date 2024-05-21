@@ -1,30 +1,24 @@
-import { useState } from "react";
-
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+
+import useCalendarStore from "@/store/calendarStore";
 
 import Button from "../Button";
 import Calendar from "./Calendar";
 
 interface DatePickerProps {
-  date?: Date;
+  date?: Dayjs;
   limit?: number;
-  onChange: (day: Date) => void;
+  onChange: (day: Dayjs) => void;
 }
 
-const DatePicker = ({
-  date = new Date(),
-  limit,
-  onChange,
-}: DatePickerProps) => {
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs(date).date(1));
+const DatePicker = ({ date = dayjs(), limit, onChange }: DatePickerProps) => {
+  const { firstDayOfMonth, setFirstDayOfMonth } = useCalendarStore();
 
   const goPreviousMonth = () =>
-    setFirstDayOfMonth(prevState => prevState.date(0).date(1));
+    setFirstDayOfMonth(firstDayOfMonth.date(0).date(1));
   const goNextMonth = () =>
-    setFirstDayOfMonth(prevState =>
-      prevState.date(prevState.daysInMonth() + 1),
-    );
+    setFirstDayOfMonth(firstDayOfMonth.date(firstDayOfMonth.daysInMonth() + 1));
 
   return (
     <div className="flex w-full select-none flex-col gap-2 text-small">
@@ -40,11 +34,9 @@ const DatePicker = ({
         </Button>
       </div>
       <Calendar
-        firstDayOfMonth={firstDayOfMonth}
         selectedDate={date}
         limit={limit}
         onChangeSelectedDate={onChange}
-        onChangeFirstDayOfMonth={setFirstDayOfMonth}
       />
     </div>
   );

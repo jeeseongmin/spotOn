@@ -105,7 +105,7 @@ const Dropdown = ({
 
       <button
         type="button"
-        className={`disabled:bg-gray-white disabled:text-gray-black absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
+        className={`disabled:text-gray-black absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull disabled:bg-white-dull ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
         onClick={() => {
           if (!disabled) optionsModal.onToggle();
         }}
