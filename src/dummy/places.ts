@@ -1,3 +1,15 @@
+export interface Place {
+  id: number;
+  name: string;
+}
+
+export interface PlacesByFloor {
+  floor: string;
+  places: Place[];
+}
+
+export interface SelectedPlace extends Place, Omit<PlacesByFloor, "places"> {}
+
 export const placesByFloor = [
   {
     floor: "2층",

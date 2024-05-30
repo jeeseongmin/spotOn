@@ -1,20 +1,11 @@
 import Button from "@/components/Button";
+import type { PlacesByFloor, SelectedPlace } from "@/dummy/places";
 import { cn } from "@/utils/cn";
-
-type Place = {
-  id: number;
-  name: string;
-};
-
-type PlacesByFloor = {
-  floor: string;
-  places: Place[];
-};
 
 interface PlacePickerProps {
   placesByFloor: PlacesByFloor[];
-  selectedPlace?: number;
-  onChange: (value: number) => void;
+  selectedPlace?: SelectedPlace;
+  onChange: (value: SelectedPlace) => void;
   availablePlaces?: number[];
 }
 
@@ -49,10 +40,10 @@ const PlacePicker = ({
                 disabled={getIsDisabled(id)}
                 className={cn(
                   "text-small",
-                  selectedPlace === id &&
+                  selectedPlace?.id === id &&
                     "border-primary bg-primary text-white",
                 )}
-                onClick={() => onChange(id)}
+                onClick={() => onChange({ id, name, floor })}
               >
                 {name}
               </Button>

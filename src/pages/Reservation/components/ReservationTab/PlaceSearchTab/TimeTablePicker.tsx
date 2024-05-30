@@ -136,7 +136,7 @@ const TimeTablePicker = ({
         const secondHalfHourStatus = getTimeStatus(hour, true);
 
         return (
-          <div className="h-full w-[5.56%]">
+          <div key={hour} className="h-full w-[5.56%]">
             <div className="flex h-1/2 items-center justify-center border-l border-l-white bg-gray-middle text-black">
               {hour}
             </div>
