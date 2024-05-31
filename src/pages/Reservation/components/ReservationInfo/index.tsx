@@ -18,7 +18,7 @@ const InfoLabel = ({
   isRequired = false,
   ...props
 }: InfoInput) => (
-  <div className="flex w-1/2 items-center gap-2">
+  <div className="flex items-center gap-2">
     <InputLabel
       text={label}
       isRequired={isRequired}
@@ -41,7 +41,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
   const isShow = getValues("time").length !== 0 && getValues("place");
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
+    <div className="flex w-full flex-col gap-2 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
       <div className="flex gap-6">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
@@ -52,7 +52,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
       </div>
       {isShow && (
         <>
-          <div className="flex gap-4">
+          <div className="flex grow gap-6">
             <InfoLabel label="예약자" htmlFor="name">
               <Input
                 id="name"
@@ -77,7 +77,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
               </div>
             </InfoLabel>
           </div>
-          <div className="flex justify-between gap-4">
+          <div className="flex grow gap-6">
             <InfoLabel label="소속" htmlFor="community">
               <Input
                 id="community"
