@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { Dayjs } from "dayjs";
 
 import Button from "@/components/Button";
@@ -23,15 +21,6 @@ const SelectRepeatType = ({
   selectedDate,
   onChange,
 }: SelectRepeatTypeProps) => {
-  const [weekInfoText, setWeekInfoText] = useState<string>("");
-
-  // useEffect(() => {
-  //   if (selectedDate)
-  //     setWeekInfoText(
-  //       `${orderText[getWeekOrder(selectedDate) as number]} ${daysOfTheWeek[selectedDate.day()]}요일`,
-  //     );
-  // }, [selectedDate]);
-
   const selectedStyle = "bg-primary text-white border-primary";
   const customButtonStyle = "border border-gray-middle drop-shadow-none";
   const customDayButtonStyle = "px-[10px]";
