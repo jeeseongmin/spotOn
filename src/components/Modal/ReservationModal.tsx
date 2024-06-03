@@ -14,7 +14,7 @@ interface ReservationModalProps extends PropsWithRequiredChildren {
 }
 
 const Header = ({ children }: PropsWithRequiredChildren) => (
-  <div className="flex h-32 flex-col justify-center gap-2 bg-primary px-8 text-xl font-light text-white">
+  <div className="flex h-32 flex-col justify-center gap-2 rounded-sm bg-primary px-8 text-xl font-light text-white">
     {children}
   </div>
 );
