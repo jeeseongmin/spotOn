@@ -9,21 +9,36 @@ type PropsWithRequiredChildren<P = unknown> = P & {
 interface LayoutProps extends PropsWithRequiredChildren {
   title: string;
   errorMessage?: string;
+  type?: string;
 }
 
-const Left = ({ children, title }: LayoutProps) => (
-  <div className="flex flex-col gap-2 border-r border-r-gray-middle px-12 py-4">
-    <ReservationLabel>{title}</ReservationLabel>
-    {children}
-  </div>
-);
+const Left = ({ children, title, type }: LayoutProps) => {
+  const generalStyle = "";
+  const recurringStyle = "w-1/2";
 
-const Right = ({ children, title }: LayoutProps) => (
-  <div className="flex w-full flex-col gap-2 px-8 py-4">
-    <ReservationLabel>{title}</ReservationLabel>
-    {children}
-  </div>
-);
+  return (
+    <div
+      className={`flex flex-col gap-2 border-r border-r-gray-middle px-12 py-4 ${type === "recurring" ? recurringStyle : generalStyle}`}
+    >
+      <ReservationLabel>{title}</ReservationLabel>
+      {children}
+    </div>
+  );
+};
+
+const Right = ({ children, title, type }: LayoutProps) => {
+  const generalStyle = "w-full";
+  const recurringStyle = "w-1/2";
+
+  return (
+    <div
+      className={`flex flex-col gap-2 px-8 py-4 ${type === "recurring" ? recurringStyle : generalStyle}`}
+    >
+      <ReservationLabel>{title}</ReservationLabel>
+      {children}
+    </div>
+  );
+};
 
 const Bottom = ({ children, title, errorMessage }: LayoutProps) => (
   <div className="flex flex-col gap-2 px-12 py-4">
