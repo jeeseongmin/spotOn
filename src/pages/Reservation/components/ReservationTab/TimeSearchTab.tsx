@@ -31,6 +31,7 @@ const TimeSearchTab = () => {
       <ReservationTabLayout.Left title="날짜 선택">
         <Controller
           name="date"
+          rules={{ required: true }}
           control={control}
           render={({ field: { value, onChange } }) => {
             const handleChangeDate = (date: Dayjs) => {
@@ -47,6 +48,7 @@ const TimeSearchTab = () => {
       <ReservationTabLayout.Right title="시간 선택">
         <Controller
           name="time"
+          rules={{ required: true }}
           control={control}
           render={({ field: { value, onChange } }) => {
             const handleChangeTime = (time: number[]) => {
@@ -73,6 +75,7 @@ const TimeSearchTab = () => {
         {isSelectedTime && (
           <Controller
             name="place"
+            rules={{ required: true }}
             control={control}
             render={({ field: { value, onChange } }) => (
               <PlacePicker
