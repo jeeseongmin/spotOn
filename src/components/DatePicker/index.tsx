@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 import useCalendarStore from "@/store/calendarStore";
