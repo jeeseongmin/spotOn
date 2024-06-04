@@ -11,7 +11,7 @@ import SelectRepeatType from "@/pages/Reservation/components/ReservationTab/Recu
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 
 const RecurringReservationTab = () => {
-  const { control, getValues, reset } = useFormContext();
+  const { control, getValues, setValue, reset } = useFormContext();
 
   useWatch({ name: ["date", "time", "startDate", "endDate"] });
 
@@ -28,6 +28,9 @@ const RecurringReservationTab = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const resetEndDate = () => {
+    setValue("endDate", "");
+  };
   return (
     <ReservationTabLayout>
       <ReservationTabLayout.Left title="날짜 선택" type="recurring">
@@ -39,7 +42,13 @@ const RecurringReservationTab = () => {
               defaultValue={dayjs()}
               control={control}
               render={({ field: { value, onChange } }) => (
-                <DatePickerButton date={value} onChange={onChange} />
+                <DatePickerButton
+                  date={value}
+                  onChange={e => {
+                    onChange(e);
+                    resetEndDate();
+                  }}
+                />
               )}
             />
           </div>
@@ -70,7 +79,11 @@ const RecurringReservationTab = () => {
                 name="endDate"
                 control={control}
                 render={({ field: { value, onChange } }) => (
-                  <DatePickerButton date={value} onChange={onChange} />
+                  <DatePickerButton
+                    startDate={getValues("startDate")}
+                    date={value}
+                    onChange={onChange}
+                  />
                 )}
               />
             </div>

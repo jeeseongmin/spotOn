@@ -9,12 +9,17 @@ import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
 
 interface DatePickerButtonProps {
+  startDate?: Dayjs;
   date?: Dayjs;
   limit?: number;
   onChange: (day: Dayjs) => void;
 }
 
-const DatePickerButton = ({ date, onChange }: DatePickerButtonProps) => {
+const DatePickerButton = ({
+  startDate,
+  date,
+  onChange,
+}: DatePickerButtonProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsModal = useModal();
   useOutSideClick(dropdownRef, () => optionsModal.onClose());
@@ -28,7 +33,7 @@ const DatePickerButton = ({ date, onChange }: DatePickerButtonProps) => {
             optionsModal.isOpen && "flex",
           )}
         >
-          <DatePicker date={date ? date : dayjs()} onChange={onChange} />
+          <DatePicker startDate={startDate} date={date} onChange={onChange} />
         </div>
       </div>
 

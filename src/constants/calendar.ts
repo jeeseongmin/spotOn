@@ -13,6 +13,7 @@ export const orderText = [
 ];
 
 export interface CalendarProps {
+  startDate?: Dayjs;
   selectedDate?: Dayjs;
   limit?: number;
   onChangeSelectedDate: (day: Dayjs) => void;
