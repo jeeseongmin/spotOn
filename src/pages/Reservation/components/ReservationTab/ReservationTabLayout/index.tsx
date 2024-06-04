@@ -1,6 +1,7 @@
 import { Children, ReactNode } from "react";
 
 import { ReservationLabel } from "@/pages/Reservation";
+import { cn } from "@/utils/cn";
 
 type PropsWithRequiredChildren<P = unknown> = P & {
   children: ReactNode;
@@ -13,12 +14,14 @@ interface LayoutProps extends PropsWithRequiredChildren {
 }
 
 const Left = ({ children, title, type }: LayoutProps) => {
-  const generalStyle = "";
   const recurringStyle = "w-1/2";
 
   return (
     <div
-      className={`flex flex-col gap-2 border-r border-r-gray-middle px-12 py-4 ${type === "recurring" ? recurringStyle : generalStyle}`}
+      className={cn(
+        `flex flex-col gap-2 border-r border-r-gray-middle px-12 py-4`,
+        type === "recurring" && recurringStyle,
+      )}
     >
       <ReservationLabel>{title}</ReservationLabel>
       {children}
