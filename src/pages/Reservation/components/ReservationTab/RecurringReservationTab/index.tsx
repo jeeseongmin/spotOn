@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import { availablePlaces, placesByFloor } from "@/dummy/places";
-import DatePickerButton from "@/pages/Reservation/components/DatePickerButton";
+import DatePickerButton from "@/pages/Reservation/components/DropdownDatePicker";
 import DropdownTimePicker from "@/pages/Reservation/components/DropdownTimePicker";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import SelectRepeatType from "@/pages/Reservation/components/ReservationTab/RecurringReservationTab/SelectRepeatType";

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { IoMdCalendar } from "react-icons/io";
 
 import DatePicker from "@/components/DatePicker";
@@ -8,18 +8,18 @@ import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
 
-interface DatePickerButtonProps {
+interface DropdownDatePickerProps {
   startDate?: Dayjs;
   date?: Dayjs;
   limit?: number;
   onChange: (day: Dayjs) => void;
 }
 
-const DatePickerButton = ({
+const DropdownDatePicker = ({
   startDate,
   date,
   onChange,
-}: DatePickerButtonProps) => {
+}: DropdownDatePickerProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsModal = useModal();
   useOutSideClick(dropdownRef, () => optionsModal.onClose());
@@ -57,4 +57,4 @@ const DatePickerButton = ({
   );
 };
 
-export default DatePickerButton;
+export default DropdownDatePicker;
