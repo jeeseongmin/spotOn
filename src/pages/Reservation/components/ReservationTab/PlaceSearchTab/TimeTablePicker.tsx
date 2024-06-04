@@ -1,11 +1,19 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 
 import dayjs from "dayjs";
 
 import Button from "@/components/Button";
+import AlertModal from "@/components/Modal/AlertModal";
+import useModal from "@/hooks/useModal";
 import { cn } from "@/utils/cn";
 
 const hours = Array.from({ length: 18 }, (_, index) => 6 + index);
+
+const alertMessage = {
+  irrevocable: "해제할 수 없는 시간대입니다.",
+  over: "2시간까지 선택 가능합니다.",
+  disconnected: "연속된 시간대만 선택 가능합니다.",
+};
 
 const TimeTableHead = () => (
   <div className="h-full w-[5.56%] *:h-1/2">
@@ -62,10 +70,14 @@ const TimeTablePicker = ({
     Math.min(...selectedTimes),
     Math.max(...selectedTimes),
   ];
+  const [alertType, setAlertType] = useState<
+    "irrevocable" | "over" | "disconnected"
+  >("disconnected");
+  const alertModal = useModal();
 
   const handleClickTime = (selectedTime: number) => {
     const isSelectedNone = selectedTimes.length === 0;
-    const isUnselectable = startTime < selectedTime && selectedTime < endTime;
+    const isIrrevocable = startTime < selectedTime && selectedTime < endTime;
     const isSelectable =
       startTime - selectedTime === 0.5 || selectedTime - endTime === 0.5;
     const isSelected = selectedTimes.includes(selectedTime);
@@ -76,8 +88,10 @@ const TimeTablePicker = ({
       return;
     }
 
-    if (isUnselectable) {
-      return alert("해제할 수 없는 시간대입니다.");
+    if (isIrrevocable) {
+      setAlertType("irrevocable");
+      alertModal.onOpen();
+      return;
     }
 
     if (isSelected) {
@@ -86,7 +100,9 @@ const TimeTablePicker = ({
     }
 
     if (isOverTwoHours) {
-      return alert("2시간까지 선택 가능합니다.");
+      setAlertType("over");
+      alertModal.onOpen();
+      return;
     }
 
     if (isSelectable) {
@@ -94,7 +110,8 @@ const TimeTablePicker = ({
       return;
     }
 
-    alert("연속된 시간대만 선택 가능합니다.");
+    alertModal.onOpen();
+    setAlertType("disconnected");
   };
 
   const getTimeStatus = (hour: number, isSecondHalfHour = false) => {
@@ -119,7 +136,7 @@ const TimeTablePicker = ({
         const secondHalfHourStatus = getTimeStatus(hour, true);
 
         return (
-          <div className="h-full w-[5.56%]">
+          <div key={hour} className="h-full w-[5.56%]">
             <div className="flex h-1/2 items-center justify-center border-l border-l-white bg-gray-middle text-black">
               {hour}
             </div>
@@ -136,6 +153,11 @@ const TimeTablePicker = ({
           </div>
         );
       })}
+      {alertModal.isOpen && (
+        <AlertModal onClose={alertModal.onClose}>
+          {alertMessage[alertType]}
+        </AlertModal>
+      )}
     </div>
   );
 };

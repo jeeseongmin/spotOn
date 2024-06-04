@@ -7,6 +7,7 @@ import {
 
 import { MdAccessTime } from "react-icons/md";
 
+import AlertModal from "@/components/Modal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
@@ -63,6 +64,7 @@ const Dropdown = ({
   const placeholder = "--:--";
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsModal = useModal();
+  const alertModal = useModal();
   useOutSideClick(dropdownRef, () => optionsModal.onClose());
 
   const hour = Math.floor(selectedOption);
@@ -94,6 +96,7 @@ const Dropdown = ({
 
     return `(${totalHour}시간)`;
   };
+
   const getIsDisabledOption = (option: string) => {
     const isSameStartTime =
       totalTime !== undefined && hour === startTime && option === "00";
@@ -138,7 +141,7 @@ const Dropdown = ({
 
   return (
     <div ref={dropdownRef} className="relative h-10">
-      <div className="absolute left-0 top-11 z-50 -m-4 flex w-fit flex-col overflow-hidden p-4">
+      <div className="absolute left-0 top-11 z-40 -m-4 flex w-fit flex-col overflow-hidden p-4">
         <div
           className={cn(
             "hidden max-h-[245px] w-[97px] animate-dropdown-open bg-white shadow *:grow",
@@ -173,12 +176,13 @@ const Dropdown = ({
       <button
         type="button"
         className={cn(
-          "absolute top-0 z-40 flex h-10 w-[223px] select-none items-center justify-between gap-4 rounded-sm border border-gray-middle bg-white px-3 py-2.5 text-small",
+          "absolute top-0 z-30 flex h-10 w-[223px] select-none items-center justify-between gap-4 rounded-sm border border-gray-middle bg-white px-3 py-2.5 text-small",
           selectedOption ? "text-black" : "text-gray-dull",
         )}
         onClick={() => {
           if (!startTime) {
-            alert("시작 시간을 선택하세요.");
+            alertModal.onOpen();
+
             return;
           }
 
@@ -195,6 +199,11 @@ const Dropdown = ({
         </div>
         <MdAccessTime size={14} className="text-black" />
       </button>
+      {alertModal.isOpen && (
+        <AlertModal onClose={alertModal.onClose}>
+          시작 시간을 선택하세요.
+        </AlertModal>
+      )}
     </div>
   );
 };

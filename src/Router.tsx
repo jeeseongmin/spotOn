@@ -16,8 +16,7 @@ import LoginMain from "@/pages/Login/LoginMain";
 import LoginSignUp from "@/pages/Login/LoginSignUp";
 import LoginWait from "@/pages/Login/LoginWait";
 import MyPage from "@/pages/MyPage";
-
-import ReservationPage from "./pages/Reservation";
+import ReservationPage from "@/pages/Reservation";
 
 //type RouterProps = {};
 

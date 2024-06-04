@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 
+import type { Dayjs } from "dayjs";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
-import { placesByFloor } from "@/dummy/places";
+import { type SelectedPlace, placesByFloor } from "@/dummy/places";
 import { reservedTimes } from "@/dummy/reservation";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import TimeTablePicker from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 
 const PlaceSearchTab = () => {
-  const { control, getValues, reset } = useFormContext();
+  const { control, getValues, reset, resetField } = useFormContext();
   useWatch({ name: "place" });
 
   const timeSelectErrorMessage = getValues("place")
@@ -27,23 +28,40 @@ const PlaceSearchTab = () => {
       <ReservationTabLayout.Left title="날짜 선택">
         <Controller
           name="date"
+          rules={{ required: true }}
           control={control}
-          render={({ field: { value, onChange } }) => (
-            <DatePicker date={value} onChange={onChange} />
-          )}
+          render={({ field: { value, onChange } }) => {
+            const handleChangeDate = (date: Dayjs) => {
+              onChange(date);
+              resetField("place");
+              resetField("time");
+              resetField("purpose");
+            };
+
+            return <DatePicker date={value} onChange={handleChangeDate} />;
+          }}
         />
       </ReservationTabLayout.Left>
       <ReservationTabLayout.Right title="장소 선택">
         <Controller
           name="place"
+          rules={{ required: true }}
           control={control}
-          render={({ field: { value, onChange } }) => (
-            <PlacePicker
-              placesByFloor={placesByFloor}
-              selectedPlace={value}
-              onChange={onChange}
-            />
-          )}
+          render={({ field: { value, onChange } }) => {
+            const handleChangePlace = (place: SelectedPlace) => {
+              onChange(place);
+              resetField("time");
+              resetField("purpose");
+            };
+
+            return (
+              <PlacePicker
+                placesByFloor={placesByFloor}
+                selectedPlace={value}
+                onChange={handleChangePlace}
+              />
+            );
+          }}
         />
       </ReservationTabLayout.Right>
       <ReservationTabLayout.Bottom
@@ -53,6 +71,7 @@ const PlaceSearchTab = () => {
         {getValues("place") && (
           <Controller
             name="time"
+            rules={{ required: true }}
             control={control}
             render={({ field: { value, onChange } }) => (
               <TimeTablePicker
