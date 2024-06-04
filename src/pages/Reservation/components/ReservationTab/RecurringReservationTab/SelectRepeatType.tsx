@@ -1,9 +1,16 @@
 import { Dayjs } from "dayjs";
 
 import Button from "@/components/Button";
-import { daysOfTheWeek, orderText } from "@/constants/calendar";
+import {
+  cycleTypeByEnglish,
+  daysOfTheWeek,
+  daysOfTheWeekByEnglish,
+  orderText,
+} from "@/constants/calendar";
 import { getWeekOrder } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
+
+import { cycleTypeByKorean } from "../../../../../constants/calendar";
 
 interface SelectRepeatTypeProps {
   typeObj: TypeObj;
@@ -28,120 +35,42 @@ const SelectRepeatType = ({
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-4">
-        <Button
-          variant="outlined"
-          className={cn(
-            customButtonStyle,
-            `${typeObj.type === "daily" && selectedStyle}`,
-          )}
-          onClick={() => onChange({ ...typeObj, type: "daily" })}
-        >
-          매일
-        </Button>
-        <Button
-          variant="outlined"
-          className={cn(
-            customButtonStyle,
-            `${typeObj.type === "weekly" && selectedStyle}`,
-          )}
-          onClick={() => onChange({ ...typeObj, type: "weekly" })}
-        >
-          매주
-        </Button>
-        <Button
-          variant="outlined"
-          className={cn(
-            customButtonStyle,
-            `${typeObj.type === "monthly" && selectedStyle}`,
-          )}
-          onClick={() => onChange({ ...typeObj, type: "monthly" })}
-        >
-          매월
-        </Button>
+        {cycleTypeByEnglish.map((text, index) => {
+          return (
+            <Button
+              variant="outlined"
+              className={cn(
+                customButtonStyle,
+                `${typeObj.type === text && selectedStyle}`,
+              )}
+              onClick={() => onChange({ ...typeObj, type: text })}
+            >
+              {cycleTypeByKorean[index]}
+            </Button>
+          );
+        })}
       </div>
+
       {typeObj.type === "weekly" && (
         <div className="flex flex-row flex-wrap gap-2">
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "sunday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "sunday" })}
-          >
-            일
-          </Button>
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "monday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "monday" })}
-          >
-            월
-          </Button>
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "tuesday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "tuesday" })}
-          >
-            화
-          </Button>
-
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "wednesday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "wednesday" })}
-          >
-            수
-          </Button>
-
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "thursday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "thursday" })}
-          >
-            목
-          </Button>
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "friday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "friday" })}
-          >
-            금
-          </Button>
-          <Button
-            variant="outlined"
-            className={cn(
-              customButtonStyle,
-              customDayButtonStyle,
-              `${typeObj.option === "saturday" && selectedStyle}`,
-            )}
-            onClick={() => onChange({ ...typeObj, option: "saturday" })}
-          >
-            토
-          </Button>
+          {daysOfTheWeekByEnglish.map((text, index) => {
+            return (
+              <Button
+                variant="outlined"
+                className={cn(
+                  customButtonStyle,
+                  customDayButtonStyle,
+                  `${typeObj.option === text && selectedStyle}`,
+                )}
+                onClick={() => onChange({ ...typeObj, option: text })}
+              >
+                {daysOfTheWeek[index]}
+              </Button>
+            );
+          })}
         </div>
       )}
+
       {typeObj.type === "monthly" && (
         <div className="flex flex-row flex-wrap gap-2">
           <Button
