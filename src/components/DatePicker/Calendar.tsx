@@ -51,6 +51,7 @@ const CalendarHead = () => (
 );
 
 const Calendar = ({
+  startDate,
   selectedDate,
   limit,
   onChangeSelectedDate,
@@ -76,7 +77,7 @@ const Calendar = ({
           className="flex items-center justify-around"
         >
           {week.map(day => {
-            const today = dayjs();
+            const today = startDate ? startDate : dayjs();
             const isBefore = day.isBefore(today, "day");
             const isLimitPassed = limit
               ? day.isAfter(today.add(limit, "day"), "day")
@@ -88,7 +89,9 @@ const Calendar = ({
                 key={day.valueOf()}
                 dayOfTheWeek={day.day()}
                 isInactive={isInactive}
-                isSelected={dayjs(selectedDate)?.isSame(day, "day")}
+                isSelected={
+                  selectedDate ? dayjs(selectedDate)?.isSame(day, "day") : false
+                }
                 onClick={() => handleClickDate(day, isInactive)}
               >
                 {day.date()}

@@ -1,4 +1,4 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 /**
  * 첫쨰 날을 기준으로 해당 달의 주차 데이터를 가져오는 함수
@@ -28,4 +28,18 @@ export const getWeeks = (firstDayOfMonth: Dayjs) => {
   ]);
 
   return weeks;
+};
+
+/**
+ * 해당 달에서 몇 번째 주의 요일인지를 가져오는 함수
+ */
+export const getWeekOrder = (day: Dayjs = dayjs()) => {
+  let _day = day;
+  let cnt = 1;
+  for (let i = 0; i < 5; i++) {
+    _day = _day.subtract(1, "week");
+    if (_day.month() !== day.month()) {
+      return cnt;
+    } else cnt++;
+  }
 };

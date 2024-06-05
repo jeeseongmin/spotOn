@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 import useCalendarStore from "@/store/calendarStore";
@@ -7,12 +7,13 @@ import Button from "../Button";
 import Calendar from "./Calendar";
 
 interface DatePickerProps {
+  startDate?: Dayjs;
   date?: Dayjs;
   limit?: number;
   onChange: (day: Dayjs) => void;
 }
 
-const DatePicker = ({ date = dayjs(), limit, onChange }: DatePickerProps) => {
+const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
   const { firstDayOfMonth, setFirstDayOfMonth } = useCalendarStore();
 
   const goPreviousMonth = () =>
@@ -34,6 +35,7 @@ const DatePicker = ({ date = dayjs(), limit, onChange }: DatePickerProps) => {
         </Button>
       </div>
       <Calendar
+        startDate={startDate}
         selectedDate={date}
         limit={limit}
         onChangeSelectedDate={onChange}
