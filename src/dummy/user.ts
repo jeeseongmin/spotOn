@@ -1,3 +1,10 @@
+export interface User {
+  id: number;
+  name: string;
+  phoneNumber: string;
+  community: string;
+}
+
 export const user = {
   id: 1,
   name: "김온누리",

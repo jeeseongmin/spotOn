@@ -2,6 +2,8 @@ import { useEffect } from "react";
 
 import dayjs from "dayjs";
 
+import AlertModal from "@/components/Modal/AlertModal";
+import useModal from "@/hooks/useModal";
 import Dropdown from "@/pages/Reservation/components/DropdownTimePicker/Dropdown";
 
 interface DropdownTimePickerProps {
@@ -18,6 +20,8 @@ const DropdownTimePicker = ({
   limitTime,
 }: DropdownTimePickerProps) => {
   const [startTime, endTime] = selectedTimes;
+  const alertModal = useModal();
+
   const getStartTime = () => {
     const isToday = dayjs(selectedDate).isSame(dayjs(), "day");
 
@@ -32,7 +36,8 @@ const DropdownTimePicker = ({
 
   const handleChangeEndTime = (time: number) => {
     if (limitTime && time - startTime > limitTime) {
-      alert(`${limitTime}시간까지 선택 가능합니다.`);
+      alertModal.onOpen();
+
       return;
     }
 
@@ -65,6 +70,11 @@ const DropdownTimePicker = ({
           totalTime={endTime - startTime}
         />
       </div>
+      {alertModal.isOpen && (
+        <AlertModal
+          onClose={alertModal.onClose}
+        >{`${limitTime}시간까지 선택 가능합니다.`}</AlertModal>
+      )}
     </div>
   );
 };

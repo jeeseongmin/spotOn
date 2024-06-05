@@ -42,6 +42,7 @@ const TabItem = ({
 
   return (
     <button
+      type="button"
       className={cn(
         tabItemCSS({ variant }),
         isActive && tabItemCSS({ active: variant }),

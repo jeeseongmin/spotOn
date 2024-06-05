@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+import type { Dayjs } from "dayjs";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import DatePicker from "@/components/DatePicker";
@@ -9,7 +10,7 @@ import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 
 const TimeSearchTab = () => {
-  const { control, getValues, reset } = useFormContext();
+  const { control, getValues, reset, resetField } = useFormContext();
   useWatch({ name: ["date", "time"] });
 
   const isSelectedTime =
@@ -30,24 +31,41 @@ const TimeSearchTab = () => {
       <ReservationTabLayout.Left title="날짜 선택">
         <Controller
           name="date"
+          rules={{ required: true }}
           control={control}
-          render={({ field: { value, onChange } }) => (
-            <DatePicker date={value} onChange={onChange} />
-          )}
+          render={({ field: { value, onChange } }) => {
+            const handleChangeDate = (date: Dayjs) => {
+              onChange(date);
+              resetField("place");
+              resetField("time");
+              resetField("purpose");
+            };
+
+            return <DatePicker date={value} onChange={handleChangeDate} />;
+          }}
         />
       </ReservationTabLayout.Left>
       <ReservationTabLayout.Right title="시간 선택">
         <Controller
           name="time"
+          rules={{ required: true }}
           control={control}
-          render={({ field: { value, onChange } }) => (
-            <DropdownTimePicker
-              selectedDate={getValues("date")}
-              selectedTimes={value}
-              onChange={onChange}
-              limitTime={2}
-            />
-          )}
+          render={({ field: { value, onChange } }) => {
+            const handleChangeTime = (time: number[]) => {
+              onChange(time);
+              resetField("place");
+              resetField("purpose");
+            };
+
+            return (
+              <DropdownTimePicker
+                selectedDate={getValues("date")}
+                selectedTimes={value}
+                onChange={handleChangeTime}
+                limitTime={2}
+              />
+            );
+          }}
         />
       </ReservationTabLayout.Right>
       <ReservationTabLayout.Bottom
@@ -57,6 +75,7 @@ const TimeSearchTab = () => {
         {isSelectedTime && (
           <Controller
             name="place"
+            rules={{ required: true }}
             control={control}
             render={({ field: { value, onChange } }) => (
               <PlacePicker

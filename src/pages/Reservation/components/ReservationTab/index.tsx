@@ -6,10 +6,10 @@ import TimeSearchTab from "@/pages/Reservation/components/ReservationTab/TimeSea
 const ReservationTab = () => {
   return (
     <Tab variant="enclosed">
-      <Tab.Item label="장소로 예약">
+      <Tab.Item label="장소로 검색">
         <PlaceSearchTab />
       </Tab.Item>
-      <Tab.Item label="시간으로 예약">
+      <Tab.Item label="시간으로 검색">
         <TimeSearchTab />
       </Tab.Item>
       <Tab.Item label="반복 예약">
