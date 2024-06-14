@@ -75,9 +75,9 @@ const Dropdown = ({
 
   const hour = Math.floor(selectedOption);
   const hourOptions = Array.from(
-    { length: endTime - startTime + 1 },
+    { length: endTime - Math.round(startTime) + 1 },
     (_, index) => {
-      const hourOption = index + startTime;
+      const hourOption = index + Math.round(startTime);
 
       return convertHourToText(hourOption);
     },
@@ -85,8 +85,12 @@ const Dropdown = ({
   const minuteOptions = ["00", "30"];
 
   const getIsDisabledOption = (option: string) => {
-    const isSameStartTime = totalTime && hour === startTime && option === "00";
-    const isMidnight = totalTime && hour === 24 && option === "30";
+    const isSameStartTime =
+      totalTime !== undefined &&
+      hour === Math.floor(startTime) &&
+      option === "00";
+    const isMidnight =
+      totalTime !== undefined && hour === 24 && option === "30";
 
     if (isSameStartTime || isMidnight) return true;
 
@@ -95,17 +99,17 @@ const Dropdown = ({
 
   const timeText = totalTime ? convertTimeToText(totalTime) : "";
 
-  const onClickOption = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClickOption = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget;
     const value = target.innerText;
 
     if (target.name === "hour") {
       const isSameStartTime =
-        totalTime &&
-        parseInt(value) === startTime &&
+        totalTime !== undefined &&
+        parseInt(value) === Math.floor(startTime) &&
         convertMinuteToNumber(selectedOption) === 0;
       const isMidnight = !!(
-        totalTime &&
+        totalTime !== undefined &&
         parseInt(value) === 24 &&
         convertMinuteToNumber(selectedOption) === 0.5
       );
@@ -121,6 +125,16 @@ const Dropdown = ({
 
       onChangeOption(hour + newMinute);
     }
+  };
+
+  const handleClickDropdown = () => {
+    if (!startTime) {
+      alertModal.onOpen();
+
+      return;
+    }
+
+    optionsModal.onToggle();
   };
 
   return (
@@ -139,7 +153,7 @@ const Dropdown = ({
                 name="hour"
                 option={String(option)}
                 isSelected={convertHourToText(hour) === option}
-                onClick={onClickOption}
+                onClick={handleClickOption}
               />
             ))}
           </div>
@@ -151,7 +165,7 @@ const Dropdown = ({
                 option={String(option)}
                 isSelected={convertMinuteToText(selectedOption) === option}
                 isDisabled={getIsDisabledOption(option)}
-                onClick={onClickOption}
+                onClick={handleClickOption}
               />
             ))}
           </div>
@@ -163,15 +177,7 @@ const Dropdown = ({
           "absolute top-0 z-30 flex h-10 w-[223px] select-none items-center justify-between gap-4 rounded-sm border border-gray-middle bg-white px-3 py-2.5 text-small",
           selectedOption ? "text-black" : "text-gray-dull",
         )}
-        onClick={() => {
-          if (!startTime) {
-            alertModal.onOpen();
-
-            return;
-          }
-
-          optionsModal.onToggle();
-        }}
+        onClick={handleClickDropdown}
       >
         <div>
           <span>
