@@ -11,6 +11,12 @@ import AlertModal from "@/components/Modal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
+import {
+  convertHourToText,
+  convertMinuteToNumber,
+  convertMinuteToText,
+  convertTimeToText,
+} from "@/utils/time";
 
 interface OptionProps extends ComponentPropsWithoutRef<"button"> {
   option: string;
@@ -68,8 +74,6 @@ const Dropdown = ({
   useOutSideClick(dropdownRef, () => optionsModal.onClose());
 
   const hour = Math.floor(selectedOption);
-  const convertHourToText = (hour: number) =>
-    hour < 10 ? `0${hour}` : String(hour);
   const hourOptions = Array.from(
     { length: endTime - startTime + 1 },
     (_, index) => {
@@ -80,31 +84,11 @@ const Dropdown = ({
   );
   const minuteOptions = ["00", "30"];
 
-  const getMinuteToNumber = (time: number) => (time % 1 > 0 ? 0.5 : 0);
-  const getMinuteToString = (time: number) => {
-    if (!time) return;
-
-    return time % 1 > 0 ? "30" : "00";
-  };
-
-  const convertTimeToText = (time: number) => {
-    const totalHour = Math.floor(time);
-
-    if (time % 1 > 0) {
-      return totalHour > 0 ? `(${totalHour}시간 30분)` : "(30분)";
-    }
-
-    return `(${totalHour}시간)`;
-  };
-
   const getIsDisabledOption = (option: string) => {
-    const isSameStartTime =
-      totalTime !== undefined && hour === startTime && option === "00";
-    const isMidnight =
-      totalTime !== undefined && hour === 24 && option === "30";
+    const isSameStartTime = totalTime && hour === startTime && option === "00";
+    const isMidnight = totalTime && hour === 24 && option === "30";
 
-    if (isSameStartTime) return true;
-    if (isMidnight) return true;
+    if (isSameStartTime || isMidnight) return true;
 
     return false;
   };
@@ -117,19 +101,19 @@ const Dropdown = ({
 
     if (target.name === "hour") {
       const isSameStartTime =
-        totalTime !== undefined &&
+        totalTime &&
         parseInt(value) === startTime &&
-        getMinuteToNumber(selectedOption) === 0;
+        convertMinuteToNumber(selectedOption) === 0;
       const isMidnight = !!(
-        totalTime !== undefined &&
+        totalTime &&
         parseInt(value) === 24 &&
-        getMinuteToNumber(selectedOption) === 0.5
+        convertMinuteToNumber(selectedOption) === 0.5
       );
       const minute = isSameStartTime
         ? 0.5
         : isMidnight
           ? 0
-          : getMinuteToNumber(selectedOption);
+          : convertMinuteToNumber(selectedOption);
 
       onChangeOption(parseInt(value) + minute);
     } else {
@@ -165,7 +149,7 @@ const Dropdown = ({
                 key={option}
                 name="minute"
                 option={String(option)}
-                isSelected={getMinuteToString(selectedOption) === option}
+                isSelected={convertMinuteToText(selectedOption) === option}
                 isDisabled={getIsDisabledOption(option)}
                 onClick={onClickOption}
               />
@@ -192,7 +176,7 @@ const Dropdown = ({
         <div>
           <span>
             {selectedOption
-              ? `${hour} : ${getMinuteToString(selectedOption)}`
+              ? `${hour} : ${convertMinuteToText(selectedOption)}`
               : placeholder}
           </span>
           <span className="mx-5 text-gray-dark">{timeText}</span>
