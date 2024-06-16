@@ -1,10 +1,10 @@
 import { Dayjs } from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
+import Button from "@/components/Button";
+import Calendar from "@/components/DatePicker/Calendar";
+import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
 import useCalendarStore from "@/store/calendarStore";
-
-import Button from "../Button";
-import Calendar from "./Calendar";
 
 interface DatePickerProps {
   startDate?: Dayjs;
@@ -27,9 +27,7 @@ const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
         <Button variant="custom" onClick={goPreviousMonth}>
           <SlArrowLeft size={10} />
         </Button>
-        <div className="flex font-light">
-          {firstDayOfMonth.format("YYYY. MM")}
-        </div>
+        <DropdownYearMonthPicker />
         <Button variant="custom" onClick={goNextMonth}>
           <SlArrowRight size={10} />
         </Button>

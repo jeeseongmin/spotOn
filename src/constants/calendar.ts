@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from "react";
 
-import { Dayjs } from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 
 export const daysOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"];
 export const daysOfTheWeekByEnglish = [
@@ -23,6 +23,9 @@ export const orderText = [
 
 export const cycleTypeByEnglish = ["daily", "weekly", "monthly"];
 export const cycleTypeByKorean = ["매일", "매주", "매월"];
+
+export const years = Array.from({ length: 10 }, (_, i) => dayjs().year() + i);
+export const months = Array.from({ length: 12 }, (_, i) => i);
 
 export interface CalendarProps {
   startDate?: Dayjs;
