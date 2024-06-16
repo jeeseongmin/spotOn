@@ -86,11 +86,8 @@ const Dropdown = ({
 
   const getIsDisabledOption = (option: string) => {
     const isSameStartTime =
-      totalTime !== undefined &&
-      hour === Math.floor(startTime) &&
-      option === "00";
-    const isMidnight =
-      totalTime !== undefined && hour === 24 && option === "30";
+      !!totalTime && hour === Math.floor(startTime) && option === "00";
+    const isMidnight = !!totalTime && hour === 24 && option === "30";
 
     if (isSameStartTime || isMidnight) return true;
 
@@ -104,22 +101,18 @@ const Dropdown = ({
     const value = target.innerText;
 
     if (target.name === "hour") {
+      const hourValue = parseInt(value);
       const isSameStartTime =
-        totalTime !== undefined &&
-        parseInt(value) === Math.floor(startTime) &&
-        convertMinuteToNumber(selectedOption) === 0;
-      const isMidnight = !!(
-        totalTime !== undefined &&
-        parseInt(value) === 24 &&
-        convertMinuteToNumber(selectedOption) === 0.5
-      );
+        !!totalTime && hourValue === Math.floor(startTime);
+      const isMidnight = !!totalTime && hourValue === 24;
+
       const minute = isSameStartTime
         ? 0.5
         : isMidnight
           ? 0
           : convertMinuteToNumber(selectedOption);
 
-      onChangeOption(parseInt(value) + minute);
+      onChangeOption(hourValue + minute);
     } else {
       const newMinute = value === "00" ? 0 : 0.5;
 
@@ -151,7 +144,7 @@ const Dropdown = ({
               <Option
                 key={option}
                 name="hour"
-                option={String(option)}
+                option={option}
                 isSelected={convertHourToText(hour) === option}
                 onClick={handleClickOption}
               />
@@ -162,7 +155,7 @@ const Dropdown = ({
               <Option
                 key={option}
                 name="minute"
-                option={String(option)}
+                option={option}
                 isSelected={convertMinuteToText(selectedOption) === option}
                 isDisabled={getIsDisabledOption(option)}
                 onClick={handleClickOption}
