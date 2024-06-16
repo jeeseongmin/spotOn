@@ -5,6 +5,8 @@ import {
   useRef,
 } from "react";
 
+import type { Dayjs } from "dayjs";
+
 import { months, years } from "@/constants/calendar";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
@@ -30,7 +32,15 @@ const Option = ({ children, isSelected, onClick, ...props }: OptionProps) => (
   </button>
 );
 
-const DropdownYearMonthPicker = () => {
+interface DropdownYearMonthPickerProps
+  extends Omit<ComponentPropsWithoutRef<"button">, "onClick"> {
+  onClick?: (date: Dayjs) => void;
+}
+
+const DropdownYearMonthPicker = ({
+  onClick,
+  className,
+}: DropdownYearMonthPickerProps) => {
   const firstDayOfMonth = useCalendarStore(state => state.firstDayOfMonth);
   const setFirstDayOfMonth = useCalendarStore(
     state => state.setFirstDayOfMonth,
@@ -46,16 +56,18 @@ const DropdownYearMonthPicker = () => {
 
     if (target.name === "year") {
       setFirstDayOfMonth(firstDayOfMonth.year(option).date(1));
+      onClick?.(firstDayOfMonth.year(option).date(1));
 
       return;
     }
 
     setFirstDayOfMonth(firstDayOfMonth.month(option).date(1));
+    onClick?.(firstDayOfMonth.month(option).date(1));
   };
 
   return (
     <div ref={dropdownRef} className="relative">
-      <div className="absolute left-1/2 top-8 z-40 flex w-fit -translate-x-1/2 flex-col overflow-hidden">
+      <div className="absolute left-1/2 top-8 z-50 flex w-fit -translate-x-1/2 flex-col overflow-hidden">
         <div
           className={cn(
             "hidden max-h-[245px] animate-dropdown-open bg-white shadow *:grow",
@@ -88,7 +100,7 @@ const DropdownYearMonthPicker = () => {
       </div>
       <button
         type="button"
-        className="flex font-light"
+        className={className}
         onClick={optionsModal.onToggle}
       >
         {firstDayOfMonth.format("YYYY. MM")}

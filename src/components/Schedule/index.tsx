@@ -2,13 +2,15 @@ import dayjs from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 import Button from "@/components/Button";
+import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
 import Reservation from "@/components/Schedule/Reservation";
 import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
 const Schedule = () => {
-  const { date, setDate, firstDayOfMonth, setFirstDayOfMonth } =
-    useCalendarStore(state => state);
+  const { date, setDate, setFirstDayOfMonth } = useCalendarStore(
+    state => state,
+  );
 
   const goPreviousMonth = () => {
     setFirstDayOfMonth(date.date(0).date(1));
@@ -33,9 +35,10 @@ const Schedule = () => {
           <Button variant="custom" onClick={goPreviousMonth}>
             <SlArrowLeft size={13} />
           </Button>
-          <div className="flex text-xl font-light leading-5">
-            {firstDayOfMonth.format("YYYY. MM")}
-          </div>
+          <DropdownYearMonthPicker
+            className="flex text-xl font-light leading-5"
+            onClick={setDate}
+          />
           <Button variant="custom" onClick={goNextMonth}>
             <SlArrowRight size={13} />
           </Button>

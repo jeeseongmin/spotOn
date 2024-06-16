@@ -27,7 +27,7 @@ const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
         <Button variant="custom" onClick={goPreviousMonth}>
           <SlArrowLeft size={10} />
         </Button>
-        <DropdownYearMonthPicker />
+        <DropdownYearMonthPicker className="flex font-light" />
         <Button variant="custom" onClick={goNextMonth}>
           <SlArrowRight size={10} />
         </Button>
