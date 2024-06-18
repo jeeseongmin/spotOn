@@ -9,10 +9,14 @@ import { reservedTimes } from "@/dummy/reservation";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import TimeTablePicker from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
+import useCalendarStore from "@/store/calendarStore";
 
 const PlaceSearchTab = () => {
   const { control, getValues, reset, resetField } = useFormContext();
   useWatch({ name: "place" });
+  const resetFirstDayOfMonth = useCalendarStore(
+    state => state.resetFirstDayOfMonth,
+  );
 
   const timeSelectErrorMessage = getValues("place")
     ? ""
@@ -20,6 +24,7 @@ const PlaceSearchTab = () => {
 
   useEffect(() => {
     reset();
+    resetFirstDayOfMonth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

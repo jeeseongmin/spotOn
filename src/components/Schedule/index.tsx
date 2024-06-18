@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { useShallow } from "zustand/react/shallow";
 
 import Button from "@/components/Button";
 import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
@@ -8,8 +8,13 @@ import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
 const Schedule = () => {
-  const { date, setDate, setFirstDayOfMonth } = useCalendarStore(
-    state => state,
+  const [date, setDate, setFirstDayOfMonth, reset] = useCalendarStore(
+    useShallow(state => [
+      state.date,
+      state.setDate,
+      state.setFirstDayOfMonth,
+      state.reset,
+    ]),
   );
 
   const goPreviousMonth = () => {
@@ -20,11 +25,6 @@ const Schedule = () => {
   const goNextMonth = () => {
     setFirstDayOfMonth(date.date(date.daysInMonth() + 1));
     setDate(date.date(date.daysInMonth() + 1));
-  };
-
-  const reset = () => {
-    setDate(dayjs(new Date()));
-    setFirstDayOfMonth(dayjs(new Date()).date(1));
   };
 
   return (

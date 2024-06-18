@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import type { Dayjs } from "dayjs";
+import { useShallow } from "zustand/react/shallow";
 
 import { months, years } from "@/constants/calendar";
 import useModal from "@/hooks/useModal";
@@ -41,9 +42,8 @@ const DropdownYearMonthPicker = ({
   onClick,
   className,
 }: DropdownYearMonthPickerProps) => {
-  const firstDayOfMonth = useCalendarStore(state => state.firstDayOfMonth);
-  const setFirstDayOfMonth = useCalendarStore(
-    state => state.setFirstDayOfMonth,
+  const [firstDayOfMonth, setFirstDayOfMonth] = useCalendarStore(
+    useShallow(state => [state.firstDayOfMonth, state.setFirstDayOfMonth]),
   );
 
   const dropdownRef = useRef<HTMLDivElement>(null);

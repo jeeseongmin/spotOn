@@ -1,5 +1,6 @@
 import { Dayjs } from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { useShallow } from "zustand/react/shallow";
 
 import Button from "@/components/Button";
 import Calendar from "@/components/DatePicker/Calendar";
@@ -14,8 +15,9 @@ interface DatePickerProps {
 }
 
 const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
-  const { firstDayOfMonth, setFirstDayOfMonth } = useCalendarStore();
-
+  const [firstDayOfMonth, setFirstDayOfMonth] = useCalendarStore(
+    useShallow(state => [state.firstDayOfMonth, state.setFirstDayOfMonth]),
+  );
   const goPreviousMonth = () =>
     setFirstDayOfMonth(firstDayOfMonth.date(0).date(1));
   const goNextMonth = () =>
