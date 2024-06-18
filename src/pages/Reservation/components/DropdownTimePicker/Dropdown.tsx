@@ -86,8 +86,8 @@ const Dropdown = ({
 
   const getIsDisabledOption = (option: string) => {
     const isSameStartTime =
-      !!totalTime && hour === Math.floor(startTime) && option === "00";
-    const isMidnight = !!totalTime && hour === 24 && option === "30";
+      totalTime && hour === Math.floor(startTime) && option === "00";
+    const isMidnight = totalTime && hour === 24 && option === "30";
 
     if (isSameStartTime || isMidnight) return true;
 
@@ -103,8 +103,8 @@ const Dropdown = ({
     if (target.name === "hour") {
       const hourValue = parseInt(value);
       const isSameStartTime =
-        !!totalTime && hourValue === Math.floor(startTime);
-      const isMidnight = !!totalTime && hourValue === 24;
+        totalTime !== undefined && hourValue === Math.floor(startTime);
+      const isMidnight = totalTime && hourValue === 24;
 
       const minute = isSameStartTime
         ? 0.5
