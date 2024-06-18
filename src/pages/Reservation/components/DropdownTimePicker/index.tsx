@@ -65,7 +65,7 @@ const DropdownTimePicker = ({
         <Dropdown
           selectedOption={selectedTimes[1]}
           onChangeOption={handleChangeEndTime}
-          startTime={Math.round(startTime)}
+          startTime={startTime}
           endTime={24}
           totalTime={endTime - startTime}
         />
