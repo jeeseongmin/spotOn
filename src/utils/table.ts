@@ -7,11 +7,15 @@ export const getTableHeader = (headerList: string[]) => {
   });
 };
 
-export const getTableBody = (bodyList: CellInfo[][]) => {
-  return bodyList.map(items => {
-    return items.map(item => {
+export const getTableBody = (
+  titleList: string[],
+  contentList: CellInfo[][],
+) => {
+  return contentList.map(items => {
+    return items.map((item, index) => {
       return {
         ...item,
+        name: titleList[index],
         type: "body",
       };
     });
