@@ -17,7 +17,7 @@ interface TableProps
   body: CellInfo[][];
 }
 
-const Table = ({ header, body, children, className, ...props }: TableProps) => {
+const Table = ({ header, body }: TableProps) => {
   return (
     <table id="table" className="w-full border-collapse">
       <thead id="table-head" className="h-[44px] bg-gray-light text-base">

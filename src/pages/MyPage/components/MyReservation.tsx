@@ -12,8 +12,8 @@ import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
 import { getTableBody, getTableHeader } from "@/utils/table";
 
 const MyReservation = () => {
-  const [headerList, setHeaderList] = useState(getTableHeader(titleList));
-  const [bodyList, setBodyList] = useState(
+  const [headerList] = useState(getTableHeader(titleList));
+  const [bodyList] = useState(
     getTableBody(titleList, [
       [
         { name: "날짜", data: `2024 / 02 / 23 ~ 2024 / 12 / 31 \n매주 수요일` },
