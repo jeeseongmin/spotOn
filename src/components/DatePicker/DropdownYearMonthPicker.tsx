@@ -67,7 +67,7 @@ const DropdownYearMonthPicker = ({
 
   return (
     <div ref={dropdownRef} className="relative">
-      <div className="absolute left-1/2 top-8 z-50 flex w-fit -translate-x-1/2 flex-col overflow-hidden">
+      <div className="absolute left-1/2 top-8 z-50 -m-1 flex w-fit -translate-x-[calc(50%-0.25rem)] flex-col overflow-hidden p-1">
         <div
           className={cn(
             "hidden max-h-[245px] animate-dropdown-open bg-white shadow *:grow",
