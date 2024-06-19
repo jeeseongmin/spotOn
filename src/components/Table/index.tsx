@@ -18,8 +18,6 @@ interface TableProps
 }
 
 const Table = ({ header, body, children, className, ...props }: TableProps) => {
-  const { variant } = props;
-
   return (
     <table id="table" className="w-full border-collapse">
       <thead id="table-head" className="h-[44px] bg-gray-light text-base">
@@ -46,7 +44,7 @@ const Table = ({ header, body, children, className, ...props }: TableProps) => {
                         className="text-[12px] text-primary"
                         onClick={item.method}
                       >
-                        취소
+                        {item.data}
                       </Button>
                     </td>
                   );
@@ -55,25 +53,6 @@ const Table = ({ header, body, children, className, ...props }: TableProps) => {
                     <td className="border border-gray-middle">{item.data}</td>
                   );
               })}
-              {/* <td className="border border-gray-middle">
-                2024 / 02 / 23 ~ 2024 / 12 / 31 매주 수요일
-              </td>
-              <td className="border border-gray-middle">21:00 ~ 23:00</td>
-              <td className="border border-gray-middle">
-                [3층] 301호 (P.W / POEM)
-              </td>
-              <td className="border border-gray-middle">
-                대청 주일 예배팀 연습
-              </td>
-              <td className="border border-gray-middle">승인대기</td>
-              <td className="border border-gray-middle">
-                <Button
-                  variant="underlined"
-                  className="text-[12px] text-primary"
-                >
-                  취소
-                </Button>
-              </td> */}
             </tr>
           );
         })}

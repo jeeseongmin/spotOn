@@ -22,7 +22,7 @@ const MyReservation = () => {
         { name: "장소", data: "[3층] 301호 (P.W / POEM)" },
         { name: "사용목적", data: "대청 주일 예배팀 연습" },
         { name: "상태", data: "승인 대기" },
-        { name: "", data: "", method: () => confirmModal.onOpen() },
+        { name: "", data: "취소", method: () => confirmModal.onOpen() },
       ],
     ]),
   );
