@@ -6,16 +6,15 @@ import Button from "@/components/Button";
 import AlertModal from "@/components/Modal/AlertModal";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
 import Table from "@/components/Table";
+import { titleList } from "@/dummy/table";
 import useModal from "@/hooks/useModal";
 import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
 import { getTableBody, getTableHeader } from "@/utils/table";
 
 const MyReservation = () => {
-  const [headerList, setHeaderList] = useState(
-    getTableHeader(["날짜", "시간", "장소", "사용목적", "상태", ""]),
-  );
+  const [headerList, setHeaderList] = useState(getTableHeader(titleList));
   const [bodyList, setBodyList] = useState(
-    getTableBody([
+    getTableBody(titleList, [
       [
         { name: "날짜", data: `2024 / 02 / 23 ~ 2024 / 12 / 31 \n매주 수요일` },
         { name: "시간", data: "21:00 ~ 23:00" },

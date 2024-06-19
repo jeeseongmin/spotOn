@@ -3,7 +3,7 @@
  */
 type CellInfo = {
   type?: string; // "header" | "body"
-  name: string; // Cell Name
+  name?: string; // Cell Name
   data?: string; // Cell Data
   method?: () => void; // Cell Method
 };
