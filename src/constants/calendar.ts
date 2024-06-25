@@ -24,7 +24,11 @@ export const orderText = [
 export const cycleTypeByEnglish = ["daily", "weekly", "monthly"];
 export const cycleTypeByKorean = ["매일", "매주", "매월"];
 
-export const years = Array.from({ length: 10 }, (_, i) => dayjs().year() + i);
+export const scheduleYears = Array.from(
+  { length: 3 },
+  (_, i) => dayjs().year() - 2 + i,
+);
+export const reservationYears = [dayjs().year()];
 export const months = Array.from({ length: 12 }, (_, i) => i);
 
 export interface CalendarProps {

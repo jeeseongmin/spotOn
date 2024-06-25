@@ -8,7 +8,7 @@ import {
 import type { Dayjs } from "dayjs";
 import { useShallow } from "zustand/react/shallow";
 
-import { months, years } from "@/constants/calendar";
+import { months } from "@/constants/calendar";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import useCalendarStore from "@/store/calendarStore";
@@ -35,10 +35,12 @@ const Option = ({ children, isSelected, onClick, ...props }: OptionProps) => (
 
 interface DropdownYearMonthPickerProps
   extends Omit<ComponentPropsWithoutRef<"button">, "onClick"> {
+  years: number[];
   onClick?: (date: Dayjs) => void;
 }
 
 const DropdownYearMonthPicker = ({
+  years,
   onClick,
   className,
 }: DropdownYearMonthPickerProps) => {

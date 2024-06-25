@@ -5,6 +5,7 @@ import { useShallow } from "zustand/react/shallow";
 import Button from "@/components/Button";
 import Calendar from "@/components/DatePicker/Calendar";
 import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
+import { reservationYears } from "@/constants/calendar";
 import useCalendarStore from "@/store/calendarStore";
 
 interface DatePickerProps {
@@ -29,7 +30,10 @@ const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
         <Button variant="custom" onClick={goPreviousMonth}>
           <SlArrowLeft size={10} />
         </Button>
-        <DropdownYearMonthPicker className="flex font-light" />
+        <DropdownYearMonthPicker
+          years={reservationYears}
+          className="flex font-light"
+        />
         <Button variant="custom" onClick={goNextMonth}>
           <SlArrowRight size={10} />
         </Button>

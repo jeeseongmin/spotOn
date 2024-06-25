@@ -4,6 +4,7 @@ import { useShallow } from "zustand/react/shallow";
 import Button from "@/components/Button";
 import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
 import Reservation from "@/components/Schedule/Reservation";
+import { scheduleYears } from "@/constants/calendar";
 import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
@@ -36,6 +37,7 @@ const Schedule = () => {
             <SlArrowLeft size={13} />
           </Button>
           <DropdownYearMonthPicker
+            years={scheduleYears}
             className="flex text-xl font-light leading-5"
             onClick={setDate}
           />
