@@ -81,7 +81,7 @@ const ReservationPage = () => {
               <ReservationDetails user={user} />
             </ReservationModal.Content>
             <ReservationModal.Footer>
-              <Link to={MYPAGE_MAIN_URL}>
+              <Link to={`${MYPAGE_MAIN_URL}?tab=1`}>
                 <Button variant="outlined">나의 예약</Button>
               </Link>
               <Button variant="primary" onClick={handleClickOkButton}>

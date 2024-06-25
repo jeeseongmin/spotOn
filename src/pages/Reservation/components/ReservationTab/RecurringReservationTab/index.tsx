@@ -9,9 +9,13 @@ import DropdownTimePicker from "@/pages/Reservation/components/DropdownTimePicke
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import SelectRepeatType from "@/pages/Reservation/components/ReservationTab/RecurringReservationTab/SelectRepeatType";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
+import useCalendarStore from "@/store/calendarStore";
 
 const RecurringReservationTab = () => {
   const { control, getValues, setValue, reset } = useFormContext();
+  const resetFirstDayOfMonth = useCalendarStore(
+    state => state.resetFirstDayOfMonth,
+  );
 
   useWatch({ name: ["date", "time", "startDate", "endDate"] });
 
@@ -25,12 +29,14 @@ const RecurringReservationTab = () => {
 
   useEffect(() => {
     reset();
+    resetFirstDayOfMonth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetEndDate = () => {
     setValue("endDate", "");
   };
+
   return (
     <ReservationTabLayout>
       <ReservationTabLayout.Left title="날짜 선택" type="recurring">

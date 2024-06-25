@@ -8,10 +8,14 @@ import { availablePlaces, placesByFloor } from "@/dummy/places";
 import DropdownTimePicker from "@/pages/Reservation/components/DropdownTimePicker";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
+import useCalendarStore from "@/store/calendarStore";
 
 const TimeSearchTab = () => {
   const { control, getValues, reset, resetField } = useFormContext();
   useWatch({ name: ["date", "time"] });
+  const resetFirstDayOfMonth = useCalendarStore(
+    state => state.resetFirstDayOfMonth,
+  );
 
   const isSelectedTime =
     getValues("time").length > 0 &&
@@ -23,6 +27,7 @@ const TimeSearchTab = () => {
 
   useEffect(() => {
     reset();
+    resetFirstDayOfMonth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

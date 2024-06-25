@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useShallow } from "zustand/react/shallow";
 
 import Reservation from "@/components/Schedule/Reservation";
 import { CalendarItemProps, daysOfTheWeek } from "@/constants/calendar";
@@ -79,8 +80,14 @@ const CalendarItem = ({
 };
 
 const Calendar = () => {
-  const { date, setDate, firstDayOfMonth, setFirstDayOfMonth } =
-    useCalendarStore(state => state);
+  const [date, setDate, firstDayOfMonth, setFirstDayOfMonth] = useCalendarStore(
+    useShallow(state => [
+      state.date,
+      state.setDate,
+      state.firstDayOfMonth,
+      state.setFirstDayOfMonth,
+    ]),
+  );
 
   return (
     <table className="flex h-full w-full border-collapse flex-col">

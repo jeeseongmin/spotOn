@@ -6,7 +6,7 @@ import ReservationCard from "@/pages/Home/components/ReservationCard";
 import useCalendarStore from "@/store/calendarStore";
 
 const DailyReservationList = () => {
-  const { date } = useCalendarStore(state => state);
+  const date = useCalendarStore(state => state.date);
 
   const [dailyReservations, setDailyReservations] = useState(
     reservations.filter((reservation: TempType) => {
