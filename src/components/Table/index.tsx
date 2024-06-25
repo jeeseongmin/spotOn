@@ -3,6 +3,7 @@ import { ComponentPropsWithRef } from "react";
 import { VariantProps, cva } from "class-variance-authority";
 
 import Button from "@/components/Button";
+import { CellInfo } from "@/types/table";
 
 const tableContentCSS = cva("", {
   variants: {

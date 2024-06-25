@@ -1,3 +1,5 @@
+import { CellInfo } from "@/types/table";
+
 export const getTableHeader = (headerList: string[]) => {
   return headerList.map((item: string) => {
     return {
