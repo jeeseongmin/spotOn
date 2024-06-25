@@ -41,7 +41,7 @@ const Table = ({ header, body }: TableProps) => {
                     <td className="border border-gray-middle">
                       <Button
                         variant="underlined"
-                        className="text-[12px] text-primary"
+                        className="text-xs text-primary"
                         onClick={item.method}
                       >
                         {item.data}
