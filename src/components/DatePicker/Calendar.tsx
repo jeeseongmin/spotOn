@@ -22,7 +22,7 @@ const CalendarItem = ({
     <div
       className={cn(
         "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border font-light",
-        isInactive && "cursor-auto opacity-50",
+        isInactive && "cursor-auto opacity-30",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-red",
         isSelected
