@@ -4,12 +4,12 @@ import {
   ReactElement,
   cloneElement,
   useMemo,
-  useState,
 } from "react";
 
 import { VariantProps, cva } from "class-variance-authority";
+import { useSearchParams } from "react-router-dom";
 
-import TabItem, { TabItemProps } from "@/components/Tab/TabItem";
+import TabItem, { type TabItemProps } from "@/components/Tab/TabItem";
 import { cn } from "@/utils/cn";
 
 const tabContentCSS = cva("w-full text-base text-black", {
@@ -22,6 +22,8 @@ const tabContentCSS = cva("w-full text-base text-black", {
   },
 });
 
+const QUERYSTRING_KEY_TAB = "tab";
+
 interface TabProps
   extends VariantProps<typeof tabContentCSS>,
     ComponentPropsWithRef<"div"> {}
@@ -33,7 +35,9 @@ interface TabProps
 const Tab = ({ children, className, ...props }: TabProps) => {
   const { variant } = props;
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTabIndex = Number(searchParams.get(QUERYSTRING_KEY_TAB)) || 0;
+
   const items = useMemo(
     () =>
       Children.map(children as ReactElement<TabItemProps>[], (child, index) =>
@@ -41,9 +45,15 @@ const Tab = ({ children, className, ...props }: TabProps) => {
           ...child.props,
           variant,
           isActive: index === activeTabIndex,
-          onClick: () => setActiveTabIndex(index),
+          onClick: () => {
+            setSearchParams(
+              { [QUERYSTRING_KEY_TAB]: String(index) },
+              { replace: true },
+            );
+          },
         }),
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [children, activeTabIndex, variant],
   );
 

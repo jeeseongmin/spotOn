@@ -1,4 +1,5 @@
 import dayjs, { type Dayjs } from "dayjs";
+import { useShallow } from "zustand/react/shallow";
 
 import {
   CalendarItemProps,
@@ -21,7 +22,7 @@ const CalendarItem = ({
     <div
       className={cn(
         "flex min-h-9 min-w-9 cursor-pointer items-center justify-center border font-light",
-        isInactive && "cursor-auto opacity-50",
+        isInactive && "cursor-auto opacity-30",
         dayOfTheWeek === 6 && "text-saturday",
         dayOfTheWeek === 0 && "text-red",
         isSelected
@@ -56,7 +57,9 @@ const Calendar = ({
   limit,
   onChangeSelectedDate,
 }: CalendarProps) => {
-  const { firstDayOfMonth, setFirstDayOfMonth } = useCalendarStore();
+  const [firstDayOfMonth, setFirstDayOfMonth] = useCalendarStore(
+    useShallow(state => [state.firstDayOfMonth, state.setFirstDayOfMonth]),
+  );
 
   const handleClickDate = (day: Dayjs, isInactive: boolean) => {
     if (isInactive) return;

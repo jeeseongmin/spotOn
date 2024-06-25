@@ -1,14 +1,22 @@
-import dayjs from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { useShallow } from "zustand/react/shallow";
 
 import Button from "@/components/Button";
+import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
 import Reservation from "@/components/Schedule/Reservation";
+import { scheduleYears } from "@/constants/calendar";
 import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
 const Schedule = () => {
-  const { date, setDate, firstDayOfMonth, setFirstDayOfMonth } =
-    useCalendarStore(state => state);
+  const [date, setDate, setFirstDayOfMonth, reset] = useCalendarStore(
+    useShallow(state => [
+      state.date,
+      state.setDate,
+      state.setFirstDayOfMonth,
+      state.reset,
+    ]),
+  );
 
   const goPreviousMonth = () => {
     setFirstDayOfMonth(date.date(0).date(1));
@@ -20,11 +28,6 @@ const Schedule = () => {
     setDate(date.date(date.daysInMonth() + 1));
   };
 
-  const reset = () => {
-    setDate(dayjs(new Date()));
-    setFirstDayOfMonth(dayjs(new Date()).date(1));
-  };
-
   return (
     <div className="h-[622px] flex-1 overflow-hidden rounded-[2px] border border-gray-light px-4 py-6">
       <div className="relative flex h-full w-full flex-col gap-6">
@@ -33,9 +36,11 @@ const Schedule = () => {
           <Button variant="custom" onClick={goPreviousMonth}>
             <SlArrowLeft size={13} />
           </Button>
-          <div className="flex text-xl font-light leading-5">
-            {firstDayOfMonth.format("YYYY. MM")}
-          </div>
+          <DropdownYearMonthPicker
+            years={scheduleYears}
+            className="flex text-xl font-light leading-5"
+            onClick={setDate}
+          />
           <Button variant="custom" onClick={goNextMonth}>
             <SlArrowRight size={13} />
           </Button>
