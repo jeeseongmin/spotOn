@@ -1,13 +1,31 @@
+import { useState } from "react";
+
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
 import Button from "@/components/Button";
 import AlertModal from "@/components/Modal/AlertModal";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
+import Table from "@/components/Table";
+import { titleList } from "@/dummy/table";
 import useModal from "@/hooks/useModal";
 import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
+import { getTableBody, getTableHeader } from "@/utils/table";
 
-/** 임시로 빠르게 UI 구현을 하였습니다. Table 컴포넌트화에 대해서는 고민해봐야할 것 같습니다. */
 const MyReservation = () => {
+  const [headerList] = useState(getTableHeader(titleList));
+  const [bodyList] = useState(
+    getTableBody(titleList, [
+      [
+        { name: "날짜", data: `2024 / 02 / 23 ~ 2024 / 12 / 31 \n매주 수요일` },
+        { name: "시간", data: "21:00 ~ 23:00" },
+        { name: "장소", data: "[3층] 301호 (P.W / POEM)" },
+        { name: "사용목적", data: "대청 주일 예배팀 연습" },
+        { name: "상태", data: "승인 대기" },
+        { name: "", data: "취소", method: () => confirmModal.onOpen() },
+      ],
+    ]),
+  );
+
   const confirmModal = useModal();
   const alertModal = useModal();
 
@@ -19,52 +37,7 @@ const MyReservation = () => {
   return (
     <MyPageWrapper>
       <div className="flex h-96 w-full flex-col justify-between p-4">
-        <table id="table" className="w-full border-collapse">
-          <thead id="table-head" className="h-[44px] bg-gray-light text-base">
-            <tr>
-              <th className="w-[218px] border border-gray-middle font-light">
-                날짜
-              </th>
-              <th className="w-[105px] border border-gray-middle font-light">
-                시간
-              </th>
-              <th className="w-[171px] border border-gray-middle font-light">
-                장소
-              </th>
-              <th className="w-[293px] border border-gray-middle font-light">
-                사용목적
-              </th>
-              <th className="w-[71px] border border-gray-middle font-light">
-                상태
-              </th>
-              <th className="w-[50px] border border-gray-middle font-light"></th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <tr className="h-[44px] text-center text-small">
-              <td className="border border-gray-middle">
-                2024 / 02 / 23 ~ 2024 / 12 / 31 매주 수요일
-              </td>
-              <td className="border border-gray-middle">21:00 ~ 23:00</td>
-              <td className="border border-gray-middle">
-                [3층] 301호 (P.W / POEM)
-              </td>
-              <td className="border border-gray-middle">
-                대청 주일 예배팀 연습
-              </td>
-              <td className="border border-gray-middle">승인대기</td>
-              <td className="border border-gray-middle">
-                <Button
-                  variant="underlined"
-                  className="text-[12px] text-primary"
-                  onClick={confirmModal.onOpen}
-                >
-                  취소
-                </Button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Table header={headerList} body={bodyList} />
         <div className="flex items-center justify-center gap-4">
           <Button variant="icon" className="text-gray-dark">
             <MdArrowBackIosNew size={14} />
