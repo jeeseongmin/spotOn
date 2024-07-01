@@ -6,11 +6,11 @@ import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 const LoginMain = () => {
   useEffect(() => {
-    resetToken();
+    resetCode();
   }, []);
 
-  const resetToken = () => {
-    window.sessionStorage.setItem("token", "");
+  const resetCode = () => {
+    window.sessionStorage.setItem("code", "");
   };
 
   return (

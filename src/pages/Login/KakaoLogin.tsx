@@ -9,20 +9,21 @@ const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const token = searchParams.get("code");
+  const code = searchParams.get("code"); // 인가 코드
 
-  const getAccessToken = async (token: string) => {
-    const accessToken = await login(token);
-    console.log("accessToken : ", accessToken);
+  const getAccessCode = async (code: string) => {
+    const accessCode = await login(code);
+    console.log("accessCode : ", accessCode);
   };
 
   useEffect(() => {
-    if (token) {
-      window.sessionStorage.setItem("token", token);
-      getAccessToken(token);
+    if (code) {
+      window.sessionStorage.setItem("code", code);
+      console.log("code : ", code);
+      getAccessCode(code);
       navigate(LOGIN_SIGNUP_URL);
     }
-  }, [token]);
+  }, [code]);
 
   return (
     <div className="spinner">
