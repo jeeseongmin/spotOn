@@ -1,4 +1,4 @@
-import axios, { CancelToken } from "axios";
+import axios from "axios";
 
 export enum METHOD {
   GET = "get",
@@ -23,13 +23,13 @@ export const doFetch = async (
     | Record<string, unknown>[]
     | string
     | null,
-  options?: {
-    headers?: Record<string, string>;
-    isLoading?: boolean;
-    cancelToken?: CancelToken;
-  },
-  timeout?: number,
-  noCache?: boolean,
+  // options?: {
+  //   headers?: Record<string, string>;
+  //   isLoading?: boolean;
+  //   cancelToken?: CancelToken;
+  // },
+  // timeout?: number,
+  // noCache?: boolean,
 ) => {
   axios({
     method,
