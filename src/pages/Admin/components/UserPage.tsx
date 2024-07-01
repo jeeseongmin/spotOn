@@ -18,11 +18,11 @@ const UserInfo = () => {
             승인 요청
           </Tab.Item>
           <div className="mx-2 border border-gray-dull"></div>
-          <Tab.Item label="전체">전체</Tab.Item>
-          <Tab.Item label="일반">일반</Tab.Item>
-          <Tab.Item label="관리자">관리자</Tab.Item>
+          <Tab.Item label="전체"></Tab.Item>
+          <Tab.Item label="일반"></Tab.Item>
+          <Tab.Item label="관리자"></Tab.Item>
         </Tab>
-        <div className="mr-4 w-full max-w-96">
+        <div className="mr-8 w-full max-w-96">
           <Input
             placeholder="이름/공동체/순/연락처/권한 으로 검색하세요"
             className="w-full text-base"
