@@ -5,25 +5,30 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { login } from "@/apis/test";
 import { LOGIN_SIGNUP_URL } from "@/constants/routes";
 
+// kakao/callback
 const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const code = searchParams.get("code"); // 인가 코드
+  const accessCode = searchParams.get("code"); // 인가 코드
 
-  const getAccessCode = async (code: string) => {
-    const accessCode = await login(code);
-    console.log("accessCode : ", accessCode);
+  const getAccessToken = async (_accessCode: string) => {
+    const accessToken = await login(_accessCode);
+    console.log("accessCode : ", accessToken);
   };
 
   useEffect(() => {
-    if (code) {
-      window.sessionStorage.setItem("code", code);
-      console.log("code : ", code);
-      getAccessCode(code);
+    if (accessCode) {
+      window.sessionStorage.setItem("code", accessCode);
+      console.log("code : ", accessCode);
+      getAccessToken(accessCode);
       navigate(LOGIN_SIGNUP_URL);
     }
-  }, [code]);
+  }, [accessCode]);
+
+  // 백엔드 api를 호출
+
+  // axios.post("/backend/gettoken")
 
   return (
     <div className="spinner">
