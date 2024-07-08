@@ -18,27 +18,31 @@ const tabContentCSS = cva("w-full text-base text-black", {
       enclosed: "rounded-sm border border-gray-middle bg-white-dull shadow",
       underlined: "",
       solid: "",
-      solidText: "",
     },
   },
 });
 
-const QUERYSTRING_KEY_TAB = "tab";
-
 interface TabProps
   extends VariantProps<typeof tabContentCSS>,
     ComponentPropsWithRef<"div"> {
-  activeTab?: number;
+  querystringKey?: string;
 }
 
 /**
  *  className을 지정하여 Tab Content 영역 스타일을 변경할 수 있습니다.
+ *
+ *  Tab을 중첩된 구조로 사용할 경우 내부 Tab에 "tab"이 아닌 값으로 querystringKey을 지정해야 합니다.
  */
 
-const Tab = ({ children, className, activeTab, ...props }: TabProps) => {
+const Tab = ({
+  children,
+  className,
+  querystringKey = "tab",
+  ...props
+}: TabProps) => {
   const { variant } = props;
   const [searchParams, setSearchParams] = useSearchParams();
-  const activeTabIndex = Number(searchParams.get(QUERYSTRING_KEY_TAB)) || 0;
+  const activeTabIndex = Number(searchParams.get(querystringKey)) || 0;
 
   const items = useMemo(
     () =>
@@ -49,7 +53,7 @@ const Tab = ({ children, className, activeTab, ...props }: TabProps) => {
           isActive: index === activeTabIndex,
           onClick: () => {
             setSearchParams(
-              { [QUERYSTRING_KEY_TAB]: String(index) },
+              { [querystringKey]: String(index) },
               { replace: true },
             );
           },
@@ -63,14 +67,7 @@ const Tab = ({ children, className, activeTab, ...props }: TabProps) => {
 
   return (
     <div className="w-full">
-      <div
-        className={cn(
-          "flex",
-          (variant === "solid" || variant === "solidText") && "gap-2",
-        )}
-      >
-        {items}
-      </div>
+      <div className={cn("flex", variant === "solid" && "gap-2")}>{items}</div>
       <div className={cn(tabContentCSS({ variant }), className)}>
         {activeContent}
       </div>

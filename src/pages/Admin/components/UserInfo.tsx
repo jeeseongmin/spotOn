@@ -9,7 +9,7 @@ const UserInfo = () => {
     <div>
       {/* header */}
       <div className="flex flex-row px-4 py-4">
-        <Tab variant="solidText" className="flex" activeTab={2}>
+        <Tab variant="solid" className="flex">
           <Tab.Item
             label="승인 요청"
             className="leading-4.5 px-2 text-small"
