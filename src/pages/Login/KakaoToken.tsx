@@ -2,29 +2,29 @@ import { useEffect } from "react";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { getToken, login } from "@/apis/test";
+import { login } from "@/apis/test";
 import { LOGIN_SIGNUP_URL } from "@/constants/routes";
 
 // kakao/callback
-const KakaoLogin = () => {
+const KakaoToken = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const accessCode = searchParams.get("code"); // 인가 코드
+  const accessToken = searchParams.get("token"); // 인가 코드
 
   const getAccessToken = async (_accessCode: string) => {
-    const accessToken = await getToken(_accessCode);
+    const accessToken = await login(_accessCode);
     console.log("accessCode : ", accessToken);
   };
 
   useEffect(() => {
-    if (accessCode) {
-      window.sessionStorage.setItem("code", accessCode);
-      console.log("code : ", accessCode);
-      getAccessToken(accessCode);
+    if (accessToken) {
+      window.sessionStorage.setItem("code", accessToken);
+      console.log("code : ", accessToken);
+      getAccessToken(accessToken);
       navigate(LOGIN_SIGNUP_URL);
     }
-  }, [accessCode]);
+  }, [accessToken]);
 
   // 백엔드 api를 호출
 
@@ -42,4 +42,4 @@ const KakaoLogin = () => {
   );
 };
 
-export default KakaoLogin;
+export default KakaoToken;
