@@ -12,6 +12,8 @@ import { useSearchParams } from "react-router-dom";
 import TabItem, { type TabItemProps } from "@/components/Tab/TabItem";
 import { cn } from "@/utils/cn";
 
+const TabDivider = () => <div className="mx-2 border-r border-gray-dull"></div>;
+
 const tabContentCSS = cva("w-full text-base text-black", {
   variants: {
     variant: {
@@ -25,13 +27,16 @@ const tabContentCSS = cva("w-full text-base text-black", {
 interface TabProps
   extends VariantProps<typeof tabContentCSS>,
     ComponentPropsWithRef<"div"> {
-  querystringKey?: string;
+  querystringKey?: "tab" | "subTab";
 }
 
 /**
- *  className을 지정하여 Tab Content 영역 스타일을 변경할 수 있습니다.
+ * @param {"tab" | "subTab"} querystringKey - 기본값은 "tab"이며,
+ * Tab을 중첩된 구조로 사용할 경우 내부 Tab querystringKey를 "subTab"로 지정해야 합니다.
  *
- *  Tab을 중첩된 구조로 사용할 경우 내부 Tab에 "tab"이 아닌 값으로 querystringKey을 지정해야 합니다.
+ * @note
+ * - className을 지정하여 Tab Content 영역 스타일을 변경할 수 있습니다.
+ * - Tab.Divider는 solid variant일 때만 사용할 수 있습니다.
  */
 
 const Tab = ({
@@ -46,19 +51,32 @@ const Tab = ({
 
   const items = useMemo(
     () =>
-      Children.map(children as ReactElement<TabItemProps>[], (child, index) =>
-        cloneElement(child, {
-          ...child.props,
-          variant,
-          isActive: index === activeTabIndex,
-          onClick: () => {
-            setSearchParams(
-              { [querystringKey]: String(index) },
-              { replace: true },
-            );
-          },
-        }),
-      ),
+      Children.map(children as ReactElement<TabItemProps>[], (child, index) => {
+        if (child.props.__type === "Tab.Item") {
+          return cloneElement(child, {
+            ...child.props,
+            variant,
+            isActive: index === activeTabIndex,
+            onClick: () => {
+              if (index === activeTabIndex) return;
+
+              if (querystringKey === "subTab") {
+                searchParams.set(querystringKey, String(index));
+                setSearchParams(searchParams, { replace: true });
+
+                return;
+              }
+
+              setSearchParams(
+                { [querystringKey]: String(index) },
+                { replace: true },
+              );
+            },
+          });
+        }
+
+        if (variant === "solid") return child;
+      }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [children, activeTabIndex, variant],
   );
@@ -76,5 +94,6 @@ const Tab = ({
 };
 
 Tab.Item = TabItem;
+Tab.Divider = TabDivider;
 
 export default Tab;

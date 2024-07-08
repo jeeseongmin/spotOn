@@ -24,6 +24,7 @@ const tabItemCSS = cva("", {
 export interface TabItemProps
   extends VariantProps<typeof tabItemCSS>,
     ComponentPropsWithoutRef<"button"> {
+  __type: "Tab.Item";
   label?: string;
   icon?: IconType;
   isActive?: boolean;
@@ -62,12 +63,16 @@ const TabItem = ({
         label
       )}
       {isNew && (
-        <div className="absolute -right-3.5 -top-3 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white">
+        <div className="absolute -right-3 -top-3 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white">
           N
         </div>
       )}
     </button>
   );
+};
+
+TabItem.defaultProps = {
+  __type: "Tab.Item",
 };
 
 export default TabItem;
