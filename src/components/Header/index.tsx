@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/images/logo.png";
 import Button from "@/components/Button";
-import { MYPAGE_MAIN_URL } from "@/constants/routes";
+import {
+  ADMIN_MAIN_URL,
+  HOME_MAIN_URL,
+  MYPAGE_MAIN_URL,
+  RESERVATION_MAIN_URL,
+} from "@/constants/routes";
 
 type HeaderProps = {
   onOpen: () => void;
@@ -15,7 +20,11 @@ const Header = ({ onOpen }: HeaderProps) => {
 
   return (
     <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-12 shadow-sm md:px-20 lg:px-32 xl:px-60 2xl:px-96">
-      <Button variant="custom" className="h-[45px] w-[96px]">
+      <Button
+        variant="custom"
+        className="h-[45px] w-[96px]"
+        onClick={() => navigate(HOME_MAIN_URL)}
+      >
         <img src={Logo} className="h-full w-full object-contain" />
       </Button>
 
@@ -23,14 +32,14 @@ const Header = ({ onOpen }: HeaderProps) => {
         <Button
           variant="custom"
           className="text-gray-500"
-          onClick={() => alert("예약하기로 이동")}
+          onClick={() => navigate(RESERVATION_MAIN_URL)}
         >
           예약하기
         </Button>
         <Button
           variant="custom"
           className="text-gray-500"
-          onClick={() => alert("통합관리로 이동")}
+          onClick={() => navigate(ADMIN_MAIN_URL)}
         >
           통합관리
         </Button>

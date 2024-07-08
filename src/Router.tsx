@@ -11,6 +11,7 @@ import {
   MYPAGE_MAIN_URL,
   RESERVATION_MAIN_URL,
 } from "@/constants/routes";
+import Admin from "@/pages/Admin";
 import Home from "@/pages/Home";
 import LoginMain from "@/pages/Login/LoginMain";
 import LoginSignUp from "@/pages/Login/LoginSignUp";
@@ -33,7 +34,7 @@ const Router: FC = () => {
       <Route path={RESERVATION_MAIN_URL} element={<ReservationPage />} />
       <Route path={HOME_MAIN_URL} element={<Home />} />
       <Route path={MYPAGE_MAIN_URL} element={<MyPage />} />
-      <Route path={ADMIN_MAIN_URL} element={<></>} />
+      <Route path={ADMIN_MAIN_URL} element={<Admin />} />
     </Routes>
   );
 };

@@ -18,6 +18,7 @@ const tabContentCSS = cva("w-full text-base text-black", {
       enclosed: "rounded-sm border border-gray-middle bg-white-dull shadow",
       underlined: "",
       solid: "",
+      solidText: "",
     },
   },
 });
@@ -26,15 +27,16 @@ const QUERYSTRING_KEY_TAB = "tab";
 
 interface TabProps
   extends VariantProps<typeof tabContentCSS>,
-    ComponentPropsWithRef<"div"> {}
+    ComponentPropsWithRef<"div"> {
+  activeTab?: number;
+}
 
 /**
  *  className을 지정하여 Tab Content 영역 스타일을 변경할 수 있습니다.
  */
 
-const Tab = ({ children, className, ...props }: TabProps) => {
+const Tab = ({ children, className, activeTab, ...props }: TabProps) => {
   const { variant } = props;
-
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTabIndex = Number(searchParams.get(QUERYSTRING_KEY_TAB)) || 0;
 
@@ -61,7 +63,14 @@ const Tab = ({ children, className, ...props }: TabProps) => {
 
   return (
     <div className="w-full">
-      <div className={cn("flex", variant === "solid" && "gap-2")}>{items}</div>
+      <div
+        className={cn(
+          "flex",
+          (variant === "solid" || variant === "solidText") && "gap-2",
+        )}
+      >
+        {items}
+      </div>
       <div className={cn(tabContentCSS({ variant }), className)}>
         {activeContent}
       </div>
