@@ -9,17 +9,19 @@ import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
 
 const CalendarHead = () => (
-  <thead className="flex items-center justify-around border-b border-gray-light">
-    {daysOfTheWeek.map((dayOfTheWeek, i) => (
-      <CalendarItem
-        key={dayOfTheWeek}
-        type="header"
-        dayOfTheWeek={i}
-        className="cursor-default font-medium"
-      >
-        {dayOfTheWeek}
-      </CalendarItem>
-    ))}
+  <thead>
+    <tr className="flex items-center justify-around border-b border-gray-light">
+      {daysOfTheWeek.map((dayOfTheWeek, i) => (
+        <CalendarItem
+          key={dayOfTheWeek}
+          type="header"
+          dayOfTheWeek={i}
+          className="cursor-default font-medium"
+        >
+          {dayOfTheWeek}
+        </CalendarItem>
+      ))}
+    </tr>
   </thead>
 );
 
@@ -41,7 +43,7 @@ const CalendarItem = ({
   });
 
   return (
-    <div
+    <td
       className={cn(
         `relative flex w-full cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-[15px] font-light text-black last-of-type:border-none`,
         isHeader && "h-10 items-center",
@@ -75,7 +77,7 @@ const CalendarItem = ({
       <div
         className={`absolute left-0 top-0 h-full w-full ${isSelected && "rounded-sm border border-primary bg-primary-light bg-opacity-30 text-black"}`}
       ></div>
-    </div>
+    </td>
   );
 };
 
@@ -92,9 +94,9 @@ const Calendar = () => {
   return (
     <table className="flex h-full w-full border-collapse flex-col">
       <CalendarHead />
-      <div className="flex flex-1 flex-col">
+      <tbody className="flex flex-1 flex-col">
         {getWeeks(firstDayOfMonth).map(week => (
-          <div
+          <tr
             key={week[0].valueOf()}
             className="flex grow border-b border-gray-light last-of-type:border-none"
           >
@@ -119,9 +121,9 @@ const Calendar = () => {
                 </CalendarItem>
               );
             })}
-          </div>
+          </tr>
         ))}
-      </div>
+      </tbody>
     </table>
   );
 };
