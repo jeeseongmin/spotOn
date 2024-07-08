@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import Tab from "@/components/Tab";
-import UserInfo from "@/pages/Admin/components/UserPage";
+import UserInfo from "@/pages/Admin/components/UserInfo";
 
 const Admin = () => {
   return (
