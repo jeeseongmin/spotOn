@@ -10,11 +10,7 @@ const UserInfo = () => {
       {/* header */}
       <div className="flex flex-row px-4 py-4">
         <Tab variant="solid" className="flex" querystringKey="subTab">
-          <Tab.Item
-            label="승인 요청"
-            className="leading-4.5 px-2 text-small"
-            isNew={false}
-          >
+          <Tab.Item label="승인 요청" className="px-2 text-small" isNew={false}>
             승인 요청
           </Tab.Item>
           <Tab.Divider />

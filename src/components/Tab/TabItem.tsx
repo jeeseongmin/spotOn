@@ -50,7 +50,7 @@ const TabItem = ({
         tabItemCSS({ variant }),
         isActive && tabItemCSS({ active: variant }),
         isDisabled && "text-gray-middle",
-        variant === "solid" && !Icon && "relative w-12 p-0",
+        variant === "solid" && !Icon && "relative w-12 break-keep p-0",
         className,
       )}
       {...props}
