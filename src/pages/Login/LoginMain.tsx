@@ -1,16 +1,19 @@
-import { useEffect } from "react";
-
 import Button from "@/components/Button";
-import { KAKAO_AUTH_URL } from "@/constants/login";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
-const LoginMain = () => {
-  useEffect(() => {
-    resetCode();
-  }, []);
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
-  const resetCode = () => {
-    window.sessionStorage.setItem("code", "");
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
+
+const LoginMain = () => {
+  const handleKakaoLogin = () => {
+    window.Kakao.Auth.authorize({
+      redirectUri: REDIRECT_URI,
+    });
   };
 
   return (
@@ -21,8 +24,8 @@ const LoginMain = () => {
           <p>계정과 비밀번호 입력없이</p>
           <p>카카오톡으로 로그인 해보세요.</p>
         </div>
-        <Button variant="kakao">
-          <a href={KAKAO_AUTH_URL}>카카오톡으로 로그인 / 회원가입</a>
+        <Button variant="kakao" onClick={handleKakaoLogin}>
+          카카오톡으로 로그인 / 회원가입
         </Button>
       </div>
     </LoginLayout>
