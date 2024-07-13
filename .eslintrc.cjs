@@ -7,7 +7,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:storybook/recommended",
     "plugin:prettier/recommended",
-    "plugin:storybook/recommended"
+    "plugin:storybook/recommended",
   ],
   ignorePatterns: ["dist", "vite.config.ts", "*.cjs", "*.mjs", "*.js"],
   parser: "@typescript-eslint/parser",
@@ -37,6 +37,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "prefer-const": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "no-var": "error",
     "object-shorthand": "error",
     "prefer-template": "error",
