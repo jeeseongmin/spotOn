@@ -1,34 +1,90 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
+import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { getToken, login } from "@/apis/test";
 import { LOGIN_SIGNUP_URL } from "@/constants/routes";
 
 // kakao/callback
 const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
-  const accessCode = searchParams.get("code"); // 인가 코드
-
-  const getAccessToken = async (_accessCode: string) => {
-    const accessToken = await getToken(_accessCode);
-    console.log("accessCode : ", accessToken);
-  };
+  const [accessCode, setAccessCode] = useState("");
+  const [accessToken, setAccessToken] = useState("");
 
   useEffect(() => {
-    if (accessCode) {
-      window.sessionStorage.setItem("code", accessCode);
-      console.log("code : ", accessCode);
-      getAccessToken(accessCode);
-      navigate(LOGIN_SIGNUP_URL);
-    }
+    getAccessCode();
+    navigate(LOGIN_SIGNUP_URL);
+  }, []);
+
+  useEffect(() => {
+    if (accessCode.length > 0) getAccessToken(accessCode);
   }, [accessCode]);
 
-  // 백엔드 api를 호출
+  useEffect(() => {
+    if (accessToken.length > 0) {
+      getKakaoUser();
+    }
+  }, [accessToken]);
 
-  // axios.post("/backend/gettoken")
+  const getAccessCode = () => {
+    const code = searchParams.get("code");
+    if (code && code.length > 0) {
+      setAccessCode(code);
+    }
+  };
+
+  /* Access Code로 Access Token 받아오는 Kakao  API */
+  const getAccessToken = async (code: string) => {
+    try {
+      const res = await axios.post(
+        "https://kauth.kakao.com/oauth/token",
+        null,
+        {
+          params: {
+            grant_type: "authorization_code",
+            client_id: import.meta.env.VITE_REST_API_KEY,
+            redirect_uri: import.meta.env.VITE_REDIRECT_URL,
+            client_secret: import.meta.env.VITE_CLIENT_SECRET_KEY,
+            code,
+          },
+          headers: {
+            "Content-type": "application/x-www-form-unlencoded;charset=utf-8",
+          },
+        },
+      );
+      if (res.data.access_token) {
+        setAccessToken(res.data.access_token);
+        console.log("token : ", res.data.access_token);
+      }
+
+      return res;
+    } catch (error) {
+      console.error("Error : ", error);
+    }
+  };
+
+  const getKakaoUser = async () => {
+    try {
+      const res = await axios.post(
+        "https://kapi.kakao.com/v2/user/me",
+        {
+          property_key: ["properties.nickname", "kakao_account.email"],
+        },
+        {
+          headers: {
+            "Content-type": "application/x-www-form-unlencoded;charset=utf-8",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      console.log("res : ", res);
+      return res;
+    } catch (error) {
+      console.error("Error : ", error);
+    }
+  };
 
   return (
     <div className="spinner">
