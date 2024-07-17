@@ -1,7 +1,7 @@
 export const organization: { [key: string]: string } = {
-  community: "공동체",
-  team: "다락방",
-  cell: "순",
+  cmt: "공동체",
+  gar: "다락방",
+  leaf: "순",
 };
 
 type PageTitleProps = {
