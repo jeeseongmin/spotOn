@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { LOGIN_SIGNUP_URL } from "@/constants/routes";
+import { fetchAccessToken, login } from "@/apis/login";
+import { HOME_MAIN_URL, LOGIN_SIGNUP_URL } from "@/constants/routes";
 
 // kakao/callback
 const KakaoLogin = () => {
@@ -14,16 +14,17 @@ const KakaoLogin = () => {
 
   useEffect(() => {
     getAccessCode();
-    navigate(LOGIN_SIGNUP_URL);
   }, []);
 
   useEffect(() => {
-    if (accessCode.length > 0) getAccessToken(accessCode);
+    if (accessCode.length > 0) {
+      getAccessToken(accessCode);
+    }
   }, [accessCode]);
 
   useEffect(() => {
     if (accessToken.length > 0) {
-      getKakaoUser();
+      loginCheck();
     }
   }, [accessToken]);
 
@@ -36,59 +37,26 @@ const KakaoLogin = () => {
 
   /* Access Code로 Access Token 받아오는 Kakao  API */
   const getAccessToken = async (code: string) => {
-    try {
-      const res = await axios.post(
-        "https://kauth.kakao.com/oauth/token",
-        null,
-        {
-          params: {
-            grant_type: "authorization_code",
-            client_id: import.meta.env.VITE_REST_API_KEY,
-            redirect_uri: import.meta.env.VITE_REDIRECT_URL,
-            client_secret: import.meta.env.VITE_CLIENT_SECRET_KEY,
-            code,
-          },
-          headers: {
-            "Content-type": "application/x-www-form-unlencoded;charset=utf-8",
-          },
-        },
-      );
-      if (res.data.access_token) {
-        setAccessToken(res.data.access_token);
-        console.log("token : ", res.data.access_token);
-      }
+    const accessToken = await fetchAccessToken(code);
 
-      return res;
-    } catch (error) {
-      console.error("Error : ", error);
+    if (accessToken) {
+      setAccessToken(accessToken);
+      console.log("token : ", accessToken);
     }
   };
 
-  const getKakaoUser = async () => {
-    try {
-      const res = await axios.post(
-        "https://kapi.kakao.com/v2/user/me",
-        {
-          property_key: ["properties.nickname", "kakao_account.email"],
-        },
-        {
-          headers: {
-            "Content-type": "application/x-www-form-unlencoded;charset=utf-8",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      console.log("res : ", res);
-      return res;
-    } catch (error) {
-      console.error("Error : ", error);
+  const loginCheck = async () => {
+    const status = await login(accessToken);
+    if (status === 412) {
+      navigate(LOGIN_SIGNUP_URL, { state: accessToken });
+    } else if (status === 200) {
+      // 승인 여부 isConfirm이 들어가야하는데, 현재는 일단 무조건 승인된 것으로
+      navigate(HOME_MAIN_URL);
     }
   };
 
   return (
     <div className="spinner">
-      {/* <Image src={Spinner} alt="로딩중" /> */}
       <h2>
         잠시만 기다려 주세요!
         <br />
