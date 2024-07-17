@@ -38,7 +38,7 @@ export const fetchAccessToken = async (accessCode: string) => {
  */
 export const login = async (accessToken: string) => {
   try {
-    const res = await axios.post("/api/user-service/login", {
+    const res = await axios.post("/talkingclass/user-service/login", {
       email: "1@gmail.com", // 의미없는 email 값
       password: "test1234!", // 의미없는 password 값
       provider: "kakao",
@@ -72,7 +72,7 @@ type JoinRequestParam = {
  */
 export const join = async (joinInfo: JoinRequestParam) => {
   const res = await axios.post(
-    "http://talkingclass.iptime.org:9000/user-service/api/v1/users/join",
+    "/talkingclass/user-service/api/v1/users/join",
     joinInfo,
   );
 
