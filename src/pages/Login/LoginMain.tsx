@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Button from "@/components/Button";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
@@ -10,6 +12,13 @@ declare global {
 const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
 
 const LoginMain = () => {
+  useEffect(() => {
+    // Initialize Kakao SDK
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_REST_API_KEY);
+    }
+  }, []);
+
   const handleKakaoLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri: REDIRECT_URI,
