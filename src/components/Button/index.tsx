@@ -7,7 +7,7 @@ import { IoChatbubbleSharp } from "react-icons/io5";
 import { cn } from "@/utils/cn";
 
 const buttonCSS = cva(
-  "h-auto w-fit	rounded-sm px-[11px] py-[8px] text-base font-light drop-shadow-base",
+  "delay-50 h-auto	w-fit rounded-sm px-[11px] py-[8px] text-base font-light drop-shadow-base transition duration-100",
   {
     variants: {
       variant: {
@@ -26,6 +26,7 @@ const buttonCSS = cva(
     },
   },
 );
+
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonCSS>;
 
 const Button = ({

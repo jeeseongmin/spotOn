@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react";
+import dayjs, { Dayjs } from "dayjs";
 import { BiCalendarEvent } from "react-icons/bi";
 import { RiListUnordered } from "react-icons/ri";
 
@@ -55,7 +56,7 @@ export const Solid: Story = {
 
 export const Overlapped: Story = {
   render: function Render() {
-    const [date, setDate] = useState<Date | undefined>(undefined);
+    const [date, setDate] = useState<Dayjs>(dayjs());
 
     return (
       <Tab variant="enclosed" className="p-4">

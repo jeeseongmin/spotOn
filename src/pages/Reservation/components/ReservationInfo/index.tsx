@@ -1,17 +1,11 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, Fragment } from "react";
 
 import { useFormContext, useWatch } from "react-hook-form";
 
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
+import type { User } from "@/dummy/user";
 import { ReservationLabel } from "@/pages/Reservation";
-
-interface User {
-  id: number;
-  name: string;
-  phoneNumber: string;
-  community: string;
-}
 
 interface InfoInput extends ComponentPropsWithoutRef<"label"> {
   label: string;
@@ -24,7 +18,7 @@ const InfoLabel = ({
   isRequired = false,
   ...props
 }: InfoInput) => (
-  <div className="flex w-1/2 items-center gap-2">
+  <div className="flex items-center gap-2">
     <InputLabel
       text={label}
       isRequired={isRequired}
@@ -42,23 +36,23 @@ interface ReservationInfoProps {
 const ReservationInfo = ({ user }: ReservationInfoProps) => {
   const { name, phoneNumber, community } = user;
   const { register, getValues } = useFormContext();
-  useWatch({ name: "time" });
+  useWatch({ name: ["time", "place"] });
 
-  const isShow = getValues("time").length !== 0;
+  const isShow = getValues("time").length !== 0 && getValues("place");
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
-      <div className="flex gap-10">
+    <div className="flex w-full flex-col gap-2 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
+      <div className="flex gap-6">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
-          <div className="text-small text-[#FF8080]">
-            *예약 시간을 선택한 후 진행해주세요.
+          <div className="text-small text-red-light">
+            *예약 시간과 장소를 선택한 후 진행해주세요.
           </div>
         )}
       </div>
       {isShow && (
         <>
-          <div className="flex gap-4">
+          <div className="flex grow gap-6">
             <InfoLabel label="예약자" htmlFor="name">
               <Input
                 id="name"
@@ -70,7 +64,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
             <InfoLabel label="연락처" htmlFor="phone">
               <div className="flex items-center gap-2">
                 {phoneNumber.split("-").map((number, index, origin) => (
-                  <>
+                  <Fragment key={number}>
                     <Input
                       id="phone"
                       disabled
@@ -78,12 +72,12 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
                       className="w-14 border-gray-middle"
                     />
                     {index !== origin.length - 1 && <div>-</div>}
-                  </>
+                  </Fragment>
                 ))}
               </div>
             </InfoLabel>
           </div>
-          <div className="flex justify-between gap-4">
+          <div className="flex grow gap-6">
             <InfoLabel label="소속" htmlFor="community">
               <Input
                 id="community"

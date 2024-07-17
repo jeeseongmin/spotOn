@@ -17,6 +17,7 @@ module.exports = {
     "prettier",
     "@typescript-eslint",
     "unused-imports",
+    "no-relative-import-paths"
   ],
   settings: {
     react: {
@@ -85,5 +86,9 @@ module.exports = {
       "error",
       { blankLine: "always", prev: "const", next: "return" },
     ],
+    "no-relative-import-paths/no-relative-import-paths": [
+      "error",
+      { allowSameFolder: false, rootDir: "src", prefix: "@"}
+    ]
   },
 };

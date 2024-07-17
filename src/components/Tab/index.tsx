@@ -4,37 +4,42 @@ import {
   ReactElement,
   cloneElement,
   useMemo,
-  useState,
 } from "react";
 
 import { VariantProps, cva } from "class-variance-authority";
+import { useSearchParams } from "react-router-dom";
 
+import TabItem, { type TabItemProps } from "@/components/Tab/TabItem";
 import { cn } from "@/utils/cn";
-
-import TabItem, { TabItemProps } from "./TabItem";
 
 const tabContentCSS = cva("w-full text-base text-black", {
   variants: {
     variant: {
-      enclosed: "border-gray-middle bg-white-dull rounded-sm border shadow",
+      enclosed: "rounded-sm border border-gray-middle bg-white-dull shadow",
       underlined: "",
       solid: "",
+      solidText: "",
     },
   },
 });
 
+const QUERYSTRING_KEY_TAB = "tab";
+
 interface TabProps
   extends VariantProps<typeof tabContentCSS>,
-    ComponentPropsWithRef<"div"> {}
+    ComponentPropsWithRef<"div"> {
+  activeTab?: number;
+}
 
 /**
  *  className을 지정하여 Tab Content 영역 스타일을 변경할 수 있습니다.
  */
 
-const Tab = ({ children, className, ...props }: TabProps) => {
+const Tab = ({ children, className, activeTab, ...props }: TabProps) => {
   const { variant } = props;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTabIndex = Number(searchParams.get(QUERYSTRING_KEY_TAB)) || 0;
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const items = useMemo(
     () =>
       Children.map(children as ReactElement<TabItemProps>[], (child, index) =>
@@ -42,9 +47,15 @@ const Tab = ({ children, className, ...props }: TabProps) => {
           ...child.props,
           variant,
           isActive: index === activeTabIndex,
-          onClick: () => setActiveTabIndex(index),
+          onClick: () => {
+            setSearchParams(
+              { [QUERYSTRING_KEY_TAB]: String(index) },
+              { replace: true },
+            );
+          },
         }),
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [children, activeTabIndex, variant],
   );
 
@@ -52,7 +63,14 @@ const Tab = ({ children, className, ...props }: TabProps) => {
 
   return (
     <div className="w-full">
-      <div className={cn("flex", variant === "solid" && "gap-2")}>{items}</div>
+      <div
+        className={cn(
+          "flex",
+          (variant === "solid" || variant === "solidText") && "gap-2",
+        )}
+      >
+        {items}
+      </div>
       <div className={cn(tabContentCSS({ variant }), className)}>
         {activeContent}
       </div>

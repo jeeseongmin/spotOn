@@ -5,11 +5,12 @@
 @layer base {
   @font-face {
     font-family: "Noto Sans KR";
-    src: url("../assets/font/NotoSansKR-Regular.ttf");
+    src: url("./assets/font/NotoSansKR-Regular.ttf");
   }
 
   * {
     @apply font-sans;
+    @apply scrollbar-hide;
   }
 }
 

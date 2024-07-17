@@ -37,14 +37,16 @@ const Banner = () => {
           <li>문의 : 목회지원실 (031-651-9680)</li>
         </ol>
       </div>
-      <Button
-        variant="custom"
-        className="flex items-center justify-center gap-1.5 py-2 outline-none"
-        onClick={() => setIsOpen(prevState => !prevState)}
-      >
-        <ArrowIcon size={9} />
-        <div>{buttonText}</div>
-      </Button>
+      <div className="flex items-center justify-center">
+        <Button
+          variant="custom"
+          className="flex items-center justify-center gap-1.5 py-2 text-small text-black outline-none"
+          onClick={() => setIsOpen(prevState => !prevState)}
+        >
+          <ArrowIcon size={9} />
+          <div>{buttonText}</div>
+        </Button>
+      </div>
     </div>
   );
 };

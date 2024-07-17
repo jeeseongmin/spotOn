@@ -1,30 +1,28 @@
-import { useState } from "react";
-
-import dayjs from "dayjs";
+import { Dayjs } from "dayjs";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { useShallow } from "zustand/react/shallow";
 
-import Button from "../Button";
-import Calendar from "./Calendar";
+import Button from "@/components/Button";
+import Calendar from "@/components/DatePicker/Calendar";
+import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
+import { reservationYears } from "@/constants/calendar";
+import useCalendarStore from "@/store/calendarStore";
 
 interface DatePickerProps {
-  date?: Date;
+  startDate?: Dayjs;
+  date?: Dayjs;
   limit?: number;
-  onChange: (day: Date) => void;
+  onChange: (day: Dayjs) => void;
 }
 
-const DatePicker = ({
-  date = new Date(),
-  limit,
-  onChange,
-}: DatePickerProps) => {
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState(dayjs(date).date(1));
-
+const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
+  const [firstDayOfMonth, setFirstDayOfMonth] = useCalendarStore(
+    useShallow(state => [state.firstDayOfMonth, state.setFirstDayOfMonth]),
+  );
   const goPreviousMonth = () =>
-    setFirstDayOfMonth(prevState => prevState.date(0).date(1));
+    setFirstDayOfMonth(firstDayOfMonth.date(0).date(1));
   const goNextMonth = () =>
-    setFirstDayOfMonth(prevState =>
-      prevState.date(prevState.daysInMonth() + 1),
-    );
+    setFirstDayOfMonth(firstDayOfMonth.date(firstDayOfMonth.daysInMonth() + 1));
 
   return (
     <div className="flex w-full select-none flex-col gap-2 text-small">
@@ -32,19 +30,19 @@ const DatePicker = ({
         <Button variant="custom" onClick={goPreviousMonth}>
           <SlArrowLeft size={10} />
         </Button>
-        <div className="flex font-light">
-          {firstDayOfMonth.format("YYYY. MM")}
-        </div>
+        <DropdownYearMonthPicker
+          years={reservationYears}
+          className="flex font-light"
+        />
         <Button variant="custom" onClick={goNextMonth}>
           <SlArrowRight size={10} />
         </Button>
       </div>
       <Calendar
-        firstDayOfMonth={firstDayOfMonth}
+        startDate={startDate}
         selectedDate={date}
         limit={limit}
         onChangeSelectedDate={onChange}
-        onChangeFirstDayOfMonth={setFirstDayOfMonth}
       />
     </div>
   );

@@ -1,11 +1,19 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 
 import dayjs from "dayjs";
 
 import Button from "@/components/Button";
+import AlertModal from "@/components/Modal/AlertModal";
+import useModal from "@/hooks/useModal";
 import { cn } from "@/utils/cn";
 
 const hours = Array.from({ length: 18 }, (_, index) => 6 + index);
+
+const alertMessage = {
+  irrevocable: "해제할 수 없는 시간대입니다.",
+  over: "2시간까지 선택 가능합니다.",
+  disconnected: "연속된 시간대만 선택 가능합니다.",
+};
 
 const TimeTableHead = () => (
   <div className="h-full w-[5.56%] *:h-1/2">
@@ -34,9 +42,9 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
   return (
     <Button
       className={cn(
-        "rounded-none",
-        isPast && "bg-gray-light",
-        isReserved && "bg-[#FF9A9A]",
+        "rounded-none p-0 drop-shadow-none",
+        isPast && "bg-gray-tinted",
+        isReserved && "bg-red-light",
         isSelected && "bg-primary",
       )}
       disabled={isPast || isReserved}
@@ -45,27 +53,31 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
   );
 };
 
-interface TimeSelectProps {
+interface TimeTablePickerProps {
   selectedDate: Date;
   reservedTimes: number[];
   selectedTimes: number[];
   onChange: (newSelectedTimes: number[]) => void;
 }
 
-const TimeSelect = ({
+const TimeTablePicker = ({
   selectedDate,
   reservedTimes,
   selectedTimes,
   onChange,
-}: TimeSelectProps) => {
+}: TimeTablePickerProps) => {
   const [startTime, endTime] = [
     Math.min(...selectedTimes),
     Math.max(...selectedTimes),
   ];
+  const [alertType, setAlertType] = useState<
+    "irrevocable" | "over" | "disconnected"
+  >("disconnected");
+  const alertModal = useModal();
 
   const handleClickTime = (selectedTime: number) => {
     const isSelectedNone = selectedTimes.length === 0;
-    const isUnselectable = startTime < selectedTime && selectedTime < endTime;
+    const isIrrevocable = startTime < selectedTime && selectedTime < endTime;
     const isSelectable =
       startTime - selectedTime === 0.5 || selectedTime - endTime === 0.5;
     const isSelected = selectedTimes.includes(selectedTime);
@@ -76,8 +88,10 @@ const TimeSelect = ({
       return;
     }
 
-    if (isUnselectable) {
-      return alert("해제할 수 없는 시간대입니다.");
+    if (isIrrevocable) {
+      setAlertType("irrevocable");
+      alertModal.onOpen();
+      return;
     }
 
     if (isSelected) {
@@ -86,7 +100,9 @@ const TimeSelect = ({
     }
 
     if (isOverTwoHours) {
-      return alert("2시간까지 선택 가능합니다.");
+      setAlertType("over");
+      alertModal.onOpen();
+      return;
     }
 
     if (isSelectable) {
@@ -94,7 +110,8 @@ const TimeSelect = ({
       return;
     }
 
-    alert("연속된 시간대만 선택 가능합니다.");
+    alertModal.onOpen();
+    setAlertType("disconnected");
   };
 
   const getTimeStatus = (hour: number, isSecondHalfHour = false) => {
@@ -119,7 +136,7 @@ const TimeSelect = ({
         const secondHalfHourStatus = getTimeStatus(hour, true);
 
         return (
-          <div className="h-full w-[5.56%]">
+          <div key={hour} className="h-full w-[5.56%]">
             <div className="flex h-1/2 items-center justify-center border-l border-l-white bg-gray-middle text-black">
               {hour}
             </div>
@@ -136,8 +153,13 @@ const TimeSelect = ({
           </div>
         );
       })}
+      {alertModal.isOpen && (
+        <AlertModal onClose={alertModal.onClose}>
+          {alertMessage[alertType]}
+        </AlertModal>
+      )}
     </div>
   );
 };
 
-export default TimeSelect;
+export default TimeTablePicker;
