@@ -40,7 +40,7 @@ export interface CalendarProps {
 
 export interface CalendarItemProps
   extends PropsWithChildren,
-    ComponentPropsWithoutRef<"div"> {
+    ComponentPropsWithoutRef<"td"> {
   dayOfTheWeek: number;
   dayData?: Dayjs;
   type?: string;
