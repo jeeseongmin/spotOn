@@ -1,14 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 import Button from "@/components/Button";
-import { LOGIN_SIGNUP_URL } from "@/constants/routes";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
-const LoginMain = () => {
-  const navigate = useNavigate();
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
-  const onLogin = () => {
-    navigate(LOGIN_SIGNUP_URL);
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
+
+const LoginMain = () => {
+  useEffect(() => {
+    // Initialize Kakao SDK
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_REST_API_KEY);
+    }
+  }, []);
+
+  const handleKakaoLogin = () => {
+    window.Kakao.Auth.authorize({
+      redirectUri: REDIRECT_URI,
+    });
   };
 
   return (
@@ -19,12 +33,7 @@ const LoginMain = () => {
           <p>계정과 비밀번호 입력없이</p>
           <p>카카오톡으로 로그인 해보세요.</p>
         </div>
-        {/* <Button
-          variant="kakao"
-          onClick={onLogin}
-          text="카카오톡으로 로그인 / 회원가입"
-        /> */}
-        <Button variant="kakao" onClick={onLogin}>
+        <Button variant="kakao" onClick={handleKakaoLogin}>
           카카오톡으로 로그인 / 회원가입
         </Button>
       </div>

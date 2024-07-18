@@ -9,8 +9,10 @@ import {
   LOGIN_QR_URL,
   LOGIN_SIGNUP_URL,
   MYPAGE_MAIN_URL,
+  REDIRECT_URI,
   RESERVATION_MAIN_URL,
 } from "@/constants/routes";
+import KakaoLogin from "@/pages/Login/KakaoLogin";
 import Admin from "@/pages/Admin";
 import Home from "@/pages/Home";
 import LoginMain from "@/pages/Login/LoginMain";
@@ -30,10 +32,11 @@ const Router: FC = () => {
       <Route path={LOGIN_MAIN_URL} element={<LoginMain />} />
       <Route path={LOGIN_SIGNUP_URL} element={<LoginSignUp />} />
       <Route path={LOGIN_QR_URL} element={<LoginWait />} />
-
       <Route path={RESERVATION_MAIN_URL} element={<ReservationPage />} />
       <Route path={HOME_MAIN_URL} element={<Home />} />
       <Route path={MYPAGE_MAIN_URL} element={<MyPage />} />
+      <Route path={ADMIN_MAIN_URL} element={<></>} />
+      <Route path={REDIRECT_URI} element={<KakaoLogin />} />
       <Route path={ADMIN_MAIN_URL} element={<Admin />} />
     </Routes>
   );
