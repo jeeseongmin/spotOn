@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import type { Dayjs } from "dayjs";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
+import { fetchPlace } from "@/apis/place";
+import { fetchReservation } from "@/apis/reservation";
 import DatePicker from "@/components/DatePicker";
-import { type SelectedPlace, placesByFloor } from "@/dummy/places";
+import { PlacesByFloor, type SelectedPlace } from "@/dummy/places";
 import { reservedTimes } from "@/dummy/reservation";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import TimeTablePicker from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
@@ -12,7 +14,8 @@ import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/
 import useCalendarStore from "@/store/calendarStore";
 
 const PlaceSearchTab = () => {
-  const { control, getValues, reset, resetField } = useFormContext();
+  const [placeList, setPlaceList] = useState<PlacesByFloor[]>([]);
+  const { control, getValues, reset, watch, resetField } = useFormContext();
   useWatch({ name: "place" });
   const resetFirstDayOfMonth = useCalendarStore(
     state => state.resetFirstDayOfMonth,
@@ -23,10 +26,19 @@ const PlaceSearchTab = () => {
     : "*날짜와 장소를 선택한 후 시간 선택이 가능합니다.";
 
   useEffect(() => {
+    getPlaceList();
+  }, []);
+
+  useEffect(() => {
     reset();
     resetFirstDayOfMonth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getPlaceList = async () => {
+    const res = await fetchPlace();
+    setPlaceList(res);
+  };
 
   return (
     <ReservationTabLayout>
@@ -61,7 +73,7 @@ const PlaceSearchTab = () => {
 
             return (
               <PlacePicker
-                placesByFloor={placesByFloor}
+                placesByFloor={placeList}
                 selectedPlace={value}
                 onChange={handleChangePlace}
               />
