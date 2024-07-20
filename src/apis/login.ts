@@ -45,13 +45,13 @@ export const login = async (accessToken: string) => {
       token: accessToken,
     });
 
-    return res.status;
+    return { status: res.status, token: res.headers["access-token"] };
   } catch (error: unknown) {
     console.log("error : ", error);
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response?.status;
 
-      return status;
+      return { status };
     }
   }
 };
