@@ -6,7 +6,7 @@ import { IoSearch } from "react-icons/io5";
 import { cn } from "@/utils/cn";
 
 const inputCSS = cva(
-  "disabled:text-gray-black flex flex-row items-center justify-center rounded-sm border border-gray-dull px-3 py-2.5 text-sm font-light text-black placeholder:text-gray-middle disabled:bg-white-dull disabled:font-light",
+  "flex w-full flex-row items-center justify-center rounded-sm border border-gray-dull px-3 py-2.5 text-sm font-light text-black placeholder:text-gray-middle disabled:bg-white-dull disabled:font-light disabled:text-gray-black",
   {
     variants: {
       variant: {
