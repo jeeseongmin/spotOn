@@ -1,6 +1,6 @@
 export interface Place {
-  id: number;
-  name: string;
+  plcCd: string;
+  plcNm: string;
 }
 
 export interface PlacesByFloor {
@@ -22,12 +22,10 @@ export const placesByFloor = [
         id: 2,
         name: "운영위원회실",
       },
-
       {
         id: 3,
         name: "203호 / 구)목회지원실",
       },
-
       {
         id: 4,
         name: "201호",
