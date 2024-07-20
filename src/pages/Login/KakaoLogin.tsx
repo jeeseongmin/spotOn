@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { fetchAccessToken, login } from "@/apis/login";
-import { HOME_MAIN_URL, LOGIN_SIGNUP_URL } from "@/constants/routes";
+import {
+  HOME_MAIN_URL,
+  LOGIN_QR_URL,
+  LOGIN_SIGNUP_URL,
+} from "@/constants/routes";
 
 // kakao/callback
 const KakaoLogin = () => {
@@ -50,8 +54,9 @@ const KakaoLogin = () => {
     if (status === 412) {
       navigate(LOGIN_SIGNUP_URL, { state: accessToken });
     } else if (status === 200) {
-      // 승인 여부 isConfirm이 들어가야하는데, 현재는 일단 무조건 승인된 것으로
       navigate(HOME_MAIN_URL);
+    } else if (status === 400) {
+      navigate(LOGIN_QR_URL);
     }
   };
 
