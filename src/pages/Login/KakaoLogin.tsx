@@ -50,7 +50,7 @@ const KakaoLogin = () => {
 
   const loginCheck = async () => {
     // 추후 api에서 token 값 전달받을 예정
-    const { status, token } = await login(accessToken);
+    const { status } = await login(accessToken);
     // 회원가입이 안된 경우
     if (status === 412) {
       navigate(LOGIN_SIGNUP_URL, { state: accessToken });

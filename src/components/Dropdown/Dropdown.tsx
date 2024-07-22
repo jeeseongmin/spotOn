@@ -97,7 +97,7 @@ const Dropdown = ({
   /* 옵션 클릭 시 event */
   const onClickOption = (
     // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    option,
+    option: any,
   ) => {
     // const target = e.currentTarget;
     // const value = target.innerText;

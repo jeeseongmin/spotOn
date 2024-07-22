@@ -50,8 +50,14 @@ export const login = async (accessToken: string) => {
     console.log("error : ", error);
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response?.status;
+      const token = null;
 
-      return { status };
+      return { status, token };
+    } else {
+      return {
+        status: null,
+        token: null,
+      };
     }
   }
 };
