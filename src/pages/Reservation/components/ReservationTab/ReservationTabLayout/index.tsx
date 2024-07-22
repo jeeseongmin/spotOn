@@ -47,7 +47,20 @@ const Bottom = ({ children, title, errorMessage }: LayoutProps) => (
   <div className="flex flex-col gap-2 px-12 py-4">
     <div className="flex gap-6">
       <ReservationLabel>{title}</ReservationLabel>
-      <div className="text-small text-red-light">{errorMessage}</div>
+      {children ? (
+        <div className="flex flex-1 justify-end gap-4 text-small font-light">
+          <div className="flex flex-row items-center gap-2">
+            <div className="bg-red-light h-2 w-2 rounded-full"></div>
+            <div>예약 불가</div>
+          </div>
+          <div className="flex flex-row items-center gap-2">
+            <div className="bg-yellow-light h-2 w-2 rounded-full"></div>
+            <div>예약 진행 중</div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-red-light text-small">{errorMessage}</div>
+      )}
     </div>
     {children}
   </div>
