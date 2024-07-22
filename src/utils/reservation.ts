@@ -1,4 +1,4 @@
-import { Reservation } from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
+import { ReservationResponse } from "@/types/reservation";
 
 // 해당 시간대가 어떤 예약 상태를 가지고 있는지 체크해주는 함수
 export const checkStatus = ({
@@ -7,11 +7,11 @@ export const checkStatus = ({
   status,
 }: {
   time: number;
-  reservationList: Reservation[];
+  reservationList: ReservationResponse[];
   status: string;
 }) => {
   try {
-    let isTrue = false;
+    let isTrue: boolean = false;
     const thisTime = convertToTimeFormat(time);
 
     if (status === "isReserved") {
@@ -40,8 +40,8 @@ export const checkStatus = ({
       });
 
       return isTrue;
-    }
-  } catch (e) {
+    } else return false;
+  } catch (e: any) {
     return e;
   }
 };
