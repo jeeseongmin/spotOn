@@ -5,6 +5,7 @@ import "dayjs/locale/ko";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
+import { reservation } from "@/apis/reservation";
 import Button from "@/components/Button";
 import Layout from "@/components/Layout";
 import ReservationModal from "@/components/Modal/ReservationModal";
@@ -15,7 +16,9 @@ import Banner from "@/pages/Reservation/components/Banner";
 import ReservationDetails from "@/pages/Reservation/components/ReservationDetails";
 import ReservationInfo from "@/pages/Reservation/components/ReservationInfo";
 import ReservationTab from "@/pages/Reservation/components/ReservationTab";
+import { ReservationRequest } from "@/types/reservation";
 import { cn } from "@/utils/cn";
+import { getTime } from "@/utils/reservation";
 
 export const ReservationLabel = ({
   children,
@@ -28,7 +31,7 @@ export const ReservationLabel = ({
 
 interface ReservationFormValues {
   date: Dayjs;
-  place: { id: number; name: string; floor: string };
+  place: { plcCd: string; floor: string; plcNm: string };
   time: number[];
   userId: string;
   purpose: string;
@@ -45,7 +48,7 @@ const ReservationPage = () => {
       purpose: "",
     },
   });
-  const { formState, reset, handleSubmit } = methods;
+  const { formState, reset, getValues, handleSubmit } = methods;
 
   const handleClickOkButton = () => {
     reservationModal.onClose();
@@ -57,7 +60,25 @@ const ReservationPage = () => {
       <FormProvider {...methods}>
         <form
           className="flex flex-col items-center gap-8"
-          onSubmit={handleSubmit(data => console.log(data))}
+          onSubmit={handleSubmit(data => {
+            const reservationRequest: ReservationRequest = {
+              useCnts: data.purpose,
+              cpsCd: "PTK",
+              bldCd: "PTK_PTK",
+              plcCd: data.place.plcCd,
+              rsvtDt: data.date.format("YYYYMMDD"),
+              startTime: getTime({
+                type: "startTime",
+                times: getValues("time"),
+              }),
+              endTime: getTime({
+                type: "endTime",
+                times: getValues("time"),
+              }),
+              mbrId: "11", // 임시 멤버 id => 추후 로그인 유저 id 정보로 변경 예정
+            };
+            reservation(reservationRequest);
+          })}
         >
           <Banner />
           <ReservationTab />
