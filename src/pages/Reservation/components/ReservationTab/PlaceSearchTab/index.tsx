@@ -7,14 +7,15 @@ import { fetchPlace } from "@/apis/place";
 import { fetchReservation } from "@/apis/reservation";
 import DatePicker from "@/components/DatePicker";
 import { PlacesByFloor, type SelectedPlace } from "@/dummy/places";
-import { reservedTimes } from "@/dummy/reservation";
 import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import TimeTablePicker from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 import useCalendarStore from "@/store/calendarStore";
+import { Place } from "@/types/place";
 
 const PlaceSearchTab = () => {
   const [placeList, setPlaceList] = useState<PlacesByFloor[]>([]);
+  const [reservationList, setReservationList] = useState([]);
   const { control, getValues, reset, watch, resetField } = useFormContext();
   useWatch({ name: "place" });
   const resetFirstDayOfMonth = useCalendarStore(
@@ -38,6 +39,21 @@ const PlaceSearchTab = () => {
   const getPlaceList = async () => {
     const res = await fetchPlace();
     setPlaceList(res);
+  };
+
+  useEffect(() => {
+    const date = getValues("date");
+    const place = getValues("place");
+
+    if (date && place) {
+      getReservationList(date, place);
+    }
+  }, [watch("date"), watch("place")]);
+
+  const getReservationList = async (date: Dayjs, place: Place) => {
+    const res = await fetchReservation(date.format("YYYYMMDD"), place.plcCd);
+
+    setReservationList(res);
   };
 
   return (
@@ -93,7 +109,7 @@ const PlaceSearchTab = () => {
             render={({ field: { value, onChange } }) => (
               <TimeTablePicker
                 selectedDate={getValues("date")}
-                reservedTimes={reservedTimes}
+                reservationList={reservationList}
                 selectedTimes={value}
                 onChange={onChange}
               />
