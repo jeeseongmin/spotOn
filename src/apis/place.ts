@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { placesByFloor } from "@/dummy/places";
 import { classifyingPlace } from "@/utils/place";
 
 export const fetchBuilding = async () => {
@@ -23,5 +24,6 @@ export const fetchPlace = async () => {
     return classifyingPlace(res.data);
   } catch (error: unknown) {
     console.log("error : ", error);
+    return placesByFloor;
   }
 };
