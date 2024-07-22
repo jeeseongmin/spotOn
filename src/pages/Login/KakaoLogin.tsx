@@ -45,30 +45,35 @@ const KakaoLogin = () => {
 
     if (accessToken) {
       setAccessToken(accessToken);
-      console.log("token : ", accessToken);
     }
   };
 
   const loginCheck = async () => {
-    const status = await login(accessToken);
+    // 추후 api에서 token 값 전달받을 예정
+    const { status, token } = await login(accessToken);
+    // 회원가입이 안된 경우
     if (status === 412) {
       navigate(LOGIN_SIGNUP_URL, { state: accessToken });
-    } else if (status === 200) {
+    }
+    // 회원가입이 된 경우 && 승인이 된 경우
+    else if (status === 200) {
       navigate(HOME_MAIN_URL);
-    } else if (status === 400) {
+    }
+    // 회원가입이 된 경우 && 승인이 안된 경우
+    else if (status === 400) {
       navigate(LOGIN_QR_URL);
+    }
+    // provider가 유효하지 않은 경우
+    else if (status === 1000) {
+      // 집사님께 요청드려야 함.
+    }
+    // 토큰이 유효하지 않은 경우
+    else if (status === 403) {
+      // 에러 창 필요
     }
   };
 
-  return (
-    <div className="spinner">
-      <h2>
-        잠시만 기다려 주세요!
-        <br />
-        로그인 중입니다.
-      </h2>
-    </div>
-  );
+  return <div className="spinner">{/* spinner 추가 예정 (로딩창)  */}</div>;
 };
 
 export default KakaoLogin;
