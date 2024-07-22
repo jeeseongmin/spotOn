@@ -5,7 +5,9 @@ import dayjs from "dayjs";
 import Button from "@/components/Button";
 import AlertModal from "@/components/Modal/AlertModal";
 import useModal from "@/hooks/useModal";
+import { ReservationResponse } from "@/types/reservation";
 import { cn } from "@/utils/cn";
+import { checkStatus } from "@/utils/reservation";
 
 const hours = Array.from({ length: 18 }, (_, index) => 6 + index);
 
@@ -27,9 +29,10 @@ const TimeTableHead = () => (
 );
 
 interface TimeStatus {
-  isPast: boolean;
-  isReserved: boolean;
-  isSelected: boolean;
+  isPast: boolean; // 지난 시간대
+  isReserved: boolean; // 예약 승인
+  isWaiting: boolean; // 예약 대기
+  isSelected: boolean; // 선택값
 }
 
 interface TimeButtonProps extends ComponentPropsWithoutRef<"button"> {
@@ -37,7 +40,7 @@ interface TimeButtonProps extends ComponentPropsWithoutRef<"button"> {
 }
 
 const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
-  const { isPast, isReserved, isSelected } = timeStatus;
+  const { isPast, isReserved, isSelected, isWaiting } = timeStatus;
 
   return (
     <Button
@@ -45,24 +48,24 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
         "rounded-none p-0 drop-shadow-none",
         isPast && "bg-gray-tinted",
         isReserved && "bg-red-light",
+        isWaiting && "bg-yellow-light",
         isSelected && "bg-primary",
       )}
-      disabled={isPast || isReserved}
+      disabled={isPast || isReserved || isWaiting}
       {...props}
     ></Button>
   );
 };
-
 interface TimeTablePickerProps {
   selectedDate: Date;
-  reservedTimes: number[];
+  reservationList: ReservationResponse[];
   selectedTimes: number[];
   onChange: (newSelectedTimes: number[]) => void;
 }
 
 const TimeTablePicker = ({
   selectedDate,
-  reservedTimes,
+  reservationList,
   selectedTimes,
   onChange,
 }: TimeTablePickerProps) => {
@@ -123,7 +126,16 @@ const TimeTablePicker = ({
 
     return {
       isPast: timeToDayjs.isBefore(dayjs(), "minute"),
-      isReserved: reservedTimes.includes(timeToNumber),
+      isReserved: checkStatus({
+        time: timeToNumber,
+        reservationList,
+        status: "isReserved",
+      }),
+      isWaiting: checkStatus({
+        time: timeToNumber,
+        reservationList,
+        status: "isWaiting",
+      }),
       isSelected: startTime <= timeToNumber && endTime >= timeToNumber,
     };
   };
