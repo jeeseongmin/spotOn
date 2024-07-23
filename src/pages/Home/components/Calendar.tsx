@@ -2,9 +2,10 @@ import dayjs from "dayjs";
 import { useShallow } from "zustand/react/shallow";
 
 import Reservation from "@/components/Schedule/Reservation";
-import { CalendarItemProps, daysOfTheWeek } from "@/constants/calendar";
+import { daysOfTheWeek } from "@/constants/calendar";
 import { TempType, reservations } from "@/dummy/reservation";
 import useCalendarStore from "@/store/calendarStore";
+import type { CalendarItemProps } from "@/types/calendar";
 import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
 
