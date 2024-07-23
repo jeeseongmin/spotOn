@@ -1,14 +1,22 @@
+import { ComponentPropsWithoutRef, PropsWithChildren } from "react";
+
 import dayjs, { type Dayjs } from "dayjs";
 import { useShallow } from "zustand/react/shallow";
 
-import {
-  CalendarItemProps,
-  CalendarProps,
-  daysOfTheWeek,
-} from "@/constants/calendar";
+import { daysOfTheWeek } from "@/constants/calendar";
 import useCalendarStore from "@/store/calendarStore";
 import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
+
+interface CalendarItemProps
+  extends PropsWithChildren,
+    ComponentPropsWithoutRef<"td"> {
+  dayOfTheWeek: number;
+  dayData?: Dayjs;
+  type?: string;
+  isInactive?: boolean;
+  isSelected?: boolean;
+}
 
 const CalendarItem = ({
   children,
@@ -50,6 +58,13 @@ const CalendarHead = () => (
     ))}
   </div>
 );
+
+interface CalendarProps {
+  startDate?: Dayjs;
+  selectedDate?: Dayjs;
+  limit?: number;
+  onChangeSelectedDate: (day: Dayjs) => void;
+}
 
 const Calendar = ({
   startDate,

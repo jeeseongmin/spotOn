@@ -16,6 +16,7 @@ import Banner from "@/pages/Reservation/components/Banner";
 import ReservationDetails from "@/pages/Reservation/components/ReservationDetails";
 import ReservationInfo from "@/pages/Reservation/components/ReservationInfo";
 import ReservationTab from "@/pages/Reservation/components/ReservationTab";
+import type { Place } from "@/types/place";
 import { ReservationRequest } from "@/types/reservation";
 import { cn } from "@/utils/cn";
 import { getTime } from "@/utils/reservation";
@@ -31,7 +32,7 @@ export const ReservationLabel = ({
 
 interface ReservationFormValues {
   date: Dayjs;
-  place: { plcCd: string; floor: string; plcNm: string };
+  place: Place;
   time: number[];
   userId: string;
   purpose: string;

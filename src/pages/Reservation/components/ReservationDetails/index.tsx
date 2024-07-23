@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import { useFormContext } from "react-hook-form";
 
-import type { User } from "@/dummy/user";
+import type { User } from "@/types/common";
+import type { Place } from "@/types/place";
 
 interface ReservationFieldProps {
   label: string;
@@ -31,10 +32,10 @@ const ReservationDetails = ({ user }: ReservationDetailsProps) => {
 
     return `${formatNumberToTime(start)} ~ ${formatNumberToTime(end + 0.5)}`;
   };
-  const getPlaceText = (place: { id: number; name: string; floor: string }) => {
-    const { name, floor } = place;
+  const getPlaceText = (place: Place) => {
+    const { plcNm, floor } = place;
 
-    return `[${floor}] ${name}`;
+    return `[${floor}] ${plcNm}`;
   };
 
   return (

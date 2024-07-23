@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { create } from "zustand";
 
-import type { CalendarAction, CalendarState } from "@/constants/store";
+import type { CalendarAction, CalendarState } from "@/types/store";
 
 const initialState: CalendarState = {
   date: dayjs(),
