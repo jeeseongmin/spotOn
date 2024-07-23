@@ -1,14 +1,16 @@
+import { useEffect, useState } from "react";
+
 import { Controller, useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { join } from "@/apis/login";
+import { fetchCommunity, fetchGarret, fetchLeaf } from "@/apis/organization";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
 import { LOGIN_QR_URL } from "@/constants/routes";
 // import { LOGIN_QR_URL } from "@/constants/routes";
-import { cells, communities, teams } from "@/dummy/organization";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
 
 type JoinCheckParam = {
@@ -20,17 +22,76 @@ type JoinCheckParam = {
 };
 
 const LoginSignUp = () => {
-  const { register, handleSubmit, control } = useForm({
+  const { register, handleSubmit, control, watch, getValues } = useForm({
     defaultValues: {
       userName: "",
       telNo: "",
-      cmt: "",
-      gar: "",
-      leaf: "",
+      cmt: {
+        id: "",
+        name: "",
+      },
+      gar: {
+        id: "",
+        name: "",
+      },
+      leaf: {
+        id: "",
+        name: "",
+      },
     },
   });
+
+  const [communityList, setCommunityList] = useState([]);
+  const [garretList, setGarretList] = useState([]);
+  const [leafList, setLeafList] = useState([]);
+
   const navigate = useNavigate();
   const { state } = useLocation();
+
+  useEffect(() => {
+    getCommunity();
+  }, []);
+
+  // 다락방 리스트 가져오기
+  useEffect(() => {
+    if (getValues("cmt").id !== "") {
+      getGarret(getValues("cmt").id);
+    }
+  }, [watch("cmt")]);
+
+  // 순 리스트 가져오기
+  useEffect(() => {
+    if (getValues("cmt").id !== "" && getValues("gar").id !== "") {
+      getLeaf(getValues("cmt").id, getValues("gar").id);
+    }
+  }, [watch("gar")]);
+
+  const getCommunity = async () => {
+    const list = await fetchCommunity();
+    const cp = list.map((item: any) => ({
+      id: item.cmtCd,
+      name: item.cmtNm,
+    }));
+    setCommunityList(cp);
+  };
+
+  const getGarret = async (cmtCd: string) => {
+    const list = await fetchGarret(cmtCd);
+    const cp = list.map((item: any) => ({
+      id: item.garCd,
+      name: item.garNm,
+    }));
+    setGarretList(cp);
+  };
+
+  const getLeaf = async (cmtCd: string, garCd: string) => {
+    const list = await fetchLeaf(cmtCd, garCd);
+    const cp = list.map((item: any) => ({
+      id: item.leafCd,
+      name: item.leafNm,
+    }));
+    setLeafList(cp);
+  };
 
   const joinCheck = async (data: JoinCheckParam) => {
     const isJoin = await join({
@@ -39,10 +100,11 @@ const LoginSignUp = () => {
       token: state,
       provider: "kakao",
       cpsCD: "PTK",
-      cmtCD: "FAITH",
-      garCD: "MATTHEW",
-      leafCD: "MATTHEW_01",
+      cmtCD: data.cmt,
+      garCD: data.gar,
+      leafCD: data.leaf,
     });
+
     if (isJoin) {
       navigate(LOGIN_QR_URL);
     }
@@ -54,7 +116,12 @@ const LoginSignUp = () => {
         className="flex h-full w-96 flex-col items-center justify-between py-12 "
         onSubmit={handleSubmit(data => {
           console.log(JSON.stringify(data));
-          joinCheck(data);
+          joinCheck({
+            ...data,
+            cmt: data.cmt.id,
+            gar: data.gar.id,
+            leaf: data.leaf.id,
+          });
         })}
       >
         <div className="mb-12 flex flex-col gap-2 text-center">
@@ -98,10 +165,10 @@ const LoginSignUp = () => {
                 render={({ field: { onChange, value } }) => (
                   <Dropdown
                     category="cmt"
-                    options={communities}
+                    options={communityList}
                     disabled={false}
                     onChangeOption={onChange}
-                    selectedOption={value}
+                    selectedOption={value.name}
                   />
                 )}
               />
@@ -114,10 +181,10 @@ const LoginSignUp = () => {
                 render={({ field: { onChange, value } }) => (
                   <Dropdown
                     category="gar"
-                    options={teams}
+                    options={garretList}
                     disabled={false}
                     onChangeOption={onChange}
-                    selectedOption={value}
+                    selectedOption={value.name}
                   />
                 )}
               />
@@ -130,10 +197,10 @@ const LoginSignUp = () => {
                 render={({ field: { onChange, value } }) => (
                   <Dropdown
                     category="leaf"
-                    options={cells}
+                    options={leafList}
                     disabled={false}
                     onChangeOption={onChange}
-                    selectedOption={value}
+                    selectedOption={value.name}
                   />
                 )}
               />

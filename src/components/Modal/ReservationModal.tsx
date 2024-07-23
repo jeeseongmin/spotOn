@@ -1,11 +1,8 @@
-import { Children, ComponentPropsWithoutRef, ReactNode } from "react";
+import { Children, ComponentPropsWithoutRef } from "react";
 
 import ModalLayout from "@/components/Layout/ModalLayout";
+import { PropsWithRequiredChildren } from "@/types/common";
 import { cn } from "@/utils/cn";
-
-type PropsWithRequiredChildren<P = unknown> = P & {
-  children: ReactNode;
-};
 
 interface ModalContentProps extends ComponentPropsWithoutRef<"div"> {}
 

@@ -198,3 +198,17 @@ export const myReservations: TempListType = [
     ],
   },
 ];
+
+export const reservationRequestDummy = {
+  useCnts: "마태1순 순모임",
+  cpsCd: "PTK",
+  bldCd: "PTK_PTK",
+  plcCd: "PTK_PTK_0303",
+  rsvtDt: "20240915",
+  startTime: "190000",
+  endTime: "210000",
+  mbrId: "11",
+  sttVd: "예약완료",
+  crtId: "11",
+  updId: "11",
+};

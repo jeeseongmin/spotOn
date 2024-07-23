@@ -6,7 +6,7 @@ interface PlacePickerProps {
   placesByFloor: PlacesByFloor[];
   selectedPlace?: SelectedPlace;
   onChange: (value: SelectedPlace) => void;
-  availablePlaces?: number[];
+  availablePlaces?: string[];
 }
 
 const PlacePicker = ({
@@ -15,7 +15,7 @@ const PlacePicker = ({
   onChange,
   availablePlaces,
 }: PlacePickerProps) => {
-  const getIsDisabled = (placeId: number) =>
+  const getIsDisabled = (placeId: string) =>
     availablePlaces ? !availablePlaces.includes(placeId) : false;
 
   return (
@@ -33,19 +33,19 @@ const PlacePicker = ({
             {floor}
           </div>
           <div className="flex flex-wrap gap-4">
-            {places.map(({ id, name }) => (
+            {places.map(({ plcCd, plcNm }) => (
               <Button
-                key={id}
+                key={plcCd}
                 variant="outlined"
-                disabled={getIsDisabled(id)}
+                disabled={getIsDisabled(plcCd)}
                 className={cn(
                   "text-small",
-                  selectedPlace?.id === id &&
+                  selectedPlace?.plcCd === plcCd &&
                     "border-primary bg-primary text-white",
                 )}
-                onClick={() => onChange({ id, name, floor })}
+                onClick={() => onChange({ plcCd, plcNm, floor })}
               >
-                {name}
+                {plcNm}
               </Button>
             ))}
           </div>

@@ -1,12 +1,9 @@
 import dayjs, { type Dayjs } from "dayjs";
 import { useShallow } from "zustand/react/shallow";
 
-import {
-  CalendarItemProps,
-  CalendarProps,
-  daysOfTheWeek,
-} from "@/constants/calendar";
+import { daysOfTheWeek } from "@/constants/calendar";
 import useCalendarStore from "@/store/calendarStore";
+import type { CalendarItemProps } from "@/types/calendar";
 import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
 
@@ -50,6 +47,13 @@ const CalendarHead = () => (
     ))}
   </div>
 );
+
+interface CalendarProps {
+  startDate?: Dayjs;
+  selectedDate?: Dayjs;
+  limit?: number;
+  onChangeSelectedDate: (day: Dayjs) => void;
+}
 
 const Calendar = ({
   startDate,

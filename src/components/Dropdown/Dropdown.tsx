@@ -1,14 +1,19 @@
-import { ComponentPropsWithoutRef, MouseEventHandler, useRef } from "react";
+import {
+  ComponentPropsWithoutRef,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { VariantProps, cva } from "class-variance-authority";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 import Button from "@/components/Button";
+import { organization } from "@/constants/common";
 import useModal from "@/hooks/useModal";
 import { useOutSideClick } from "@/hooks/useOutSideClick";
 import { cn } from "@/utils/cn";
-
-import { organization } from "../../constants/common";
 
 /* 추가되는 다른 dropdown에 따라 variant 추가 예정 */
 const dropdownCSS = cva("relative h-10", {
@@ -28,7 +33,7 @@ interface DropdownProps
   onChangeOption: (option: string) => void;
   disabled: boolean;
   category: string; // 드롭다운 카테고리
-  options: string[]; // 드롭다운 별 옵션 배열
+  options: any[]; // 드롭다운 별 옵션 배열
   selectedOption: string;
 }
 
@@ -67,6 +72,23 @@ const Dropdown = ({
   options,
   selectedOption,
 }: DropdownProps) => {
+  const [optionList, setOptionList] = useState<{ id: number; name: string }[]>(
+    [],
+  );
+
+  useEffect(() => {
+    // 임시 작업
+    if (typeof options[0] === "string") {
+      const cp = options.map(option => ({
+        id: option,
+        name: option,
+      }));
+      setOptionList(cp);
+    } else {
+      setOptionList(options);
+    }
+  }, [options]);
+
   const placeholder = organization[category];
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsModal = useModal();
@@ -74,11 +96,12 @@ const Dropdown = ({
 
   /* 옵션 클릭 시 event */
   const onClickOption = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    // e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    option: any,
   ) => {
-    const target = e.currentTarget;
-    const value = target.innerText;
-    onChangeOption(value); // 실제 form 훅에 저장
+    // const target = e.currentTarget;
+    // const value = target.innerText;
+    onChangeOption(option); // 실제 form 훅에 저장
     optionsModal.onClose(); // 모달  닫기
   };
 
@@ -88,15 +111,15 @@ const Dropdown = ({
         className={`absolute left-0 top-11 z-20 flex h-auto w-full flex-col overflow-hidden`}
       >
         <div
-          className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? "h-[124px] animate-dropdown-open border-b border-gray-dull" : "h-0"}`}
+          className={`flex flex-col overflow-scroll ${optionsModal.isOpen ? " animate-dropdown-open border-b border-gray-dull" : "h-0"}`}
         >
-          {options.map(option => {
+          {optionList.map(option => {
             return (
               <Option
-                key={option}
-                option={option}
-                isSelected={selectedOption === option}
-                onClick={onClickOption}
+                key={option.id}
+                option={option.name}
+                isSelected={selectedOption === option.name}
+                onClick={() => onClickOption(option)}
               />
             );
           })}
@@ -105,7 +128,7 @@ const Dropdown = ({
 
       <button
         type="button"
-        className={`disabled:text-gray-black absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull disabled:bg-white-dull ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
+        className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull disabled:bg-white-dull disabled:text-gray-black ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
         onClick={() => {
           if (!disabled) optionsModal.onToggle();
         }}

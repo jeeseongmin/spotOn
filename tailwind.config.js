@@ -22,7 +22,10 @@ export default {
         },
         red: {
           DEFAULT: "#FF6161",
-          light: "#FF8080"
+          light: "#FF8080",
+        },
+        yellow: {
+          light: "#FFD79B",
         },
         saturday: "#4D54FF",
         kakaoBG: "#FFE502",
