@@ -1,11 +1,10 @@
-import axios from "axios";
-
+import { axiosInstance } from "@/apis/core";
 import { ReservationRequest } from "@/types/reservation";
 
 export const fetchReservation = async (date: string, place: string) => {
   try {
     const res =
-      await axios.get(`/talkingclass/portal-service/api/v1/reservation/list?cpsCd=PTK&rsvtDt=${date}&plcCd=${place}
+      await axiosInstance.get(`/portal-service/api/v1/reservation/list?cpsCd=PTK&rsvtDt=${date}&plcCd=${place}
 `);
 
     return res.data;
@@ -16,8 +15,8 @@ export const fetchReservation = async (date: string, place: string) => {
 
 export const reservation = async (reservationRequest: ReservationRequest) => {
   try {
-    const res = await axios.post(
-      `/talkingclass/portal-service/api/v1/reservation/insert`,
+    const res = await axiosInstance.post(
+      `/portal-service/api/v1/reservation/insert`,
       reservationRequest,
     );
 
