@@ -1,6 +1,9 @@
+import { useEffect } from "react";
+
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { useShallow } from "zustand/react/shallow";
 
+import { getMonthlyReservation } from "@/apis/reservation";
 import Button from "@/components/Button";
 import DropdownYearMonthPicker from "@/components/DatePicker/DropdownYearMonthPicker";
 import Reservation from "@/components/Schedule/Reservation";
@@ -9,12 +12,21 @@ import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
 const Schedule = () => {
-  const [date, setDate, setFirstDayOfMonth, reset] = useCalendarStore(
+  const [
+    date,
+    setDate,
+    firstDayOfMonth,
+    setFirstDayOfMonth,
+    resetCalendar,
+    setMonthlyReservations,
+  ] = useCalendarStore(
     useShallow(state => [
       state.date,
       state.setDate,
+      state.firstDayOfMonth,
       state.setFirstDayOfMonth,
-      state.reset,
+      state.resetCalendar,
+      state.setMonthlyReservations,
     ]),
   );
 
@@ -27,6 +39,16 @@ const Schedule = () => {
     setFirstDayOfMonth(date.date(date.daysInMonth() + 1));
     setDate(date.date(date.daysInMonth() + 1));
   };
+
+  const getReservations = async () => {
+    const reservations = await getMonthlyReservation(date.format("YYYYMM"));
+    setMonthlyReservations(reservations);
+  };
+
+  useEffect(() => {
+    getReservations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstDayOfMonth]);
 
   return (
     <div className="h-[622px] flex-1 overflow-hidden rounded-[2px] border border-gray-light px-4 py-6">
@@ -48,7 +70,7 @@ const Schedule = () => {
           <div className="absolute right-0 top-0 h-10">
             <Button
               variant="custom"
-              onClick={reset}
+              onClick={resetCalendar}
               className="h-8 border border-primary px-4 text-primary drop-shadow-none hover:bg-primary hover:text-white"
             >
               오늘

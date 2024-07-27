@@ -32,3 +32,12 @@ export const convertTimeToText = (time: number) => {
 
   return `(${totalHour}시간)`;
 };
+
+export const convertTimeToHourMinuteText = (time: string) => {
+  const [hour, minute] = [
+    time.split("").slice(0, 2).join(""),
+    time.split("").slice(2, 4).join(""),
+  ];
+
+  return `${hour}:${minute}`;
+};

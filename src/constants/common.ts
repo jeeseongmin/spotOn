@@ -29,3 +29,8 @@ export const pageTitle: PageTitleProps = {
     subTitle: "통합관리",
   },
 };
+
+export const RESERVATION_STATE: { [key: string]: string } = {
+  request: "승인대기",
+  approve: "승인완료",
+};

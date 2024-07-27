@@ -48,3 +48,22 @@ export interface ReservedPlacesRequest {
   startTime: string;
   endTime: string;
 }
+
+export interface DailyReservationData {
+  rsvtId: number;
+  useCnts: string;
+  plcCd: string;
+  plcNm: string;
+  rsvtDt: string;
+  startTime: string;
+  endTime: string;
+  mbrId: string;
+  userName: string;
+  sttCd: ReservationStateCode;
+  telNo: string;
+}
+
+export interface DailyReservation {
+  day: string;
+  data: DailyReservationData[];
+}

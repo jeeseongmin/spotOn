@@ -67,3 +67,21 @@ export const getReservedPlaces = async ({
     console.error(error);
   }
 };
+
+export const getMonthlyReservation = async (date: string) => {
+  try {
+    const res = await axiosInstance.get(
+      "/portal-service/api/v1/reservation/list/month",
+      {
+        params: {
+          cpsCd: "PTK",
+          rsvtDt: date,
+        },
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -1,10 +1,9 @@
 import { PropsWithChildren } from "react";
 
-import "@/dummy/reservation";
-import { TempListType } from "@/dummy/reservation";
+import type { DailyReservation } from "@/types/reservation";
 
 type ReservationType = PropsWithChildren & {
-  reservations?: TempListType;
+  reservations?: DailyReservation[];
 };
 const Reservation = ({ children, reservations }: ReservationType) => {
   return (

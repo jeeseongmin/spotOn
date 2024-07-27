@@ -3,9 +3,9 @@ import { useShallow } from "zustand/react/shallow";
 
 import Reservation from "@/components/Schedule/Reservation";
 import { daysOfTheWeek } from "@/constants/calendar";
-import { TempType, reservations } from "@/dummy/reservation";
 import useCalendarStore from "@/store/calendarStore";
 import type { CalendarItemProps } from "@/types/calendar";
+import type { DailyReservation } from "@/types/reservation";
 import { getWeeks } from "@/utils/calendar";
 import { cn } from "@/utils/cn";
 
@@ -26,8 +26,13 @@ const CalendarHead = () => (
   </thead>
 );
 
+interface CalendarItemWithReseravtion extends CalendarItemProps {
+  dailyReservation?: DailyReservation[];
+}
+
 const CalendarItem = ({
   children,
+  dailyReservation = [],
   type,
   dayOfTheWeek,
   dayData,
@@ -35,24 +40,20 @@ const CalendarItem = ({
   isSelected = false,
   className,
   ...props
-}: CalendarItemProps) => {
+}: CalendarItemWithReseravtion) => {
   const isHeader = type === "header";
   const isBody = type === "body";
   const isToday = dayData?.isSame(dayjs(), "day");
-  const dailyReservation = reservations.filter((reservationList: TempType) => {
-    return children === reservationList.day.date() && !isInactive;
-  });
 
   return (
     <td
       className={cn(
-        `relative flex w-full cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-[15px] font-light text-black last-of-type:border-none`,
+        "relative flex w-full cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-base font-light text-black last-of-type:border-none",
         isHeader && "h-10 items-center",
         isBody && "pt-1",
         isInactive && "text-opacity-30",
-        // isSelected && "border border-primary",
         dayOfTheWeek === 6 && "text-saturday",
-        dayOfTheWeek === 0 && "text-sunday",
+        dayOfTheWeek === 0 && "text-red",
         className,
       )}
       {...props}
@@ -69,7 +70,7 @@ const CalendarItem = ({
         <div className="z-40 h-4 w-full">
           {dailyReservation.length > 0 && (
             <Reservation reservations={dailyReservation}>
-              {dailyReservation[0].data[0].place}
+              {dailyReservation[0].data[0].plcNm}
             </Reservation>
           )}
         </div>
@@ -83,12 +84,19 @@ const CalendarItem = ({
 };
 
 const Calendar = () => {
-  const [date, setDate, firstDayOfMonth, setFirstDayOfMonth] = useCalendarStore(
+  const [
+    date,
+    setDate,
+    firstDayOfMonth,
+    setFirstDayOfMonth,
+    monthlyReservations,
+  ] = useCalendarStore(
     useShallow(state => [
       state.date,
       state.setDate,
       state.firstDayOfMonth,
       state.setFirstDayOfMonth,
+      state.monthlyReservations,
     ]),
   );
 
@@ -104,11 +112,16 @@ const Calendar = () => {
             {week.map(day => {
               const isCurrentMonth = dayjs(date).month() === day.month();
               const isInactive = !isCurrentMonth;
+              const dailyReservation = monthlyReservations.filter(
+                (reservation: DailyReservation) =>
+                  day.date() === dayjs(reservation.day).date() && !isInactive,
+              );
 
               return (
                 <CalendarItem
                   key={day.valueOf()}
                   type="body"
+                  dailyReservation={dailyReservation}
                   dayOfTheWeek={day.day()}
                   dayData={day}
                   isInactive={isInactive}
