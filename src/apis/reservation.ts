@@ -1,5 +1,8 @@
 import { axiosInstance } from "@/apis/core";
-import { ReservationRequest } from "@/types/reservation";
+import {
+  ReservationRequest,
+  ReservationStateRequest,
+} from "@/types/reservation";
 
 export const fetchReservation = async (date: string, place: string) => {
   try {
@@ -23,5 +26,19 @@ export const reservation = async (reservationRequest: ReservationRequest) => {
     console.log("reservation : ", res);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const putReservationState = async ({
+  rsvtId,
+  sttCd,
+}: ReservationStateRequest) => {
+  try {
+    await axiosInstance.put(`/portal-service/api/v1/reservation/${sttCd}`, {
+      rsvtId,
+      sttCd,
+    });
+  } catch (error) {
+    console.error(error);
   }
 };
