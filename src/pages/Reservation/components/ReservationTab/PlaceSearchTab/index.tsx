@@ -100,6 +100,7 @@ const PlaceSearchTab = () => {
       <ReservationTabLayout.Bottom
         title="예약 시간 선택"
         errorMessage={timeSelectErrorMessage}
+        isLabel
       >
         {getValues("place") && (
           <Controller

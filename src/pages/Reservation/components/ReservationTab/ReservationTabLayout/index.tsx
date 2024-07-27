@@ -8,6 +8,7 @@ interface LayoutProps extends PropsWithRequiredChildren {
   title: string;
   errorMessage?: string;
   type?: string;
+  isLabel?: boolean;
 }
 
 const Left = ({ children, title, type }: LayoutProps) => {
@@ -40,21 +41,28 @@ const Right = ({ children, title, type }: LayoutProps) => {
   );
 };
 
-const Bottom = ({ children, title, errorMessage }: LayoutProps) => (
+const Bottom = ({
+  children,
+  title,
+  errorMessage,
+  isLabel = false,
+}: LayoutProps) => (
   <div className="flex flex-col gap-2 px-12 py-4">
     <div className="flex gap-6">
       <ReservationLabel>{title}</ReservationLabel>
       {children ? (
-        <div className="flex flex-1 justify-end gap-4 text-small font-light">
-          <div className="flex flex-row items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-red-light"></div>
-            <div>예약 불가</div>
+        isLabel && (
+          <div className="flex flex-1 justify-end gap-4 text-small font-light">
+            <div className="flex flex-row items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-red-light"></div>
+              <div>예약 불가</div>
+            </div>
+            <div className="flex flex-row items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-yellow-light"></div>
+              <div>예약 진행 중</div>
+            </div>
           </div>
-          <div className="flex flex-row items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-yellow-light"></div>
-            <div>예약 진행 중</div>
-          </div>
-        </div>
+        )
       ) : (
         <div className="text-small text-red-light">{errorMessage}</div>
       )}
