@@ -46,9 +46,9 @@ const TimeButton = ({ timeStatus, ...props }: TimeButtonProps) => {
     <Button
       className={cn(
         "rounded-none p-0 drop-shadow-none",
-        isPast && "bg-gray-tinted",
         isReserved && "bg-red-light",
         isWaiting && "bg-yellow-light",
+        isPast && "bg-gray-tinted",
         isSelected && "bg-primary",
       )}
       disabled={isPast || isReserved || isWaiting}
