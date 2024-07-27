@@ -2,25 +2,7 @@ import { ClassValue, clsx } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
 const customTwMerge = extendTailwindMerge({
-  override: {
-    theme: {
-      colors: [
-        "primary",
-        "primary-light",
-        "black",
-        "white",
-        "white-dull",
-        {
-          gray: ["light", "tinted", "middle", "dull", "dark"],
-        },
-        "red",
-        "red-light",
-        "saturday",
-        "kakaoBG",
-        "kakaoFont",
-        "loginBG",
-      ],
-    },
+  extend: {
     classGroups: {
       "font-size": [{ text: ["base", "small"] }],
     },
