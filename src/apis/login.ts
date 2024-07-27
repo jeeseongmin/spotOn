@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { axiosInstance } from "@/apis/core";
+
 /**
  *
  * @param accessCode 카카오 로그인을 통해 얻어온 accessCode
@@ -8,7 +10,7 @@ import axios from "axios";
  */
 export const fetchAccessToken = async (accessCode: string) => {
   try {
-    const res = await axios.post("/kauth/oauth/token", null, {
+    const res = await axios.post("https://kauth.kakao.com/oauth/token", null, {
       params: {
         grant_type: "authorization_code",
         client_id: import.meta.env.VITE_REST_API_KEY,
@@ -19,7 +21,6 @@ export const fetchAccessToken = async (accessCode: string) => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      withCredentials: true,
     });
 
     return res.data.access_token;
@@ -38,7 +39,7 @@ export const fetchAccessToken = async (accessCode: string) => {
  */
 export const login = async (accessToken: string) => {
   try {
-    const res = await axios.post("/talkingclass/user-service/login", {
+    const res = await axiosInstance.post("/user-service/login", {
       email: "1@gmail.com", // 의미없는 email 값
       password: "test1234!", // 의미없는 password 값
       provider: "kakao",
@@ -77,8 +78,8 @@ type JoinRequestParam = {
  * 회원가입
  */
 export const join = async (joinInfo: JoinRequestParam) => {
-  const res = await axios.post(
-    "/talkingclass/user-service/api/v1/users/join",
+  const res = await axiosInstance.post(
+    "/user-service/api/v1/users/join",
     joinInfo,
   );
 
