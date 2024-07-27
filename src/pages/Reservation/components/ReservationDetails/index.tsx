@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import { useFormContext } from "react-hook-form";
 
-import type { User } from "@/types/common";
 import type { Place } from "@/types/place";
+import type { User } from "@/types/user";
 
 interface ReservationFieldProps {
   label: string;
