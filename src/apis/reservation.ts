@@ -2,6 +2,7 @@ import { axiosInstance } from "@/apis/core";
 import {
   ReservationRequest,
   ReservationStateRequest,
+  ReservedPlacesRequest,
 } from "@/types/reservation";
 
 export const fetchReservation = async (date: string, place: string) => {
@@ -38,6 +39,30 @@ export const putReservationState = async ({
       rsvtId,
       sttCd,
     });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getReservedPlaces = async ({
+  rsvtDt,
+  startTime,
+  endTime,
+}: ReservedPlacesRequest) => {
+  try {
+    const res = await axiosInstance.get(
+      "/portal-service/api/v1/place/reserved/list",
+      {
+        params: {
+          cpsCd: "PTK",
+          rsvtDt,
+          startTime,
+          endTime,
+        },
+      },
+    );
+
+    return res.data;
   } catch (error) {
     console.error(error);
   }

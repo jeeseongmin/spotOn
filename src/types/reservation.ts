@@ -42,3 +42,9 @@ export interface ReservationStateRequest {
   rsvtId: number;
   sttCd: ReservationStateCode;
 }
+
+export interface ReservedPlacesRequest {
+  rsvtDt: string;
+  startTime: string;
+  endTime: string;
+}
