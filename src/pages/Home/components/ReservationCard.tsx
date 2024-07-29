@@ -1,8 +1,10 @@
-import { TempDataType } from "@/dummy/reservation";
+import { RESERVATION_STATE } from "@/constants/common";
+import type { DailyReservationData } from "@/types/reservation";
+import { convertTimeToHourMinuteText } from "@/utils/time";
 
 type ReservationCardProps = {
   date: string;
-  reservationList: TempDataType;
+  reservationList: DailyReservationData[];
 };
 
 const ReservationCard = ({ date, reservationList }: ReservationCardProps) => {
@@ -21,25 +23,37 @@ const ReservationCard = ({ date, reservationList }: ReservationCardProps) => {
         <table className="h-auto w-full border-collapse bg-white">
           <tbody>
             {reservationList.map(element => {
+              const {
+                rsvtId,
+                startTime,
+                endTime,
+                plcNm,
+                useCnts,
+                userName,
+                telNo,
+                sttCd,
+              } = element;
+
               return (
-                <tr className="border-b border-gray-middle p-4 align-top text-small last:border-none">
+                <tr
+                  key={rsvtId}
+                  className="border-b border-gray-middle p-4 align-top text-small last:border-none"
+                >
                   <td className="h-[94px] w-[100px] gap-2 border-r border-gray-middle py-2 pl-2 text-left font-semibold">
-                    {element.status && (
+                    {sttCd && (
                       <p
-                        className={`mb-1 ${element.status === "승인완료" ? "text-primary" : "text-[#A30000]"}`}
+                        className={`mb-1 ${sttCd === "approve" ? "text-primary" : "text-[#A30000]"}`}
                       >
-                        {element.status}
+                        {RESERVATION_STATE[sttCd]}
                       </p>
                     )}
-                    <p>{element.time}</p>
+                    <p>{`${convertTimeToHourMinuteText(startTime)} ~ ${convertTimeToHourMinuteText(endTime)}`}</p>
                   </td>
                   <td className="flex h-[94px] flex-col gap-1 pl-2 pt-2">
-                    <p className="font-semibold">{element.place}</p>
+                    <p className="font-semibold">{plcNm}</p>
+                    <p className="font-light text-gray-dark">{useCnts}</p>
                     <p className="font-light text-gray-dark">
-                      {element.description}
-                    </p>
-                    <p className="font-light text-gray-dark">
-                      {element.name} / {element.phone}
+                      {userName} / {telNo}
                     </p>
                   </td>
                 </tr>

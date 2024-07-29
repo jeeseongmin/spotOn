@@ -1,3 +1,13 @@
+/**
+ * 예약 상태 코드
+ *
+ * request: 예약 대기
+ * approve: 예약 승인
+ * cancel: 예약 취소 (사용자 직접 취소)
+ * reject: 예약 반려 (관리자 취소)
+ */
+type ReservationStateCode = "request" | "approve" | "cancel" | "reject";
+
 // 예약 요청 시 request Type
 export type ReservationRequest = {
   useCnts: string; // 사용 목적
@@ -21,9 +31,39 @@ export type ReservationResponse = {
   startTime: string; // "190000";
   endTime: string; // "210000";
   mbrId: string; // "11";
-  sttId: string; // "예약완료";
+  sttCd: ReservationStateCode; // "approve";
   crtId: string; // "11";
   crDt: string; // "2024-07-20T06:15:57";
   updId: string; // "11";
   updDt: string; // "2024-07-20T06:15:57";
 };
+
+export interface ReservationStateRequest {
+  rsvtId: number;
+  sttCd: ReservationStateCode;
+}
+
+export interface ReservedPlacesRequest {
+  rsvtDt: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface DailyReservationData {
+  rsvtId: number;
+  useCnts: string;
+  plcCd: string;
+  plcNm: string;
+  rsvtDt: string;
+  startTime: string;
+  endTime: string;
+  mbrId: string;
+  userName: string;
+  sttCd: ReservationStateCode;
+  telNo: string;
+}
+
+export interface DailyReservation {
+  day: string;
+  data: DailyReservationData[];
+}

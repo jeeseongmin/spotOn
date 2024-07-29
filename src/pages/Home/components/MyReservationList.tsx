@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import dayjs from "dayjs";
+
 import { daysOfTheWeek } from "@/constants/calendar";
 import { myReservations } from "@/dummy/reservation";
 import ReservationCard from "@/pages/Home/components/ReservationCard";
@@ -12,7 +14,7 @@ const MyReservationList = () => {
       {myReservationList.map(element => {
         return (
           <ReservationCard
-            date={`${element.day.format("MM / DD")} (${daysOfTheWeek[element.day.day()]})`}
+            date={`${dayjs(element.day).format("MM / DD")} (${daysOfTheWeek[dayjs(element.day).day()]})`}
             reservationList={element.data}
           />
         );

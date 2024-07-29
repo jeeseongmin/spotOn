@@ -5,7 +5,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
 import { ReservationLabel } from "@/pages/Reservation";
-import type { User } from "@/types/common";
+import type { User } from "@/types/user";
 
 interface InfoInput extends ComponentPropsWithoutRef<"label"> {
   label: string;

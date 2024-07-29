@@ -1,26 +1,31 @@
 import { useEffect, useState } from "react";
 
+import dayjs from "dayjs";
+import { useShallow } from "zustand/react/shallow";
+
 import { daysOfTheWeek } from "@/constants/calendar";
-import { TempType, reservations } from "@/dummy/reservation";
 import ReservationCard from "@/pages/Home/components/ReservationCard";
 import useCalendarStore from "@/store/calendarStore";
+import type { DailyReservation } from "@/types/reservation";
 
 const DailyReservationList = () => {
-  const date = useCalendarStore(state => state.date);
+  const [date, monthlyReservations] = useCalendarStore(
+    useShallow(state => [state.date, state.monthlyReservations]),
+  );
 
   const [dailyReservations, setDailyReservations] = useState(
-    reservations.filter((reservation: TempType) => {
-      return date.date() === reservation.day.date();
+    monthlyReservations.filter((reservation: DailyReservation) => {
+      return date.date() === dayjs(reservation.day).date();
     })[0],
   );
 
   useEffect(() => {
     setDailyReservations(
-      reservations.filter((reservation: TempType) => {
-        return date.date() === reservation.day.date();
+      monthlyReservations.filter((reservation: DailyReservation) => {
+        return date.date() === dayjs(reservation.day).date();
       })[0],
     );
-  }, [date]);
+  }, [date, monthlyReservations]);
 
   return (
     <div className="flex h-[540px] w-full flex-col items-center justify-start gap-4 overflow-y-scroll px-2 py-8">

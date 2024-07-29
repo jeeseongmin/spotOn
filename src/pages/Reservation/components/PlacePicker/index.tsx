@@ -1,22 +1,25 @@
 import Button from "@/components/Button";
 import type { PlacesByFloor, SelectedPlace } from "@/dummy/places";
+import { Place } from "@/types/place";
 import { cn } from "@/utils/cn";
 
 interface PlacePickerProps {
   placesByFloor: PlacesByFloor[];
   selectedPlace?: SelectedPlace;
   onChange: (value: SelectedPlace) => void;
-  availablePlaces?: string[];
+  reservedPlaces?: Place[];
 }
 
 const PlacePicker = ({
   placesByFloor,
   selectedPlace,
   onChange,
-  availablePlaces,
+  reservedPlaces,
 }: PlacePickerProps) => {
   const getIsDisabled = (placeId: string) =>
-    availablePlaces ? !availablePlaces.includes(placeId) : false;
+    reservedPlaces
+      ? reservedPlaces.some(({ plcCd }) => plcCd === placeId)
+      : false;
 
   return (
     <div className="overflow-auto rounded-sm bg-white px-4">

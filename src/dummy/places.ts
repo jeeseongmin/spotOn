@@ -89,15 +89,12 @@ export const placesByFloor = [
   },
 ];
 
-export const availablePlaces = [
-  "1",
-  "4",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "14",
-  "15",
+export const reservedPlaces = [
+  {
+    plcCd: "PTK_PTK_0201",
+    plcNm: "새가족실",
+    plcF: 2,
+    cpsCd: "PTK",
+    bldCd: "PTK_PTK",
+  },
 ];

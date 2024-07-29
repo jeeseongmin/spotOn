@@ -19,7 +19,7 @@ export const checkStatus = ({
         if (
           Number(reservation.startTime) <= Number(thisTime) &&
           Number(thisTime) < Number(reservation.endTime) &&
-          reservation.sttId === "예약완료"
+          reservation.sttCd === "approve"
         ) {
           isTrue = true;
           throw isTrue;
@@ -32,7 +32,7 @@ export const checkStatus = ({
         if (
           Number(reservation.startTime) <= Number(thisTime) &&
           Number(thisTime) < Number(reservation.endTime) &&
-          reservation.sttId === "예약대기"
+          reservation.sttCd === "request"
         ) {
           isTrue = true;
           throw isTrue;
