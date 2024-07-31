@@ -28,7 +28,7 @@ const Router: FC = () => {
 
   return (
     <Routes location={location}>
-      <Route path="" element={<div>default page</div>} />
+      <Route path="" element={<LoginMain />} />
       <Route path={LOGIN_MAIN_URL} element={<LoginMain />} />
       <Route path={LOGIN_SIGNUP_URL} element={<LoginSignUp />} />
       <Route path={LOGIN_QR_URL} element={<LoginWait />} />
