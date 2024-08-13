@@ -99,10 +99,10 @@ const LoginSignUp = () => {
       telNo: data.telNo,
       token: state,
       provider: "kakao",
-      cpsCD: "PTK",
-      cmtCD: data.cmt,
-      garCD: data.gar,
-      leafCD: data.leaf,
+      cpsCd: "PTK",
+      cmtCd: data.cmt,
+      garCd: data.gar,
+      leafCd: data.leaf,
     });
 
     if (isJoin) {

@@ -68,10 +68,10 @@ type JoinRequestParam = {
   provider: string;
   userName: string;
   telNo: string;
-  cpsCD: string;
-  cmtCD: string;
-  garCD: string;
-  leafCD: string;
+  cpsCd: string;
+  cmtCd: string;
+  garCd: string;
+  leafCd: string;
 };
 
 /**
