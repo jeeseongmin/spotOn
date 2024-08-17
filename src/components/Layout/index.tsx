@@ -5,9 +5,13 @@ import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
 import MenuModal from "@/components/Modal/MenuModal";
 import { pageTitle } from "@/constants/common";
+import useLoginCheck from "@/hooks/useLoginCheck";
 import useModal from "@/hooks/useModal";
+import useLoginStore from "@/store/loginStore";
 
 const Layout = ({ children }: PropsWithChildren) => {
+  const { kakaoToken } = useLoginStore();
+  useLoginCheck(kakaoToken);
   const location = useLocation();
   const pageName = location.pathname.split("/")[1];
   const mainTitle = pageTitle[pageName].mainTitle;
