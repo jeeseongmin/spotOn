@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { fetchKakaoToken, spotOnLogin } from "@/apis/login";
+import { fetchCommunity, fetchGarret, fetchLeaf } from "@/apis/organization";
 import { getUserInfo } from "@/apis/user";
 import {
   HOME_MAIN_URL,
@@ -66,11 +67,38 @@ const KakaoLogin = () => {
     // 회원가입이 된 경우 && 승인이 된 경우
     else if (status === 200) {
       const info = await getUserInfo(tokenId);
+      const { cmtCd, garCd, leafCd } = info;
+      let cmtNm, garNm, leafNm;
+      (await fetchCommunity()).map((elem: any) => {
+        if (elem.cmtCd === cmtCd) {
+          console.log("cmtNm", elem.cmtNm);
+          cmtNm = elem.cmtNm;
+        }
+      });
+      (await fetchGarret(cmtCd)).map((elem: any) => {
+        if (elem.garCd === garCd) {
+          console.log("garNm", elem.garNm);
+          garNm = elem.garNm;
+        }
+      });
+      (await fetchLeaf(cmtCd, garCd)).map((elem: any) => {
+        if (elem.leafCd === leafCd) {
+          console.log("leafNm", elem.leafNm);
+          leafNm = elem.leafNm;
+        }
+      });
+      const userInfo = {
+        ...info,
+        cmtNm,
+        garNm,
+        leafNm,
+      };
+      console.log("check : ", userInfo);
 
       // 로그인 후 정보 저장
+      saveUserInfo(userInfo);
       saveSpotOnToken(token);
       saveTokenId(tokenId);
-      saveUserInfo(info);
 
       navigate(HOME_MAIN_URL);
     }
