@@ -18,7 +18,7 @@ const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
 
 const LoginMain = () => {
   const navigate = useNavigate();
-  const { token, expiredAt } = useLoginStore();
+  const { kakaoToken, expiredAt } = useLoginStore();
 
   useEffect(() => {
     loginCheck();
@@ -28,7 +28,7 @@ const LoginMain = () => {
    * 현재 가지고 있는 토큰의 유효성을 체크하는 함수
    */
   const loginCheck = async () => {
-    const isValid = await isValidLogin(token, expiredAt);
+    const isValid = await isValidLogin(kakaoToken, expiredAt);
     if (isValid) {
       navigate(HOME_MAIN_URL);
     } else {

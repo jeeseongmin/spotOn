@@ -6,9 +6,9 @@ import { axiosInstance } from "@/apis/core";
  *
  * @param accessCode 카카오 로그인을 통해 얻어온 accessCode
  * @returns
- * 카카오 로그인 정보를 다룰 수 있는 accessToken return
+ * 카카오 로그인 정보를 다룰 수 있는 kakaoToken return
  */
-export const fetchAccessToken = async (accessCode: string) => {
+export const fetchKakaoToken = async (accessCode: string) => {
   try {
     const res = await axios.post("https://kauth.kakao.com/oauth/token", null, {
       params: {
@@ -31,24 +31,30 @@ export const fetchAccessToken = async (accessCode: string) => {
 
 /**
  *
- * @param accessToken 카카오 로그인을 통해 얻은 accessCode로 발급받은 accessToken
+ * @param kakaoToken 카카오 로그인을 통해 얻은 accessCode로 발급받은 kakaoToken(access_token)
  * @returns
  * 1. 회원가입이 안되어있는 경우 412 (error) return
  * 2. 회원가입이 되어있는 경우 200 (success) return
  * 3. 회원가입이 되어있는 경우 + 승인 여부 관련 플래그가 추가되어야 함
  */
-export const login = async (accessToken: string) => {
+export const spotOnLogin = async (kakaoToken: string) => {
   try {
     const res = await axiosInstance.post("/user-service/login", {
       email: "1@gmail.com", // 의미없는 email 값
       password: "test1234!", // 의미없는 password 값
       provider: "kakao",
-      token: accessToken,
+      token: kakaoToken,
     });
 
-    return { status: res.status, token: res.headers["access-token"] };
+    console.log(res, res.headers["access-token"]);
+
+    return {
+      status: res.status,
+      token: res.headers["access-token"],
+      tokenId: res.headers["token-id"],
+    };
   } catch (error: unknown) {
-    console.log("error : ", error);
+    console.error(error);
     if (axios.isAxiosError(error) && error.response) {
       const status = error.response?.status;
       const token = null;
