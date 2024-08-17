@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { spotOnLogin } from "@/apis/login";
-import { getUserInfo } from "@/apis/user";
 import {
   HOME_MAIN_URL,
   LOGIN_MAIN_URL,
@@ -11,13 +10,11 @@ import {
   LOGIN_SIGNUP_URL,
 } from "@/constants/routes";
 import useLoginStore from "@/store/loginStore";
-import useUserStore from "@/store/userStore";
 
 const useLoginCheck = (kakaoToken: string) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { saveSpotOnToken, saveTokenId } = useLoginStore();
-  const { saveUserInfo } = useUserStore();
 
   useEffect(() => {
     if (kakaoToken.length > 0) {
@@ -37,14 +34,11 @@ const useLoginCheck = (kakaoToken: string) => {
     }
     // 회원가입이 된 경우 && 승인이 된 경우
     else if (status === 200) {
-      const info = await getUserInfo(tokenId);
-
       // 로그인 후 정보 저장
       saveSpotOnToken(token);
       saveTokenId(tokenId);
-      saveUserInfo(info);
 
-      if (location.pathname === "/login/main") {
+      if (location.pathname.includes("/login")) {
         navigate(HOME_MAIN_URL);
       }
       // navigate(HOME_MAIN_URL);
