@@ -16,7 +16,7 @@ export const putUserState = async (userStateRequest: UserStateRequest) => {
 export const getUserInfo = async (spotOnToken: string) => {
   try {
     const res = await axiosInstance.get(
-      `/user-service/api/v1/users/${spotOnToken}`,
+      `/user-service/api/v1/users/info/${spotOnToken}`,
     );
 
     return res;
