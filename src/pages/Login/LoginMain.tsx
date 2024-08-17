@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import Button from "@/components/Button";
+import { HOME_MAIN_URL, LOGIN_MAIN_URL } from "@/constants/routes";
 import LoginLayout from "@/pages/Login/components/LoginLayout";
+import useLoginStore from "@/store/loginStore";
+import { isValidLogin } from "@/utils/login";
 
 declare global {
   interface Window {
@@ -12,6 +17,25 @@ declare global {
 const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URL;
 
 const LoginMain = () => {
+  const navigate = useNavigate();
+  const { kakaoToken, expiredAt } = useLoginStore();
+
+  useEffect(() => {
+    loginCheck();
+  }, []);
+
+  /**
+   * 현재 가지고 있는 토큰의 유효성을 체크하는 함수
+   */
+  const loginCheck = async () => {
+    const isValid = await isValidLogin(kakaoToken, expiredAt);
+    if (isValid) {
+      navigate(HOME_MAIN_URL);
+    } else {
+      navigate(LOGIN_MAIN_URL);
+    }
+  };
+
   useEffect(() => {
     // Initialize Kakao SDK
     if (window.Kakao && !window.Kakao.isInitialized()) {

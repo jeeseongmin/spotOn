@@ -11,3 +11,16 @@ export const putUserState = async (userStateRequest: UserStateRequest) => {
     console.error(error);
   }
 };
+
+// spotOnToken으로 유저 정보를 가져오는 api
+export const getUserInfo = async (spotOnToken: string) => {
+  try {
+    const res = await axiosInstance.get(
+      `/user-service/api/v1/users/info/${spotOnToken}`,
+    );
+
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
+};
