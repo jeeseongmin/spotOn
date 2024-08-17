@@ -14,7 +14,8 @@ import useUserStore from "@/store/userStore";
 
 const MyInfo = () => {
   const [isDisabled, setIsDisabled] = useState(true);
-  const { userName, telNo, cmtCd, garCd, leafCd } = useUserStore();
+  const { userName, telNo, cmtCd, garCd, leafCd, cmtNm, garNm, leafNm } =
+    useUserStore();
   const modal = useModal();
   const { control, register, reset, handleSubmit, watch, getValues, setValue } =
     useForm({
@@ -22,16 +23,16 @@ const MyInfo = () => {
         name: userName,
         phone: telNo,
         cmt: {
-          id: "",
-          name: "",
+          id: cmtCd,
+          name: cmtNm,
         },
         gar: {
-          id: "",
-          name: "",
+          id: garCd,
+          name: garNm,
         },
         leaf: {
-          id: "",
-          name: "",
+          id: leafCd,
+          name: leafNm,
         },
       },
     });
@@ -68,8 +69,11 @@ const MyInfo = () => {
 
   // 다락방 리스트 가져오기
   useEffect(() => {
-    resetList("gar");
-    resetList("leaf");
+    // 회원정보 수정 시 조직 정보 reset 설정
+    if (!isDisabled) {
+      resetList("gar");
+      resetList("leaf");
+    }
     if (getValues("cmt").id !== "") {
       getGarret(getValues("cmt").id);
     }
@@ -77,11 +81,10 @@ const MyInfo = () => {
 
   // 순 리스트 가져오기
   useEffect(() => {
-    resetList("leaf");
-    setValue("leaf", {
-      id: "",
-      name: "",
-    });
+    // 회원정보 수정 시 조직 정보 reset 설정
+    if (!isDisabled) {
+      resetList("leaf");
+    }
     if (getValues("cmt").id !== "" && getValues("gar").id !== "") {
       getLeaf(getValues("cmt").id, getValues("gar").id);
     }
@@ -89,10 +92,12 @@ const MyInfo = () => {
 
   const getCommunity = async () => {
     const list = await fetchCommunity();
-    const cp = list.map((item: any) => ({
-      id: item.cmtCd,
-      name: item.cmtNm,
-    }));
+    const cp = list.map((item: any) => {
+      return {
+        id: item.cmtCd,
+        name: item.cmtNm,
+      };
+    });
     setCommunityList(cp);
   };
 
