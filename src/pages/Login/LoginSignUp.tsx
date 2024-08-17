@@ -22,24 +22,25 @@ type JoinCheckParam = {
 };
 
 const LoginSignUp = () => {
-  const { register, handleSubmit, control, watch, getValues } = useForm({
-    defaultValues: {
-      userName: "",
-      telNo: "",
-      cmt: {
-        id: "",
-        name: "",
+  const { register, handleSubmit, control, watch, getValues, setValue } =
+    useForm({
+      defaultValues: {
+        userName: "",
+        telNo: "",
+        cmt: {
+          id: "",
+          name: "",
+        },
+        gar: {
+          id: "",
+          name: "",
+        },
+        leaf: {
+          id: "",
+          name: "",
+        },
       },
-      gar: {
-        id: "",
-        name: "",
-      },
-      leaf: {
-        id: "",
-        name: "",
-      },
-    },
-  });
+    });
 
   const [communityList, setCommunityList] = useState([]);
   const [garretList, setGarretList] = useState([]);
@@ -52,8 +53,33 @@ const LoginSignUp = () => {
     getCommunity();
   }, []);
 
+  //
+  const resetList = (type: string) => {
+    if (type === "cmt") {
+      setCommunityList([]);
+      setValue("cmt", {
+        id: "",
+        name: "",
+      });
+    } else if (type === "gar") {
+      setGarretList([]);
+      setValue("gar", {
+        id: "",
+        name: "",
+      });
+    } else if (type === "leaf") {
+      setLeafList([]);
+      setValue("leaf", {
+        id: "",
+        name: "",
+      });
+    }
+  };
+
   // 다락방 리스트 가져오기
   useEffect(() => {
+    resetList("gar");
+    resetList("leaf");
     if (getValues("cmt").id !== "") {
       getGarret(getValues("cmt").id);
     }
@@ -61,6 +87,7 @@ const LoginSignUp = () => {
 
   // 순 리스트 가져오기
   useEffect(() => {
+    resetList("leaf");
     if (getValues("cmt").id !== "" && getValues("gar").id !== "") {
       getLeaf(getValues("cmt").id, getValues("gar").id);
     }
@@ -166,7 +193,7 @@ const LoginSignUp = () => {
                   <Dropdown
                     category="cmt"
                     options={communityList}
-                    disabled={false}
+                    disabled={false || communityList.length === 0}
                     onChangeOption={onChange}
                     selectedOption={value.name}
                   />
@@ -182,7 +209,7 @@ const LoginSignUp = () => {
                   <Dropdown
                     category="gar"
                     options={garretList}
-                    disabled={false}
+                    disabled={false || garretList.length === 0}
                     onChangeOption={onChange}
                     selectedOption={value.name}
                   />
@@ -198,7 +225,7 @@ const LoginSignUp = () => {
                   <Dropdown
                     category="leaf"
                     options={leafList}
-                    disabled={false}
+                    disabled={false || leafList.length === 0}
                     onChangeOption={onChange}
                     selectedOption={value.name}
                   />

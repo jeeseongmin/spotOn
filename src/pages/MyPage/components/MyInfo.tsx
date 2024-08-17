@@ -1,28 +1,118 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 
+import { fetchCommunity, fetchGarret, fetchLeaf } from "@/apis/organization";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
 import InputLabel from "@/components/Label/InputLabel";
 import AlertModal from "@/components/Modal/AlertModal";
-import { cells, communities, teams } from "@/dummy/organization";
 import useModal from "@/hooks/useModal";
 import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
+import useUserStore from "@/store/userStore";
 
 const MyInfo = () => {
   const [isDisabled, setIsDisabled] = useState(true);
+  const { userName, telNo, cmtCd, garCd, leafCd } = useUserStore();
   const modal = useModal();
-  const { control, register, reset, handleSubmit } = useForm({
-    defaultValues: {
-      name: "김온누리",
-      phone: "010-1234-5678",
-      community: "믿음",
-      team: "1번 다락방",
-      cell: "누가 1순",
-    },
-  });
+  const { control, register, reset, handleSubmit, watch, getValues, setValue } =
+    useForm({
+      defaultValues: {
+        name: userName,
+        phone: telNo,
+        cmt: {
+          id: "",
+          name: "",
+        },
+        gar: {
+          id: "",
+          name: "",
+        },
+        leaf: {
+          id: "",
+          name: "",
+        },
+      },
+    });
+  const [communityList, setCommunityList] = useState([]);
+  const [garretList, setGarretList] = useState([]);
+  const [leafList, setLeafList] = useState([]);
+
+  // 공동체 리스트 가져오기
+  useEffect(() => {
+    getCommunity();
+  }, []);
+
+  const resetList = (type: string) => {
+    if (type === "cmt") {
+      setCommunityList([]);
+      setValue("cmt", {
+        id: "",
+        name: "",
+      });
+    } else if (type === "gar") {
+      setGarretList([]);
+      setValue("gar", {
+        id: "",
+        name: "",
+      });
+    } else if (type === "leaf") {
+      setLeafList([]);
+      setValue("leaf", {
+        id: "",
+        name: "",
+      });
+    }
+  };
+
+  // 다락방 리스트 가져오기
+  useEffect(() => {
+    resetList("gar");
+    resetList("leaf");
+    if (getValues("cmt").id !== "") {
+      getGarret(getValues("cmt").id);
+    }
+  }, [watch("cmt")]);
+
+  // 순 리스트 가져오기
+  useEffect(() => {
+    resetList("leaf");
+    setValue("leaf", {
+      id: "",
+      name: "",
+    });
+    if (getValues("cmt").id !== "" && getValues("gar").id !== "") {
+      getLeaf(getValues("cmt").id, getValues("gar").id);
+    }
+  }, [watch("gar")]);
+
+  const getCommunity = async () => {
+    const list = await fetchCommunity();
+    const cp = list.map((item: any) => ({
+      id: item.cmtCd,
+      name: item.cmtNm,
+    }));
+    setCommunityList(cp);
+  };
+
+  const getGarret = async (cmtCd: string) => {
+    const list = await fetchGarret(cmtCd);
+    const cp = list.map((item: any) => ({
+      id: item.garCd,
+      name: item.garNm,
+    }));
+    setGarretList(cp);
+  };
+
+  const getLeaf = async (cmtCd: string, garCd: string) => {
+    const list = await fetchLeaf(cmtCd, garCd);
+    const cp = list.map((item: any) => ({
+      id: item.leafCd,
+      name: item.leafNm,
+    }));
+    setLeafList(cp);
+  };
 
   const cancel = () => {
     setIsDisabled(true);
@@ -68,49 +158,49 @@ const MyInfo = () => {
           <div className="grid grid-cols-3 gap-2">
             <Controller
               control={control}
-              name="community"
+              name="cmt"
               rules={{
                 required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <Dropdown
-                  category="community"
-                  options={communities}
-                  disabled={isDisabled}
+                  category="cmt"
+                  options={communityList}
+                  disabled={isDisabled || communityList.length === 0}
                   onChangeOption={onChange}
-                  selectedOption={value}
+                  selectedOption={value.name}
                 />
               )}
             />
             <Controller
               control={control}
-              name="team"
+              name="gar"
               rules={{
                 required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <Dropdown
-                  category="team"
-                  options={teams}
-                  disabled={isDisabled}
+                  category="gar"
+                  options={garretList}
+                  disabled={isDisabled || garretList.length === 0}
                   onChangeOption={onChange}
-                  selectedOption={value}
+                  selectedOption={value.name}
                 />
               )}
             />
             <Controller
               control={control}
-              name="cell"
+              name="leaf"
               rules={{
                 required: true,
               }}
               render={({ field: { onChange, value } }) => (
                 <Dropdown
-                  category="cell"
-                  options={cells}
-                  disabled={isDisabled}
+                  category="leaf"
+                  options={leafList}
+                  disabled={isDisabled || leafList.length === 0}
                   onChangeOption={onChange}
-                  selectedOption={value}
+                  selectedOption={value.name}
                 />
               )}
             />
