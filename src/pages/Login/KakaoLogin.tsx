@@ -5,15 +5,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { fetchKakaoToken, spotOnLogin } from "@/apis/login";
 import { getUserInfo } from "@/apis/user";
 import {
-  HOME_MAIN_URL, // HOME_MAIN_URL,
+  HOME_MAIN_URL,
   LOGIN_QR_URL,
   LOGIN_SIGNUP_URL,
 } from "@/constants/routes";
 import useLoginStore from "@/store/loginStore";
+import useUserStore from "@/store/userStore";
 
 // /kakao/auth
 const KakaoLogin = () => {
   const { saveKakaoToken, saveSpotOnToken, saveTokenId } = useLoginStore();
+  const { saveUserInfo } = useUserStore();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [accessCode, setAccessCode] = useState("");
@@ -66,7 +68,7 @@ const KakaoLogin = () => {
       const info = await getUserInfo(tokenId);
       saveSpotOnToken(token);
       saveTokenId(tokenId);
-      console.log("info response check ", info);
+      saveUserInfo(info);
       navigate(HOME_MAIN_URL);
     }
     // 회원가입이 된 경우 && 승인이 안된 경우
