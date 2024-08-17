@@ -14,12 +14,13 @@ import useUserStore from "@/store/userStore";
 
 // /kakao/auth
 const KakaoLogin = () => {
-  const { saveKakaoToken, saveSpotOnToken, saveTokenId } = useLoginStore();
+  const { kakaoToken, saveKakaoToken, saveSpotOnToken, saveTokenId } =
+    useLoginStore();
   const { saveUserInfo } = useUserStore();
+
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [accessCode, setAccessCode] = useState("");
-  const [kakaoToken, setKakaoToken] = useState("");
 
   useEffect(() => {
     getAccessCode();
@@ -33,7 +34,7 @@ const KakaoLogin = () => {
 
   useEffect(() => {
     if (kakaoToken.length > 0) {
-      loginCheck();
+      getSpotOnToken();
     }
   }, [kakaoToken]);
 
@@ -50,12 +51,11 @@ const KakaoLogin = () => {
 
     if (token) {
       saveKakaoToken(token);
-      setKakaoToken(token);
     }
   };
 
   /** 카카오 로그인이 된 이후에 spotOn 로그인 시도 */
-  const loginCheck = async () => {
+  const getSpotOnToken = async () => {
     // 추후 api에서 token 값 전달받을 예정
     const { status, token, tokenId } = await spotOnLogin(kakaoToken);
 
@@ -66,9 +66,12 @@ const KakaoLogin = () => {
     // 회원가입이 된 경우 && 승인이 된 경우
     else if (status === 200) {
       const info = await getUserInfo(tokenId);
+
+      // 로그인 후 정보 저장
       saveSpotOnToken(token);
       saveTokenId(tokenId);
       saveUserInfo(info);
+
       navigate(HOME_MAIN_URL);
     }
     // 회원가입이 된 경우 && 승인이 안된 경우
