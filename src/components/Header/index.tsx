@@ -10,6 +10,8 @@ import {
   MYPAGE_MAIN_URL,
   RESERVATION_MAIN_URL,
 } from "@/constants/routes";
+import useLoginStore from "@/store/loginStore";
+import useUserStore from "@/store/userStore";
 
 type HeaderProps = {
   onOpen: () => void;
@@ -17,6 +19,18 @@ type HeaderProps = {
 
 const Header = ({ onOpen }: HeaderProps) => {
   const navigate = useNavigate();
+
+  const { logout } = useLoginStore();
+  const { resetUserInfo } = useUserStore();
+
+  const spotOnLogout = () => {
+    // 나중에 팝업 만들기
+    alert("로그아웃됩니다.");
+    // 유저 정보 지우기
+    resetUserInfo();
+    // 서비스 로그아웃
+    logout();
+  };
 
   return (
     <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-12 shadow-sm md:px-20 lg:px-32 xl:px-60 2xl:px-96">
@@ -42,6 +56,13 @@ const Header = ({ onOpen }: HeaderProps) => {
           onClick={() => navigate(ADMIN_MAIN_URL)}
         >
           통합관리
+        </Button>
+        <Button
+          variant="custom"
+          className="text-gray-500"
+          onClick={() => spotOnLogout()}
+        >
+          로그아웃
         </Button>
         <Button
           variant="custom"
