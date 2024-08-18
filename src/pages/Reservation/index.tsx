@@ -16,6 +16,7 @@ import Banner from "@/pages/Reservation/components/Banner";
 import ReservationDetails from "@/pages/Reservation/components/ReservationDetails";
 import ReservationInfo from "@/pages/Reservation/components/ReservationInfo";
 import ReservationTab from "@/pages/Reservation/components/ReservationTab";
+import useLoginStore from "@/store/loginStore";
 import type { Place } from "@/types/place";
 import { ReservationRequest } from "@/types/reservation";
 import { cn } from "@/utils/cn";
@@ -39,6 +40,7 @@ interface ReservationFormValues {
 }
 
 const ReservationPage = () => {
+  const { tokenId } = useLoginStore();
   const reservationModal = useModal();
   const methods = useForm<ReservationFormValues>({
     defaultValues: {
@@ -76,7 +78,7 @@ const ReservationPage = () => {
                 type: "endTime",
                 times: getValues("time"),
               }),
-              mbrId: "11", // 임시 멤버 id => 추후 로그인 유저 id 정보로 변경 예정
+              mbrId: tokenId, // 임시 멤버 id => 추후 로그인 유저 id 정보로 변경 예정
             };
             reservation(reservationRequest);
           })}
