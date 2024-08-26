@@ -1,8 +1,13 @@
 export interface User {
-  id: number;
-  name: string;
-  phoneNumber: string;
-  community: string;
+  id: string;
+  userName: string;
+  telNo: string;
+  cmtNm: string;
+  garNm: string;
+  leafNm: string;
+  cmtCd: string;
+  garCd: string;
+  leafCd: string;
 }
 
 /**

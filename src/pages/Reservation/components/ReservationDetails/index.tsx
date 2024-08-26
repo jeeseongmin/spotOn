@@ -22,7 +22,7 @@ interface ReservationDetailsProps {
 
 const ReservationDetails = ({ user }: ReservationDetailsProps) => {
   const { getValues } = useFormContext();
-  const { name, phoneNumber, community } = user;
+  const userInfo = user;
 
   const getTimeText = (time: number[]) => {
     const [start, end] = time.length === 1 ? [time[0], time[0]] : time;
@@ -49,9 +49,11 @@ const ReservationDetails = ({ user }: ReservationDetailsProps) => {
       />
       <ReservationField label="시간" value={getTimeText(getValues("time"))} />
       <ReservationField label="장소" value={getPlaceText(getValues("place"))} />
-      <ReservationField label="예약자" value={name} />
-      <ReservationField label="연락처" value={phoneNumber} />
-      <ReservationField label="부서" value={community} />
+      <ReservationField label="예약자" value={userInfo.userName} />
+      <ReservationField label="연락처" value={userInfo.telNo} />
+      <ReservationField label="공동체" value={userInfo.cmtNm} />
+      <ReservationField label="다락방" value={userInfo.garNm} />
+      <ReservationField label="순" value={userInfo.leafNm} />
       <ReservationField label="사용목적" value={getValues("purpose")} />
     </>
   );

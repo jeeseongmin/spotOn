@@ -34,14 +34,13 @@ interface ReservationInfoProps {
 }
 
 const ReservationInfo = ({ user }: ReservationInfoProps) => {
-  const { name, phoneNumber, community } = user;
   const { register, getValues } = useFormContext();
   useWatch({ name: ["time", "place"] });
 
   const isShow = getValues("time").length !== 0 && getValues("place");
 
   return (
-    <div className="flex w-full flex-col gap-2 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
+    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
       <div className="flex gap-6">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
@@ -52,21 +51,21 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
       </div>
       {isShow && (
         <>
-          <div className="flex grow gap-6">
+          <div className="flex grow gap-9">
             <InfoLabel label="예약자" htmlFor="name">
               <Input
                 id="name"
                 disabled
-                defaultValue={name}
+                defaultValue={user.userName}
                 className="border-gray-middle"
               />
             </InfoLabel>
-            <InfoLabel label="연락처" htmlFor="phone">
-              <div className="flex items-center gap-2">
-                {phoneNumber.split("-").map((number, index, origin) => (
+            <InfoLabel label="연락처" htmlFor="telNo">
+              <div className="flex items-center gap-1">
+                {user.telNo.split("-").map((number, index, origin) => (
                   <Fragment key={number}>
                     <Input
-                      id="phone"
+                      id="telNo"
                       disabled
                       defaultValue={number}
                       className="w-14 border-gray-middle"
@@ -80,18 +79,32 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
           <div className="flex grow gap-6">
             <InfoLabel label="소속" htmlFor="community">
               <Input
-                id="community"
+                id="cmtCd"
                 disabled
-                defaultValue={community}
-                className="border-gray-middle"
+                defaultValue={user.cmtNm}
+                className="w-40 border-gray-middle"
+              />
+              <Input
+                id="garCd"
+                disabled
+                defaultValue={user.garNm}
+                className="w-40 border-gray-middle"
+              />
+              <Input
+                id="leafCd"
+                disabled
+                defaultValue={user.leafNm}
+                className="w-40 border-gray-middle"
               />
             </InfoLabel>
+          </div>
+          <div className="flex grow gap-6">
             <InfoLabel label="사용 목적" isRequired htmlFor="purpose">
               <Input
                 id="purpose"
                 placeholder="사용 목적을 입력하세요 (최대 15자)"
                 maxLength={15}
-                className="w-60 border-gray-middle"
+                className="w-[31rem] border-gray-middle"
                 {...register("purpose", { required: true, maxLength: 15 })}
               />
             </InfoLabel>
