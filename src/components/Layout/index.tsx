@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 
 import { useLocation } from "react-router-dom";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MenuModal from "@/components/Modal/MenuModal";
 import { pageTitle } from "@/constants/common";
@@ -38,6 +39,7 @@ const Layout = ({ children }: PropsWithChildren) => {
 
         {children}
       </div>
+      <Footer />
       {menuModal.isOpen && <MenuModal onClose={menuModal.onClose} />}
     </div>
   );
