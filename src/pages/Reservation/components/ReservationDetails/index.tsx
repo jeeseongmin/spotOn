@@ -33,9 +33,10 @@ const ReservationDetails = ({ user }: ReservationDetailsProps) => {
     return `${formatNumberToTime(start)} ~ ${formatNumberToTime(end + 0.5)}`;
   };
   const getPlaceText = (place: Place) => {
-    const { plcNm, plcF } = place;
+    const { plcNm, plcCd } = place;
+    const [, , floor] = plcCd.split("_");
 
-    return `[${plcF}] ${plcNm}`;
+    return `[${floor[1]}층] ${plcNm}`;
   };
 
   return (
