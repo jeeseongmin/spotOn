@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import { HiUserCircle } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +12,8 @@ import {
   MYPAGE_MAIN_URL,
   RESERVATION_MAIN_URL,
 } from "@/constants/routes";
+import useModal from "@/hooks/useModal";
+import { useOutSideClick } from "@/hooks/useOutSideClick";
 import useLoginStore from "@/store/loginStore";
 import useUserStore from "@/store/userStore";
 
@@ -22,6 +26,11 @@ const Header = ({ onOpen }: HeaderProps) => {
 
   const { logout } = useLoginStore();
   const { resetUserInfo } = useUserStore();
+
+  const profileRef = useRef<HTMLDivElement>(null);
+  const profileModal = useModal();
+
+  useOutSideClick(profileRef, () => profileModal.onClose());
 
   const spotOnLogout = () => {
     // 나중에 팝업 만들기
@@ -57,20 +66,34 @@ const Header = ({ onOpen }: HeaderProps) => {
         >
           통합관리
         </Button>
-        <Button
-          variant="custom"
-          className="text-gray-500"
-          onClick={() => spotOnLogout()}
-        >
-          로그아웃
-        </Button>
-        <Button
-          variant="custom"
-          className="text-gray-400"
-          onClick={() => navigate(MYPAGE_MAIN_URL)}
-        >
-          <HiUserCircle size={40} />
-        </Button>
+
+        <div ref={profileRef} className="relative">
+          <Button
+            onClick={profileModal.onToggle}
+            variant="custom"
+            className="text-gray-400"
+          >
+            <HiUserCircle size={40} />
+          </Button>
+          {profileModal.isOpen && (
+            <div className="absolute right-0 flex h-auto w-auto flex-col items-center rounded-md border border-gray-middle bg-white shadow-sm">
+              <Button
+                variant="custom"
+                className="h-10 w-28 border-b border-gray-middle text-small text-gray-500"
+                onClick={() => navigate(MYPAGE_MAIN_URL)}
+              >
+                마이페이지
+              </Button>
+              <Button
+                variant="custom"
+                className="h-10 w-28 text-small text-gray-500"
+                onClick={() => spotOnLogout()}
+              >
+                로그아웃
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex md:hidden">
