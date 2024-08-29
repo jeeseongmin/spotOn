@@ -79,14 +79,14 @@ const Header = ({ onOpen }: HeaderProps) => {
             <div className="absolute right-0 flex h-auto w-auto flex-col items-center rounded-md border border-gray-middle bg-white shadow-sm">
               <Button
                 variant="custom"
-                className="h-10 w-28 border-b border-gray-middle text-small text-gray-500"
+                className="h-10 w-28 border-b border-gray-middle text-small text-gray-500 hover:bg-primary hover:text-white"
                 onClick={() => navigate(MYPAGE_MAIN_URL)}
               >
                 마이페이지
               </Button>
               <Button
                 variant="custom"
-                className="h-10 w-28 text-small text-gray-500"
+                className="h-10 w-28 text-small text-gray-500 hover:bg-primary hover:text-white"
                 onClick={() => spotOnLogout()}
               >
                 로그아웃
