@@ -4,6 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 
 import Button from "@/components/Button";
 import { CellInfo } from "@/types/table";
+import { cn } from "@/utils/cn";
 
 const tableContentCSS = cva("", {
   variants: {
@@ -25,7 +26,12 @@ const Table = ({ header, body }: TableProps) => {
         <tr>
           {header.map(item => {
             return (
-              <th className="w-auto border border-gray-middle font-light">
+              <th
+                className={cn(
+                  "w-auto border border-gray-middle font-light",
+                  !item.name && "w-[44px]",
+                )}
+              >
                 {item.name}
               </th>
             );
@@ -42,7 +48,7 @@ const Table = ({ header, body }: TableProps) => {
                     <td className="border border-gray-middle">
                       <Button
                         variant="underlined"
-                        className="text-xs text-primary"
+                        className="text-nowrap text-xs text-primary"
                         onClick={item.method}
                       >
                         {item.data}

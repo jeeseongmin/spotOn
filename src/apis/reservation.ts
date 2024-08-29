@@ -85,3 +85,29 @@ export const getMonthlyReservation = async (date: string) => {
     console.error(error);
   }
 };
+
+export const postReservationsByState = async (
+  page: number = 0,
+  size: number = 10,
+  sttCd: string = "",
+) => {
+  try {
+    const res = await axiosInstance.post(
+      "/portal-service/api/v1/reservation/list/page",
+      {
+        cpsCd: "PTK",
+        sttCd,
+      },
+      {
+        params: {
+          page,
+          size,
+        },
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

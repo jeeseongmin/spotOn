@@ -1,3 +1,5 @@
+import { Pageable, Sort } from "@/types/common";
+
 /**
  * 예약 상태 코드
  *
@@ -25,17 +27,17 @@ export type ReservationResponse = {
   rsvtId: number; // 1;
   useCnts: string; // "마태1순 순모임";
   cpsCd: string; // "PTK";
-  bldCd: string; // "PTK_PTK";
+  bldCd: string; // "PTK_PTK";  제외
   plcCd: string; // "PTK_PTK_0303";
   rsvtDt: string; // "20240907";
   startTime: string; // "190000";
   endTime: string; // "210000";
   mbrId: string; // "11";
   sttCd: ReservationStateCode; // "approve";
-  crtId: string; // "11";
-  crDt: string; // "2024-07-20T06:15:57";
-  updId: string; // "11";
-  updDt: string; // "2024-07-20T06:15:57";
+  crtId: string; // "11";  제외
+  crDt: string; // "2024-07-20T06:15:57";  제외
+  updId: string; // "11";  제외
+  updDt: string; // "2024-07-20T06:15:57";  제외
 };
 
 export interface ReservationStateRequest {
@@ -66,4 +68,34 @@ export interface DailyReservationData {
 export interface DailyReservation {
   day: string;
   data: DailyReservationData[];
+}
+
+export interface ReservationByState
+  extends Omit<
+    ReservationResponse,
+    "bldCd" | "crtId" | "crDt" | "updId" | "updDt"
+  > {
+  plcNm: string;
+  userName: string;
+  telNo: string;
+  cmtCd: string;
+  cmtNm: string;
+  garCd: string;
+  garNm: string;
+  leafCd: string;
+  leafNm: string;
+}
+
+export interface ReservationsByStateResponse {
+  content: ReservationByState[];
+  pageable: Pageable;
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  sort: Sort;
+  first: boolean;
+  numberOfElements: number;
+  size: number;
+  number: number;
+  empty: boolean;
 }

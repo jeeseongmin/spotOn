@@ -36,7 +36,7 @@ const TabItem = ({
   label = "",
   icon,
   isActive = false,
-  isNew,
+  isNew = false,
   className,
   ...props
 }: TabItemProps) => {
