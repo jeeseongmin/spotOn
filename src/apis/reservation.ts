@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/apis/core";
-import {
+import type {
   ReservationRequest,
   ReservationStateRequest,
   ReservedPlacesRequest,
@@ -34,8 +34,10 @@ export const putReservationState = async ({
   rsvtId,
   sttCd,
 }: ReservationStateRequest) => {
+  const endPoint = sttCd === "approve" ? "approve" : "cancel";
+
   try {
-    await axiosInstance.put(`/portal-service/api/v1/reservation/${sttCd}`, {
+    await axiosInstance.put(`/portal-service/api/v1/reservation/${endPoint}`, {
       rsvtId,
       sttCd,
     });
