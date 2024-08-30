@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { ReservationByState } from "@/types/reservation";
-import { CellInfo } from "@/types/table";
+import type {
+  ReservationByState,
+  ReservationStateCode,
+} from "@/types/reservation";
+import type { CellInfo } from "@/types/table";
 import {
   convertTimeRangeToHHMM,
   formatLocationWithFloor,
@@ -32,34 +35,35 @@ export const getTableBody = (
   });
 };
 
-export const getReservationBodyData = (reservations: ReservationByState[]) =>
-  reservations.map(reservation => {
-    const {
-      rsvtId,
-      rsvtDt,
-      startTime,
-      endTime,
-      plcCd,
-      plcNm,
-      userName,
-      useCnts,
-      telNo,
-      cmtNm,
-      garNm,
-      leafNm,
-    } = reservation;
+export const getReservationBodyData = (
+  reservation: ReservationByState,
+  type: ReservationStateCode,
+  method1: () => void,
+  method2: () => void,
+) => {
+  const { rsvtDt, startTime, endTime, plcCd, plcNm, userName, useCnts, cmtNm } =
+    reservation;
+  const methodColumn =
+    type === "request"
+      ? [
+          { data: "승인", method: method1 },
+          { data: "거절", method: method2 },
+        ]
+      : [
+          { data: "상세", method: method1 },
+          {
+            data: <RiDeleteBin6Line size={16} className="text-red" />,
+            method: method2,
+          },
+        ];
 
-    return [
-      { data: dayjs(rsvtDt).locale("ko").format("YYYY / MM / DD (ddd)") },
-      { data: convertTimeRangeToHHMM(startTime, endTime) },
-      { data: formatLocationWithFloor(plcCd, plcNm) },
-      { data: cmtNm },
-      { data: userName },
-      { data: useCnts },
-      { data: "상세", method: () => alert("예약 상세 Modal") },
-      {
-        data: <RiDeleteBin6Line size={16} className="text-red" />,
-        method: () => alert("삭제"),
-      },
-    ];
-  });
+  return [
+    { data: dayjs(rsvtDt).locale("ko").format("YYYY / MM / DD (ddd)") },
+    { data: convertTimeRangeToHHMM(startTime, endTime) },
+    { data: formatLocationWithFloor(plcCd, plcNm) },
+    { data: cmtNm },
+    { data: userName },
+    { data: useCnts },
+    ...methodColumn,
+  ];
+};

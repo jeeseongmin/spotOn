@@ -1,4 +1,4 @@
-import { ReservationResponse } from "@/types/reservation";
+import type { ReservationResponse } from "@/types/reservation";
 
 // 해당 시간대가 어떤 예약 상태를 가지고 있는지 체크해주는 함수
 export const checkStatus = ({
@@ -75,9 +75,19 @@ export const convertToTimeFormat = (time: number) => {
   return `${hour}${minute}${second}`;
 };
 
+// hhmmss 형태에서 시간, 분을 추출하는 함수
+export const extractHourMinuteFromHHMM = (time: string) => {
+  const [hour, minute] = [time.substring(0, 2), time.substring(2, 4)];
+
+  return {
+    hour,
+    minute,
+  };
+};
+
 // hhmmss -> hh:mm 변환 함수
 export const convertTimeToHHMM = (time: string) => {
-  const [hour, minute] = [time.substring(0, 2), time.substring(2, 4)];
+  const { hour, minute } = extractHourMinuteFromHHMM(time);
 
   return `${hour}:${minute}`;
 };

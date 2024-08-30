@@ -1,4 +1,4 @@
-import { Pageable, Sort } from "@/types/common";
+import type { Pageable, Sort } from "@/types/common";
 
 /**
  * 예약 상태 코드
@@ -8,7 +8,7 @@ import { Pageable, Sort } from "@/types/common";
  * cancel: 예약 취소 (사용자 직접 취소)
  * reject: 예약 반려 (관리자 취소)
  */
-type ReservationStateCode = "request" | "approve" | "cancel" | "reject";
+export type ReservationStateCode = "request" | "approve" | "cancel" | "reject";
 
 // 예약 요청 시 request Type
 export type ReservationRequest = {
@@ -27,17 +27,17 @@ export type ReservationResponse = {
   rsvtId: number; // 1;
   useCnts: string; // "마태1순 순모임";
   cpsCd: string; // "PTK";
-  bldCd: string; // "PTK_PTK";  제외
+  bldCd: string; // "PTK_PTK";
   plcCd: string; // "PTK_PTK_0303";
   rsvtDt: string; // "20240907";
   startTime: string; // "190000";
   endTime: string; // "210000";
   mbrId: string; // "11";
   sttCd: ReservationStateCode; // "approve";
-  crtId: string; // "11";  제외
-  crDt: string; // "2024-07-20T06:15:57";  제외
-  updId: string; // "11";  제외
-  updDt: string; // "2024-07-20T06:15:57";  제외
+  crtId: string; // "11";
+  crDt: string; // "2024-07-20T06:15:57";
+  updId: string; // "11";
+  updDt: string; // "2024-07-20T06:15:57";
 };
 
 export interface ReservationStateRequest {
