@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { fetchKakaoToken, spotOnLogin } from "@/apis/login";
+import { fetchCommunity, fetchGarret, fetchLeaf } from "@/apis/organization";
 import { getUserInfo } from "@/apis/user";
 import {
   HOME_MAIN_URL, // HOME_MAIN_URL,
@@ -10,15 +11,17 @@ import {
   LOGIN_SIGNUP_URL,
 } from "@/constants/routes";
 import useLoginStore from "@/store/loginStore";
+import useUserStore from "@/store/userStore";
 
 // /kakao/auth
 const KakaoLogin = () => {
-  const { saveKakaoToken, saveSpotOnToken, saveTokenId } = useLoginStore();
+  const { kakaoToken, saveKakaoToken, saveSpotOnToken, saveTokenId } =
+    useLoginStore();
+  const { saveUserInfo } = useUserStore();
+
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [accessCode, setAccessCode] = useState("");
-  const [kakaoToken, setKakaoToken] = useState("");
-
   useEffect(() => {
     getAccessCode();
   }, []);
@@ -31,7 +34,7 @@ const KakaoLogin = () => {
 
   useEffect(() => {
     if (kakaoToken.length > 0) {
-      loginCheck();
+      getSpotOnToken();
     }
   }, [kakaoToken]);
 
@@ -48,12 +51,11 @@ const KakaoLogin = () => {
 
     if (token) {
       saveKakaoToken(token);
-      setKakaoToken(token);
     }
   };
 
   /** 카카오 로그인이 된 이후에 spotOn 로그인 시도 */
-  const loginCheck = async () => {
+  const getSpotOnToken = async () => {
     // 추후 api에서 token 값 전달받을 예정
     const { status, token, tokenId } = await spotOnLogin(kakaoToken);
 
@@ -64,10 +66,38 @@ const KakaoLogin = () => {
     // 회원가입이 된 경우 && 승인이 된 경우
     else if (status === 200) {
       const info = await getUserInfo(tokenId);
+      const { cmtCd, garCd, leafCd } = info;
+      let cmtNm, garNm, leafNm;
+      (await fetchCommunity()).map((elem: any) => {
+        if (elem.cmtCd === cmtCd) {
+          console.log("cmtNm", elem.cmtNm);
+          cmtNm = elem.cmtNm;
+        }
+      });
+      (await fetchGarret(cmtCd)).map((elem: any) => {
+        if (elem.garCd === garCd) {
+          console.log("garNm", elem.garNm);
+          garNm = elem.garNm;
+        }
+      });
+      (await fetchLeaf(cmtCd, garCd)).map((elem: any) => {
+        if (elem.leafCd === leafCd) {
+          console.log("leafNm", elem.leafNm);
+          leafNm = elem.leafNm;
+        }
+      });
+      const userInfo = {
+        ...info,
+        cmtNm,
+        garNm,
+        leafNm,
+      };
+      console.log("check : ", userInfo);
+
+      // 로그인 후 정보 저장
+      saveUserInfo(userInfo);
       saveSpotOnToken(token);
-      saveTokenId(tokenId);
-      console.log("info response check ", info);
-      navigate(HOME_MAIN_URL);
+      saveTokenId(tokenId);      navigate(HOME_MAIN_URL);
     }
     // 회원가입이 된 경우 && 승인이 안된 경우
     else if (status === 400) {

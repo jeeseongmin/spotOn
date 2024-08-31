@@ -128,17 +128,19 @@ const Dropdown = ({
 
       <button
         type="button"
-        className={`absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull disabled:bg-white-dull disabled:text-gray-black ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
+        className={`disabled:text-gray-black absolute top-0 z-40 flex h-10 w-full select-none flex-row items-center justify-between gap-4 rounded-sm border border-gray-500 bg-white px-3 py-2.5 font-light disabled:border-gray-dull disabled:bg-white-dull ${selectedOption ? "text-black" : "font-light text-gray-middle"}`}
         onClick={() => {
           if (!disabled) optionsModal.onToggle();
         }}
         disabled={disabled}
       >
-        <span className={`text-sm`}>
+        <span
+          className={`w-10/12 truncate whitespace-nowrap text-left text-sm`}
+        >
           {selectedOption ? selectedOption : placeholder}
         </span>
         {!disabled && (
-          <Button variant="icon" className="w-auto">
+          <Button variant="icon" className="absolute right-2 w-auto">
             {optionsModal.isOpen ? (
               <SlArrowUp size={14} className="py-0 text-xl text-gray-600" />
             ) : (

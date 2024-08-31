@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, useState } from "react";
 
 import dayjs, { type Dayjs } from "dayjs";
 import "dayjs/locale/ko";
@@ -10,12 +10,13 @@ import Button from "@/components/Button";
 import Layout from "@/components/Layout";
 import ReservationModal from "@/components/Modal/ReservationModal";
 import { MYPAGE_MAIN_URL } from "@/constants/routes";
-import { user } from "@/dummy/user";
 import useModal from "@/hooks/useModal";
 import Banner from "@/pages/Reservation/components/Banner";
 import ReservationDetails from "@/pages/Reservation/components/ReservationDetails";
 import ReservationInfo from "@/pages/Reservation/components/ReservationInfo";
 import ReservationTab from "@/pages/Reservation/components/ReservationTab";
+import useLoginStore from "@/store/loginStore";
+import useUserStore from "@/store/userStore";
 import type { Place } from "@/types/place";
 import { ReservationRequest } from "@/types/reservation";
 import { cn } from "@/utils/cn";
@@ -39,7 +40,22 @@ interface ReservationFormValues {
 }
 
 const ReservationPage = () => {
+  const { tokenId } = useLoginStore();
+  const userInfo = useUserStore();
+  const loginInfo = useLoginStore();
   const reservationModal = useModal();
+  const [user] = useState({
+    id: loginInfo.tokenId,
+    userName: userInfo.userName,
+    telNo: userInfo.telNo,
+    cmtCd: userInfo.cmtCd,
+    garCd: userInfo.garCd,
+    leafCd: userInfo.leafCd,
+    cmtNm: userInfo.cmtNm,
+    garNm: userInfo.garNm,
+    leafNm: userInfo.leafNm,
+  });
+
   const methods = useForm<ReservationFormValues>({
     defaultValues: {
       date: dayjs(),
@@ -76,7 +92,7 @@ const ReservationPage = () => {
                 type: "endTime",
                 times: getValues("time"),
               }),
-              mbrId: "11", // 임시 멤버 id => 추후 로그인 유저 id 정보로 변경 예정
+              mbrId: tokenId, // 임시 멤버 id => 추후 로그인 유저 id 정보로 변경 예정
             };
             reservation(reservationRequest);
           })}

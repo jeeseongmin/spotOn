@@ -46,8 +46,6 @@ export const spotOnLogin = async (kakaoToken: string) => {
       token: kakaoToken,
     });
 
-    console.log(res, res.headers["access-token"]);
-
     return {
       status: res.status,
       token: res.headers["access-token"],

@@ -2,12 +2,17 @@ import { PropsWithChildren } from "react";
 
 import { useLocation } from "react-router-dom";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MenuModal from "@/components/Modal/MenuModal";
 import { pageTitle } from "@/constants/common";
+import useLoginCheck from "@/hooks/useLoginCheck";
 import useModal from "@/hooks/useModal";
+import useLoginStore from "@/store/loginStore";
 
 const Layout = ({ children }: PropsWithChildren) => {
+  const { kakaoToken } = useLoginStore();
+  useLoginCheck(kakaoToken);
   const location = useLocation();
   const pageName = location.pathname.split("/")[1];
   const mainTitle = pageTitle[pageName].mainTitle;
@@ -34,6 +39,7 @@ const Layout = ({ children }: PropsWithChildren) => {
 
         {children}
       </div>
+      <Footer />
       {menuModal.isOpen && <MenuModal onClose={menuModal.onClose} />}
     </div>
   );
