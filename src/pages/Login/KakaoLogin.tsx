@@ -6,7 +6,7 @@ import { fetchKakaoToken, spotOnLogin } from "@/apis/login";
 import { fetchCommunity, fetchGarret, fetchLeaf } from "@/apis/organization";
 import { getUserInfo } from "@/apis/user";
 import {
-  HOME_MAIN_URL,
+  HOME_MAIN_URL, // HOME_MAIN_URL,
   LOGIN_QR_URL,
   LOGIN_SIGNUP_URL,
 } from "@/constants/routes";
@@ -22,7 +22,6 @@ const KakaoLogin = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [accessCode, setAccessCode] = useState("");
-
   useEffect(() => {
     getAccessCode();
   }, []);
@@ -98,9 +97,7 @@ const KakaoLogin = () => {
       // 로그인 후 정보 저장
       saveUserInfo(userInfo);
       saveSpotOnToken(token);
-      saveTokenId(tokenId);
-
-      navigate(HOME_MAIN_URL);
+      saveTokenId(tokenId);      navigate(HOME_MAIN_URL);
     }
     // 회원가입이 된 경우 && 승인이 안된 경우
     else if (status === 400) {
