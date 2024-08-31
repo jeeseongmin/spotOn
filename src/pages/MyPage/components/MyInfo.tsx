@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { fetchCommunity, fetchGarret, fetchLeaf } from "@/apis/organization";
+import { updateUserInfo } from "@/apis/user";
 import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import Input from "@/components/Input/Input";
@@ -10,7 +11,9 @@ import InputLabel from "@/components/Label/InputLabel";
 import AlertModal from "@/components/Modal/AlertModal";
 import useModal from "@/hooks/useModal";
 import MyPageWrapper from "@/pages/MyPage/components/MyPageLayout";
+import useLoginStore from "@/store/loginStore";
 import useUserStore from "@/store/userStore";
+import { UpdateUserInfoRequest } from "@/types/user";
 
 const MyInfo = () => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -36,6 +39,8 @@ const MyInfo = () => {
         },
       },
     });
+  const { tokenId } = useLoginStore();
+  const { email, roleId, saveUserInfo } = useUserStore();
   const [communityList, setCommunityList] = useState([]);
   const [garretList, setGarretList] = useState([]);
   const [leafList, setLeafList] = useState([]);
@@ -119,9 +124,35 @@ const MyInfo = () => {
     setLeafList(cp);
   };
 
+  // 취소
   const cancel = () => {
     setIsDisabled(true);
     reset();
+  };
+
+  // 유저 정보를 업데이트
+  const updateInfo = async (updateUserInfoRequest: UpdateUserInfoRequest) => {
+    try {
+      await updateUserInfo(tokenId, updateUserInfoRequest);
+      saveUserInfo({
+        cmtCd: updateUserInfoRequest.cmtCd, // 공동체 코드
+        cpsCd: updateUserInfoRequest.cpsCd, // 캠퍼스 코드
+        garCd: updateUserInfoRequest.garCd, // 다락방 코드
+        leafCd: updateUserInfoRequest.leafCd, // 순 코드
+        email: updateUserInfoRequest.email,
+        cmtNm: updateUserInfoRequest.cmtNm, // 공동체명
+        garNm: updateUserInfoRequest.garNm, // 다락방명
+        leafNm: updateUserInfoRequest.leafNm, //순명
+        roleId, // 역할명
+        telNo: updateUserInfoRequest.telNo, // 전화번호
+        userName: updateUserInfoRequest.userName, // 사용자 이름
+      });
+
+      modal.onOpen();
+      setIsDisabled(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -131,7 +162,20 @@ const MyInfo = () => {
         onSubmit={handleSubmit(data => {
           console.log(data);
           console.log("모달 오픈 이벤트");
-          modal.onOpen();
+          updateInfo({
+            provider: "kakao",
+            userName: data.name,
+            email: email ? email : "123@kakao.com",
+            telNo: data.phone,
+            cpsCd: "PTK",
+            cmtCd: data.cmt.id,
+            garCd: data.gar.id,
+            leafCd: data.leaf.id,
+            cmtNm: data.cmt.name,
+            garNm: data.gar.name,
+            leafNm: data.leaf.name,
+            token: "",
+          });
         })}
       >
         <div className="flex flex-col gap-2">

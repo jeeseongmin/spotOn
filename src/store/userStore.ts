@@ -8,6 +8,7 @@ const initialState: UserState = {
   cmtCd: "", // 공동체 코드
   garCd: "", // 다락방 코드
   leafCd: "", // 순 코드
+  email: "", // default email
   cmtNm: "", // 공동체명
   garNm: "", // 다락방명
   leafNm: "", // 순명
@@ -26,6 +27,7 @@ const useUserStore = create(
           cpsCd: userInfo.cpsCd, // 캠퍼스 코드
           garCd: userInfo.garCd, // 다락방 코드
           leafCd: userInfo.leafCd, // 순 코드
+          email: userInfo.email,
           cmtNm: userInfo.cmtNm, // 공동체명
           garNm: userInfo.garNm, // 다락방명
           leafNm: userInfo.leafNm, //순명
@@ -39,6 +41,7 @@ const useUserStore = create(
           cpsCd: "",
           garCd: "",
           leafCd: "",
+          email: "",
           cmtNm: "",
           garNm: "",
           leafNm: "",

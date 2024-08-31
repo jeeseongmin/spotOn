@@ -23,3 +23,18 @@ export interface UserStateRequest {
   userId: string;
   userStateCode: "00" | "01" | "07" | "08" | "09";
 }
+
+export interface UpdateUserInfoRequest {
+  provider: "kakao";
+  token: string;
+  userName: string;
+  email: string;
+  telNo: string;
+  cpsCd: string; // "PTK";
+  cmtCd: string; // "FAITH";
+  garCd: string; // "MATTHEW";
+  leafCd: string; // "MATTHEW_01";
+  cmtNm: string; // "FAITH";
+  garNm: string; // "MATTHEW";
+  leafNm: string; // "MATTHEW_01";
+}

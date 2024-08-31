@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/apis/core";
-import type { UserStateRequest } from "@/types/user";
+import type { UpdateUserInfoRequest, UserStateRequest } from "@/types/user";
 
 export const putUserState = async (userStateRequest: UserStateRequest) => {
   try {
@@ -20,6 +20,21 @@ export const getUserInfo = async (spotOnToken: string) => {
     );
 
     return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 회원정보 수정 api
+export const updateUserInfo = async (
+  tokenId: string,
+  updateUserInfoRequest: UpdateUserInfoRequest,
+) => {
+  try {
+    await axiosInstance.put(
+      `/user-service/api/v1/users/info/${tokenId}`,
+      updateUserInfoRequest,
+    );
   } catch (error) {
     console.error(error);
   }
