@@ -3,10 +3,10 @@ import type { Pageable, Sort } from "@/types/common";
 /**
  * 예약 상태 코드
  *
- * request: 예약 대기
- * approve: 예약 승인
+ * request: 승인 대기
+ * approve: 승인 완료
  * cancel: 예약 취소 (사용자 직접 취소)
- * reject: 예약 반려 (관리자 취소)
+ * reject: 승인 반려 (관리자 취소)
  */
 export type ReservationStateCode = "request" | "approve" | "cancel" | "reject";
 

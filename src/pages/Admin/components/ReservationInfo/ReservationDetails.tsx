@@ -41,8 +41,12 @@ const ReservationDetails = ({ reservation }: ReservationDetailsProps) => {
     return `${convertTimeRangeToHHMM(startTime, endTime)} ${convertTimeToText(end - start)}`;
   };
 
-  const getOrganization = (cmtNm: string, garNm: string, leafNm: string) =>
-    `${cmtNm} > ${garNm} > ${leafNm}`;
+  const getOrganization = (cmtNm: string, garNm: string, leafNm: string) => {
+    const garretName = garNm ? ` > ${garNm}` : "";
+    const leafName = leafNm ? ` > ${leafNm}` : "";
+
+    return cmtNm + garretName + leafName;
+  };
 
   return (
     <>

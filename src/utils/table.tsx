@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
+import { RESERVATION_STATE } from "@/constants/common";
 import type {
   ReservationByState,
   ReservationStateCode,
@@ -37,24 +38,35 @@ export const getTableBody = (
 
 export const getReservationBodyData = (
   reservation: ReservationByState,
-  type: ReservationStateCode,
-  method1: () => void,
-  method2: () => void,
+  stateCode: ReservationStateCode,
+  detailsMethod?: () => void,
+  approveMethod?: () => void,
+  rejectMethod?: () => void,
 ) => {
-  const { rsvtDt, startTime, endTime, plcCd, plcNm, userName, useCnts, cmtNm } =
-    reservation;
+  const {
+    rsvtDt,
+    startTime,
+    endTime,
+    plcCd,
+    plcNm,
+    userName,
+    sttCd,
+    useCnts,
+    cmtNm,
+  } = reservation;
+
   const methodColumn =
-    type === "request"
+    stateCode === "approve"
       ? [
-          { data: "승인", method: method1 },
-          { data: "거절", method: method2 },
-        ]
-      : [
-          { data: "상세", method: method1 },
+          { data: "상세", method: detailsMethod },
           {
             data: <RiDeleteBin6Line size={16} className="text-red" />,
-            method: method2,
+            method: rejectMethod,
           },
+        ]
+      : [
+          { data: "승인", method: approveMethod },
+          { data: "거절", method: rejectMethod },
         ];
 
   return [
@@ -63,6 +75,7 @@ export const getReservationBodyData = (
     { data: formatLocationWithFloor(plcCd, plcNm) },
     { data: cmtNm },
     { data: userName },
+    { data: RESERVATION_STATE[sttCd] },
     { data: useCnts },
     ...methodColumn,
   ];

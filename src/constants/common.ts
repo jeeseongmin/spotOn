@@ -31,6 +31,8 @@ export const pageTitle: PageTitleProps = {
 };
 
 export const RESERVATION_STATE: { [key: string]: string } = {
-  request: "승인대기",
-  approve: "승인완료",
+  request: "승인 대기",
+  approve: "승인 완료",
+  reject: "승인 반려",
+  cancel: "예약 취소",
 };

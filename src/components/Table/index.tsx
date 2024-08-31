@@ -3,7 +3,7 @@ import { ComponentPropsWithRef } from "react";
 import { VariantProps, cva } from "class-variance-authority";
 
 import Button from "@/components/Button";
-import { CellInfo } from "@/types/table";
+import type { CellInfo } from "@/types/table";
 import { cn } from "@/utils/cn";
 
 const tableContentCSS = cva("", {
@@ -48,7 +48,10 @@ const Table = ({ header, body }: TableProps) => {
                     <td className="border border-gray-middle">
                       <Button
                         variant="underlined"
-                        className="text-nowrap text-xs text-primary"
+                        className={cn(
+                          "text-nowrap text-xs text-primary",
+                          item.data === "거절" && "text-gray-dark",
+                        )}
                         onClick={item.method}
                       >
                         {item.data}
