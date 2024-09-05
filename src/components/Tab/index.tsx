@@ -81,7 +81,7 @@ const Tab = ({
     [children, activeTabIndex, variant],
   );
 
-  const activeContent = items[activeTabIndex].props.children;
+  const activeContent = items[activeTabIndex]?.props.children;
 
   return (
     <div className="w-full">

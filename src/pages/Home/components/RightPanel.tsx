@@ -1,6 +1,5 @@
 import Tab from "@/components/Tab";
 import DailyReservationList from "@/pages/Home/components/DailyReservationList";
-import MyReservationList from "@/pages/Home/components/MyReservationList";
 
 const RightPanel = () => {
   return (
@@ -8,9 +7,6 @@ const RightPanel = () => {
       <Tab variant="underlined">
         <Tab.Item label="예약 현황">
           <DailyReservationList />
-        </Tab.Item>
-        <Tab.Item label="나의 예약">
-          <MyReservationList />
         </Tab.Item>
       </Tab>
     </div>
