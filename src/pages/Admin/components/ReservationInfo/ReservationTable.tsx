@@ -117,7 +117,7 @@ const ReservationTable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservations]);
 
-  if (reservations.length === 0) {
+  if (reservations.length === 0 && !alertModal.isOpen) {
     return (
       <div className="flex h-20 items-center justify-center">
         <div>예약 내역이 없습니다.</div>

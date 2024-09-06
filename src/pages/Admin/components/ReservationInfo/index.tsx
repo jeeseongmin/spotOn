@@ -20,15 +20,23 @@ const ReservationInfo = () => {
   >("all");
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const [requestCount, setRequestCount] = useState(0);
 
   const getReservations = async () => {
-    const { content, totalPages } = await postReservationsByState(
-      page,
-      10,
-      selectedFilter,
-    );
+    const { content, totalElements, totalPages } =
+      await postReservationsByState(page, 10, selectedFilter);
     setReservations(content);
     setPageCount(totalPages);
+    selectedFilter === "request" && setRequestCount(totalElements);
+  };
+
+  const getRequestCount = async () => {
+    const { totalElements } = await postReservationsByState(
+      page,
+      10,
+      "request",
+    );
+    setRequestCount(totalElements);
   };
 
   const handleClickFilterButton = (e: MouseEvent<HTMLButtonElement>) => {
@@ -42,22 +50,24 @@ const ReservationInfo = () => {
 
   const updateReservations = () => {
     getReservations();
-    console.log("update");
   };
-
-  console.log("reservations", reservations);
 
   useEffect(() => {
     getReservations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFilter, page]);
 
+  useEffect(() => {
+    getRequestCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex w-full flex-col gap-4 p-4 text-base text-black">
       <div className="relative flex gap-2">
         <TableFilterButton
           data-filter="all"
-          active={selectedFilter === "all"}
+          isActive={selectedFilter === "all"}
           onClick={handleClickFilterButton}
         >
           전체
@@ -67,7 +77,8 @@ const ReservationInfo = () => {
           <TableFilterButton
             data-filter={type}
             className="px-2 text-small"
-            active={selectedFilter === type}
+            isActive={selectedFilter === type}
+            isNew={type === "request" && requestCount > 0}
             onClick={handleClickFilterButton}
           >
             {name}
