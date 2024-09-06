@@ -55,19 +55,26 @@ export const getReservationBodyData = (
     cmtNm,
   } = reservation;
 
-  const methodColumn =
-    stateCode === "approve"
-      ? [
+  const getMethodColumn = (stateCode: ReservationStateCode) => {
+    switch (stateCode) {
+      case "approve":
+        return [
           { data: "상세", method: detailsMethod },
           {
             data: <RiDeleteBin6Line size={16} className="text-red" />,
             method: rejectMethod,
           },
-        ]
-      : [
+        ];
+      case "reject":
+      case "request":
+        return [
           { data: "승인", method: approveMethod },
           { data: "거절", method: rejectMethod },
         ];
+      default:
+        return [{ data: "" }, { data: "" }];
+    }
+  };
 
   return [
     { data: dayjs(rsvtDt).locale("ko").format("YYYY / MM / DD (ddd)") },
@@ -77,6 +84,6 @@ export const getReservationBodyData = (
     { data: userName },
     { data: RESERVATION_STATE[sttCd] },
     { data: useCnts },
-    ...methodColumn,
+    ...getMethodColumn(stateCode),
   ];
 };
