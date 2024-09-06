@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  postReservationsByState,
-  putReservationState,
-} from "@/apis/reservation";
+import { putReservationState } from "@/apis/reservation";
 import Button from "@/components/Button";
 import AlertModal from "@/components/Modal/AlertModal";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
@@ -37,10 +34,13 @@ const reservationTableHeader = [
 const header = getTableHeader(reservationTableHeader);
 
 interface ReservationTable {
-  type?: ReservationStateCode | "all";
+  reservations: ReservationByState[];
+  updateReservations: () => void;
 }
-const ReservationTable = ({ type = "all" }: ReservationTable) => {
-  const [reservations, setReservations] = useState<ReservationByState[]>([]);
+const ReservationTable = ({
+  reservations,
+  updateReservations,
+}: ReservationTable) => {
   const [reservationBody, setReservationBody] = useState<CellInfo[][]>([]);
   const [selectedReservation, setSelectedReservation] =
     useState<ReservationByState | null>(null);
@@ -51,16 +51,12 @@ const ReservationTable = ({ type = "all" }: ReservationTable) => {
   const confirmRejectModal = useModal();
   const alertModal = useModal();
 
-  const getReservations = async () => {
-    const { content } = await postReservationsByState(0, 10, type);
-    setReservations(content);
-  };
-
   const changeReservationState = async (
     rsvtId: number,
     sttCd: ReservationStateCode,
   ) => {
     await putReservationState({ rsvtId, sttCd });
+    updateReservations();
   };
 
   const handleConfirmApprove = () => {
@@ -88,16 +84,9 @@ const ReservationTable = ({ type = "all" }: ReservationTable) => {
   };
 
   useEffect(() => {
-    if (alertModal.isOpen) return;
-    getReservations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, alertModal.isOpen]);
-
-  useEffect(() => {
-    if (reservations.length === 0) return;
-
     const reservationTableBody = reservations.map(reservation => {
       const { sttCd } = reservation;
+
       const showReservationModal = () => {
         setSelectedReservation(reservation);
         reservationModal.onOpen();
@@ -127,6 +116,14 @@ const ReservationTable = ({ type = "all" }: ReservationTable) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservations]);
+
+  if (reservations.length === 0) {
+    return (
+      <div className="flex h-20 items-center justify-center">
+        <div>예약 내역이 없습니다.</div>
+      </div>
+    );
+  }
 
   return (
     <>

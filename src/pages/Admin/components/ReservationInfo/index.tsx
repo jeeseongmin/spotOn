@@ -1,8 +1,10 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 
+import { postReservationsByState } from "@/apis/reservation";
+import Pagination from "@/components/Pagination";
 import ReservationTable from "@/pages/Admin/components/ReservationInfo/ReservationTable";
 import TableFilterButton from "@/pages/Admin/components/TableFilterButton";
-import { ReservationStateCode } from "@/types/reservation";
+import { ReservationByState, ReservationStateCode } from "@/types/reservation";
 
 const filterButtons = [
   { name: "승인 요청", type: "request" },
@@ -12,9 +14,22 @@ const filterButtons = [
 ];
 
 const ReservationInfo = () => {
+  const [reservations, setReservations] = useState<ReservationByState[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<
     ReservationStateCode | "all"
   >("all");
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+
+  const getReservations = async () => {
+    const { content, totalPages } = await postReservationsByState(
+      page,
+      10,
+      selectedFilter,
+    );
+    setReservations(content);
+    setPageCount(totalPages);
+  };
 
   const handleClickFilterButton = (e: MouseEvent<HTMLButtonElement>) => {
     const filterType = e.currentTarget.dataset.filter as
@@ -22,7 +37,20 @@ const ReservationInfo = () => {
       | "all";
 
     setSelectedFilter(filterType);
+    setPage(0);
   };
+
+  const updateReservations = () => {
+    getReservations();
+    console.log("update");
+  };
+
+  console.log("reservations", reservations);
+
+  useEffect(() => {
+    getReservations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFilter, page]);
 
   return (
     <div className="flex w-full flex-col gap-4 p-4 text-base text-black">
@@ -46,8 +74,14 @@ const ReservationInfo = () => {
           </TableFilterButton>
         ))}
       </div>
-      <div className="bg-white px-3 py-4">
-        <ReservationTable type={selectedFilter} />
+      <div className="flex flex-col items-center gap-6 bg-white px-3 py-4">
+        <ReservationTable
+          reservations={reservations}
+          updateReservations={updateReservations}
+        />
+        {pageCount > 0 && (
+          <Pagination count={pageCount} page={page} onChange={setPage} />
+        )}
       </div>
     </div>
   );
