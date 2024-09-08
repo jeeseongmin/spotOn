@@ -25,7 +25,7 @@ export const getUserInfo = async (spotOnToken: string) => {
   }
 };
 
-export const postUsers = async (
+export const postUsersByState = async (
   page: number = 0,
   size: number = 10,
   userStateCode: string = "",
