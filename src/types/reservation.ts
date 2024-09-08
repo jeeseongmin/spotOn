@@ -1,12 +1,14 @@
+import type { Pageable, Sort } from "@/types/common";
+
 /**
  * 예약 상태 코드
  *
- * request: 예약 대기
- * approve: 예약 승인
+ * request: 승인 대기
+ * approve: 승인 완료
  * cancel: 예약 취소 (사용자 직접 취소)
- * reject: 예약 반려 (관리자 취소)
+ * reject: 승인 반려 (관리자 취소)
  */
-type ReservationStateCode = "request" | "approve" | "cancel" | "reject";
+export type ReservationStateCode = "request" | "approve" | "cancel" | "reject";
 
 // 예약 요청 시 request Type
 export type ReservationRequest = {
@@ -66,4 +68,34 @@ export interface DailyReservationData {
 export interface DailyReservation {
   day: string;
   data: DailyReservationData[];
+}
+
+export interface ReservationByState
+  extends Omit<
+    ReservationResponse,
+    "bldCd" | "crtId" | "crDt" | "updId" | "updDt"
+  > {
+  plcNm: string;
+  userName: string;
+  telNo: string;
+  cmtCd: string;
+  cmtNm: string;
+  garCd: string;
+  garNm: string;
+  leafCd: string;
+  leafNm: string;
+}
+
+export interface ReservationsByStateResponse {
+  content: ReservationByState[];
+  pageable: Pageable;
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  sort: Sort;
+  first: boolean;
+  numberOfElements: number;
+  size: number;
+  number: number;
+  empty: boolean;
 }

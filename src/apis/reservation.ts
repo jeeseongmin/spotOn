@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/apis/core";
-import {
+import type {
   ReservationRequest,
   ReservationStateRequest,
   ReservedPlacesRequest,
@@ -34,8 +34,10 @@ export const putReservationState = async ({
   rsvtId,
   sttCd,
 }: ReservationStateRequest) => {
+  const endPoint = sttCd === "approve" ? "approve" : "cancel";
+
   try {
-    await axiosInstance.put(`/portal-service/api/v1/reservation/${sttCd}`, {
+    await axiosInstance.put(`/portal-service/api/v1/reservation/${endPoint}`, {
       rsvtId,
       sttCd,
     });
@@ -76,6 +78,32 @@ export const getMonthlyReservation = async (date: string) => {
         params: {
           cpsCd: "PTK",
           rsvtDt: date,
+        },
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const postReservationsByState = async (
+  page: number = 0,
+  size: number = 10,
+  sttCd: string = "",
+) => {
+  try {
+    const res = await axiosInstance.post(
+      "/portal-service/api/v1/reservation/list/page",
+      {
+        cpsCd: "PTK",
+        sttCd,
+      },
+      {
+        params: {
+          page,
+          size,
         },
       },
     );

@@ -9,7 +9,7 @@ interface ReservationFieldProps {
   value: string;
 }
 
-const ReservationField = ({ label, value }: ReservationFieldProps) => (
+export const ReservationField = ({ label, value }: ReservationFieldProps) => (
   <div className="flex border-b border-b-gray-middle p-4 text-base font-light">
     <div className="min-w-20 text-primary">{label}</div>
     <div>{value}</div>

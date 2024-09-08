@@ -10,6 +10,27 @@ export interface User {
   leafCd: string;
 }
 
+export type UserResponse = {
+  cmtCd: string;
+  cmtNm: string;
+  cpsCd: string;
+  createdDate: string;
+  email: string;
+  garCd: string;
+  garNm: string;
+  lastLoginDate: string;
+  laefCd: string;
+  leafNm: string;
+  loginFailCount: number;
+  roleId: string;
+  roleName: string;
+  telNo: string;
+  userId: string;
+  userName: string;
+  userStateCode: string;
+  userStateCodeName: string;
+};
+
 /**
  * 사용자 상태 코드
  *
@@ -19,9 +40,22 @@ export interface User {
  * 08: 탈퇴
  * 09: 삭제
  */
+export type UserStateCode = "00" | "01" | "07" | "08" | "09";
 export interface UserStateRequest {
   userId: string;
-  userStateCode: "00" | "01" | "07" | "08" | "09";
+  userStateCode: string;
+}
+
+export interface UserByState
+  extends Omit<UserResponse, "bldCd" | "crtId" | "crDt" | "updId" | "updDt"> {
+  userName: string;
+  telNo: string;
+  cmtCd: string;
+  cmtNm: string;
+  garCd: string;
+  garNm: string;
+  leafCd: string;
+  leafNm: string;
 }
 
 export interface UpdateUserInfoRequest {

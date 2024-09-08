@@ -14,14 +14,14 @@ const DailyReservationList = () => {
   );
 
   const [dailyReservations, setDailyReservations] = useState(
-    monthlyReservations.filter((reservation: DailyReservation) => {
+    monthlyReservations?.filter((reservation: DailyReservation) => {
       return date.date() === dayjs(reservation.day).date();
     })[0],
   );
 
   useEffect(() => {
     setDailyReservations(
-      monthlyReservations.filter((reservation: DailyReservation) => {
+      monthlyReservations?.filter((reservation: DailyReservation) => {
         return date.date() === dayjs(reservation.day).date();
       })[0],
     );

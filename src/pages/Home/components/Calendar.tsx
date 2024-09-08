@@ -112,7 +112,7 @@ const Calendar = () => {
             {week.map(day => {
               const isCurrentMonth = dayjs(date).month() === day.month();
               const isInactive = !isCurrentMonth;
-              const dailyReservation = monthlyReservations.filter(
+              const dailyReservation = monthlyReservations?.filter(
                 (reservation: DailyReservation) =>
                   day.date() === dayjs(reservation.day).date() && !isInactive,
               );

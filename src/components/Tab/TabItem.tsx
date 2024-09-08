@@ -28,7 +28,6 @@ export interface TabItemProps
   label?: string;
   icon?: IconType;
   isActive?: boolean;
-  isNew?: boolean;
 }
 
 const TabItem = ({
@@ -36,7 +35,6 @@ const TabItem = ({
   label = "",
   icon,
   isActive = false,
-  isNew,
   className,
   ...props
 }: TabItemProps) => {
@@ -61,11 +59,6 @@ const TabItem = ({
         />
       ) : (
         label
-      )}
-      {isNew && (
-        <div className="absolute -right-3 -top-3 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white">
-          N
-        </div>
       )}
     </button>
   );

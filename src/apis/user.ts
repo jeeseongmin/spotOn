@@ -39,3 +39,29 @@ export const updateUserInfo = async (
     console.error(error);
   }
 };
+
+export const postUsersByState = async (
+  page: number = 0,
+  size: number = 10,
+  userStateCode: string = "",
+) => {
+  try {
+    const res = await axiosInstance.post(
+      "/user-service/api/v1/users/list/page",
+      {
+        cpsCd: "PTK",
+        userStateCode,
+      },
+      {
+        params: {
+          page,
+          size,
+        },
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

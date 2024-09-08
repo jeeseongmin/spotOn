@@ -21,7 +21,7 @@ export const convertMinuteToText = (time: number) => {
 
 /**
  * 시간을 숫자로 받아 시간, 분을 텍스트로 변환하는 함수
- * @example convertTimeToText(2.5) → "2시간 30분"
+ * @example convertTimeToText(2.5) → "(2시간 30분)"
  */
 export const convertTimeToText = (time: number) => {
   const totalHour = Math.floor(time);
