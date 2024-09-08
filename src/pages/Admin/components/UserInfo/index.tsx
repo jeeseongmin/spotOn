@@ -1,45 +1,93 @@
-import { VscRefresh } from "react-icons/vsc";
+import { MouseEvent, useEffect, useState } from "react";
 
-import Button from "@/components/Button";
-import Input from "@/components/Input/Input";
-import Tab from "@/components/Tab";
+import { postUsersByState } from "@/apis/user";
+import Pagination from "@/components/Pagination";
+import TableFilterButton from "@/pages/Admin/components/TableFilterButton";
 import UserTable from "@/pages/Admin/components/UserInfo/UserTable";
+import { ReservationStateCode } from "@/types/reservation";
+
+const filterButtons = [
+  { name: "승인 요청", type: "00" },
+  { name: "승인 완료", type: "01" },
+];
 
 const UserInfo = () => {
+  const [users, setUsers] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState<
+    ReservationStateCode | ""
+  >("");
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const [requestCount, setRequestCount] = useState(0);
+
+  const getUsers = async () => {
+    const { content, totalElements, totalPages } = await postUsersByState(
+      page,
+      10,
+      selectedFilter,
+    );
+    setUsers(content);
+    setPageCount(totalPages);
+    selectedFilter === "request" && setRequestCount(totalElements);
+  };
+
+  const getRequestCount = async () => {
+    const { totalElements } = await postUsersByState(page, 10, "00");
+    setRequestCount(totalElements);
+  };
+
+  const handleClickFilterButton = (e: MouseEvent<HTMLButtonElement>) => {
+    const filterType = e.currentTarget.dataset.filter as
+      | ReservationStateCode
+      | "";
+
+    setSelectedFilter(filterType);
+    setPage(0);
+  };
+
+  const updateUsers = () => {
+    getUsers();
+  };
+
+  useEffect(() => {
+    getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFilter, page]);
+
+  useEffect(() => {
+    getRequestCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div>
-      {/* header */}
-      <div className="relative flex p-4">
-        <Tab variant="solid" className="mt-4 flex" querystringKey="subTab">
-          <Tab.Item label="승인 요청" className="px-2 text-small">
-            <UserTable />
-          </Tab.Item>
-          <Tab.Divider />
-          <Tab.Item label="전체"></Tab.Item>
-          <Tab.Item label="일반"></Tab.Item>
-          <Tab.Item label="관리자"></Tab.Item>
-        </Tab>
-        <div className="absolute right-4 flex w-fit items-center gap-8">
-          <div className="w-fit min-w-[340px] max-w-96">
-            <Input
-              placeholder="이름/공동체/순/연락처/권한 으로 검색하세요"
-              className="w-full text-base "
-              isSearch={true}
-            />
-          </div>
-          <div className="">
-            <Button
-              variant="custom"
-              className="font- flex h-10 w-16 flex-row items-center gap-1 font-normal text-black"
-            >
-              <VscRefresh className="text-primary" />
-              초기화
-            </Button>
-          </div>
-        </div>
+    <div className="flex w-full flex-col gap-4 p-4 text-base text-black">
+      <div className="relative flex gap-2">
+        <TableFilterButton
+          data-filter=""
+          isActive={selectedFilter === ""}
+          onClick={handleClickFilterButton}
+        >
+          전체
+        </TableFilterButton>
+        <div className="mx-1 border-r border-gray-dull"></div>
+        {filterButtons.map(({ name, type }) => (
+          <TableFilterButton
+            data-filter={type}
+            className="px-2 text-small"
+            isActive={selectedFilter === type}
+            isNew={type === "request" && requestCount > 0}
+            onClick={handleClickFilterButton}
+          >
+            {name}
+          </TableFilterButton>
+        ))}
       </div>
-      {/* body */}
-      <div></div>
+      <div className="flex flex-col items-center gap-6 bg-white px-3 py-4">
+        <UserTable users={users} updateUsers={updateUsers} />
+        {pageCount > 0 && (
+          <Pagination count={pageCount} page={page} onChange={setPage} />
+        )}
+      </div>
     </div>
   );
 };

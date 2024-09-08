@@ -7,6 +7,7 @@ import type {
   ReservationStateCode,
 } from "@/types/reservation";
 import type { CellInfo } from "@/types/table";
+import { UserByState } from "@/types/user";
 import {
   convertTimeRangeToHHMM,
   formatLocationWithFloor,
@@ -66,6 +67,7 @@ export const getReservationBodyData = (
           },
         ];
       case "reject":
+        return [{}, {}];
       case "request":
         return [
           { data: "승인", method: approveMethod },
@@ -85,5 +87,57 @@ export const getReservationBodyData = (
     { data: RESERVATION_STATE[sttCd] },
     { data: useCnts },
     ...getMethodColumn(stateCode),
+  ];
+};
+
+export const getUserBodyData = (
+  user: UserByState,
+  detailsMethod?: () => void,
+  approveMethod?: () => void,
+  rejectMethod?: () => void,
+) => {
+  const {
+    createdDate,
+    userName,
+    telNo,
+    cmtNm,
+    garNm,
+    leafNm,
+    userStateCodeName,
+    userStateCode,
+  } = user;
+
+  const getMethodColumn = (stateCode: string) => {
+    switch (stateCode) {
+      // 대기
+      case "00":
+        return [
+          { data: "승인", method: approveMethod },
+          { data: "거절", method: rejectMethod },
+        ];
+
+      // 정상 (승인 완료)
+      case "01":
+        return [
+          { data: "상세", method: detailsMethod },
+          {
+            data: <RiDeleteBin6Line size={16} className="text-red" />,
+            method: rejectMethod,
+          },
+        ];
+      default:
+        return [{ data: "" }, { data: "" }];
+    }
+  };
+
+  return [
+    { data: userName },
+    { data: cmtNm },
+    { data: garNm },
+    { data: leafNm },
+    { data: telNo },
+    { data: userStateCodeName },
+    { data: dayjs(createdDate).locale("ko").format("YYYY / MM / DD (ddd)") },
+    ...getMethodColumn(userStateCode),
   ];
 };
