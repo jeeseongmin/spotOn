@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build && echo '/* /index.html 200' | cat > dist/_redirects",
+    "dev": "vite --mode development",
+    "build:dev": "tsc && vite build --mode development && echo '/* /index.html 200' | cat > dist/_redirects",
+    "build:prd": "tsc && vite build --mode production && echo '/* /index.html 200' | cat > dist/_redirects",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "storybook": "storybook dev -p 6006",
     "preview": "vite preview",
