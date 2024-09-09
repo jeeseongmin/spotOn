@@ -35,7 +35,7 @@ const ModalLayout = ({
 
   return (
     <div
-      className="fixed left-0 top-0 z-40 h-full w-full transition delay-150 ease-in-out"
+      className="fixed left-0 top-0 z-50 h-full w-full transition delay-150 ease-in-out"
       {...props}
     >
       <div className={cn(modalCSS({ variant }), className)}>{children}</div>

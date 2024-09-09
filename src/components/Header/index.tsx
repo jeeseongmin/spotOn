@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { HiUserCircle } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/images/logo.png";
 import Button from "@/components/Button";
+import ConfirmModal from "@/components/Modal/ConfirmModal";
 import {
   ADMIN_MAIN_URL,
   HOME_MAIN_URL,
@@ -29,12 +30,13 @@ const Header = ({ onOpen }: HeaderProps) => {
 
   const profileRef = useRef<HTMLDivElement>(null);
   const profileModal = useModal();
+  const [alertMessage] = useState("정말 로그아웃하시겠습니까?");
+  const confirmModal = useModal();
 
   useOutSideClick(profileRef, () => profileModal.onClose());
 
   const spotOnLogout = () => {
-    // 나중에 팝업 만들기
-    alert("로그아웃됩니다.");
+    confirmModal.onOpen();
     // 유저 정보 지우기
     resetUserInfo();
     // 서비스 로그아웃
@@ -87,7 +89,7 @@ const Header = ({ onOpen }: HeaderProps) => {
               <Button
                 variant="custom"
                 className="h-10 w-28 text-small text-gray-500 hover:bg-primary hover:text-white"
-                onClick={() => spotOnLogout()}
+                onClick={() => confirmModal.onOpen()}
               >
                 로그아웃
               </Button>
@@ -101,6 +103,15 @@ const Header = ({ onOpen }: HeaderProps) => {
           <RxHamburgerMenu size={26} />
         </Button>
       </div>
+      {confirmModal.isOpen && (
+        <ConfirmModal
+          title="로그아웃"
+          onConfirm={spotOnLogout}
+          onClose={confirmModal.onClose}
+        >
+          {alertMessage}
+        </ConfirmModal>
+      )}
     </nav>
   );
 };
