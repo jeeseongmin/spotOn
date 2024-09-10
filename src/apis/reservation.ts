@@ -113,3 +113,25 @@ export const postReservationsByState = async (
     console.error(error);
   }
 };
+
+// 사용자 별 예약 목록 가져오기
+export const getReservationByUsers = async (
+  page: number = 0,
+  size: number = 10,
+  userId: string = "",
+) => {
+  try {
+    const res = await axiosInstance.post(
+      `/portal-service/api/v1/reservation/list/page?page=${page}&size=${size}`,
+      {
+        cpsCd: "PTK",
+        sttCd: "",
+        userId,
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
