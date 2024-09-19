@@ -10,7 +10,8 @@ const tabItemCSS = cva("", {
     variant: {
       enclosed:
         "w-40 rounded-t-[5px] border border-b-0 border-gray-middle bg-gray-light py-2",
-      underlined: "grow border-b-2 border-gray-middle py-6 text-gray-middle",
+      underlined:
+        "grow border-b-2 border-gray-middle py-4 text-base text-gray-middle",
       solid: "rounded-sm border border-gray-middle p-1.5",
     },
     active: {
