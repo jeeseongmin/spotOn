@@ -28,7 +28,7 @@ const DailyReservationList = () => {
   }, [date, monthlyReservations]);
 
   return (
-    <div className="flex h-fit max-h-[225px] w-full flex-col items-center justify-start gap-4 overflow-y-scroll px-2 py-4 md:h-[540px] md:py-8">
+    <div className="flex h-fit max-h-[225px] w-full flex-col items-center justify-start gap-4 overflow-y-scroll px-2 py-4 md:h-[540px] md:max-h-full md:py-8">
       <ReservationCard
         key={date.format("MM / DD")}
         date={`${date.format("MM / DD")} (${daysOfTheWeek[date.day()]})`}
