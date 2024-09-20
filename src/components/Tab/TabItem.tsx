@@ -5,7 +5,7 @@ import { IconType } from "react-icons";
 
 import { cn } from "@/utils/cn";
 
-const tabItemCSS = cva("", {
+const tabItemCSS = cva("text-base", {
   variants: {
     variant: {
       enclosed:

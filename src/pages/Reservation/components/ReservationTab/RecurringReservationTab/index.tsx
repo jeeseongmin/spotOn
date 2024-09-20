@@ -39,9 +39,9 @@ const RecurringReservationTab = () => {
 
   return (
     <ReservationTabLayout>
-      <ReservationTabLayout.Left title="날짜 선택" type="recurring">
+      <ReservationTabLayout.Left title="날짜 선택">
         <div className="mt-6 flex flex-col gap-6">
-          <div className="flex w-full items-center gap-10">
+          <div className="flex h-20 w-full flex-col gap-4 md:h-auto md:flex-row md:items-center md:gap-10">
             <div className="min-w-16">시작 날짜</div>
             <Controller
               name="startDate"
@@ -58,9 +58,9 @@ const RecurringReservationTab = () => {
               )}
             />
           </div>
-          <div className="flex w-full items-center gap-10 ">
+          <div className="flex w-full flex-col gap-4 md:flex-row md:gap-10">
             <div
-              className={` flex h-full min-w-16 justify-start gap-2 ${getValues("repeatType") && getValues("repeatType") !== "daily" && "items-start pt-3"}`}
+              className={` flex h-full min-w-16 justify-start gap-2 ${getValues("repeatType") && getValues("repeatType") !== "daily" && "items-start md:pt-3"}`}
             >
               반복 <span className="text-red-500">*</span>
             </div>
@@ -77,7 +77,7 @@ const RecurringReservationTab = () => {
               )}
             />
           </div>
-          <div className="flex w-full items-center gap-10 ">
+          <div className="flex h-20 w-full flex-col gap-4 md:h-auto md:flex-row md:items-center md:gap-10">
             <div className="min-w-16">종료 날짜</div>
 
             <div className="flex w-full flex-row gap-2">
@@ -96,7 +96,7 @@ const RecurringReservationTab = () => {
           </div>
         </div>
       </ReservationTabLayout.Left>
-      <ReservationTabLayout.Right title="시간 선택" type="recurring">
+      <ReservationTabLayout.Right title="시간 선택">
         <Controller
           name="time"
           control={control}

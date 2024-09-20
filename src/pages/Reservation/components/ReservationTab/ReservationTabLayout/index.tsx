@@ -7,18 +7,14 @@ import { cn } from "@/utils/cn";
 interface LayoutProps extends PropsWithRequiredChildren {
   title: string;
   errorMessage?: string;
-  type?: string;
   isLabel?: boolean;
 }
 
-const Left = ({ children, title, type }: LayoutProps) => {
-  const recurringStyle = "w-1/2";
-
+const Left = ({ children, title }: LayoutProps) => {
   return (
     <div
       className={cn(
-        `flex flex-col gap-2 border-r border-r-gray-middle px-12 py-4`,
-        type === "recurring" && recurringStyle,
+        "flex w-full flex-col gap-2 border-b border-gray-middle p-4 md:w-1/2 md:border-b-0 md:border-r md:px-12",
       )}
     >
       <ReservationLabel>{title}</ReservationLabel>
@@ -27,13 +23,12 @@ const Left = ({ children, title, type }: LayoutProps) => {
   );
 };
 
-const Right = ({ children, title, type }: LayoutProps) => {
-  const generalStyle = "w-full";
-  const recurringStyle = "w-1/2";
-
+const Right = ({ children, title }: LayoutProps) => {
   return (
     <div
-      className={`flex flex-col gap-2 px-8 py-4 ${type === "recurring" ? recurringStyle : generalStyle}`}
+      className={cn(
+        "flex max-h-96 w-full flex-col gap-2 p-4 md:z-0 md:w-1/2 md:px-12",
+      )}
     >
       <ReservationLabel>{title}</ReservationLabel>
       {children}
@@ -47,7 +42,7 @@ const Bottom = ({
   errorMessage,
   isLabel = false,
 }: LayoutProps) => (
-  <div className="flex flex-col gap-2 px-12 py-4">
+  <div className="flex flex-col gap-2 p-4 md:px-12">
     <div className="flex gap-6">
       <ReservationLabel>{title}</ReservationLabel>
       {children ? (
@@ -67,7 +62,7 @@ const Bottom = ({
         <div className="text-small text-red-light">{errorMessage}</div>
       )}
     </div>
-    {children}
+    <div className="overflow-x-auto">{children}</div>
   </div>
 );
 
@@ -77,7 +72,7 @@ const ReservationTabLayout = ({ children }: PropsWithRequiredChildren) => {
 
   return (
     <div>
-      <div className="flex h-96 border-b border-b-gray-middle">
+      <div className="flex h-fit flex-col border-b border-b-gray-middle md:h-96 md:flex-row">
         {leftChildren}
         {rightChildren}
       </div>

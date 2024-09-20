@@ -141,7 +141,7 @@ const TimeTablePicker = ({
   };
 
   return (
-    <div className="flex h-16 w-full justify-between">
+    <div className="flex h-16 w-full min-w-[544px] justify-between">
       <TimeTableHead />
       {hours.map(hour => {
         const firstHalfHourStatus = getTimeStatus(hour);

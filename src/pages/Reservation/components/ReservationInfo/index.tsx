@@ -40,7 +40,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
   const isShow = getValues("time").length !== 0 && getValues("place");
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull px-12 py-4 text-black shadow">
+    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull p-4 text-black shadow md:px-12">
       <div className="flex gap-6">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
