@@ -48,7 +48,7 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
       setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
     } else {
       changeUserState("01", selectedUser?.userId);
-      setAlertMessage("예약이 승인되었습니다.");
+      setAlertMessage("가입이 승인되었습니다.");
     }
 
     alertModal.onOpen();
@@ -60,7 +60,7 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
       setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
     } else {
       changeUserState("00", selectedUser?.userId);
-      setAlertMessage("예약이 반려되었습니다.");
+      setAlertMessage("가입이 반려되었습니다.");
     }
 
     alertModal.onOpen();
@@ -96,7 +96,7 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
       <Table header={header} body={userBody} />
       {userModal.isOpen && (
         <UserModal onClose={userModal.onClose}>
-          <UserModal.Header>예약 상세 정보</UserModal.Header>
+          <UserModal.Header>회원 상세 정보</UserModal.Header>
           <UserModal.Content>
             {selectedUser && <UserDetails user={selectedUser} />}
           </UserModal.Content>
@@ -110,20 +110,20 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
 
       {confirmApproveModal.isOpen && (
         <ConfirmModal
-          title="예약 승인"
+          title="회원 가입 승인"
           onConfirm={handleConfirmApprove}
           onClose={confirmApproveModal.onClose}
         >
-          해당 예약을 승인하려면 확인 버튼을 클릭하세요.
+          해당 회원을 승인하려면 확인 버튼을 클릭하세요.
         </ConfirmModal>
       )}
       {confirmRejectModal.isOpen && (
         <ConfirmModal
-          title="예약 반려"
+          title="회원 가입 반려"
           onConfirm={handleConfirmReject}
           onClose={confirmRejectModal.onClose}
         >
-          해당 예약을 반려하려면 확인 버튼을 클릭하세요.
+          해당 회원을 반려하려면 확인 버튼을 클릭하세요.
         </ConfirmModal>
       )}
       {alertModal.isOpen && (
