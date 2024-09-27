@@ -18,14 +18,16 @@ const InfoLabel = ({
   isRequired = false,
   ...props
 }: InfoInput) => (
-  <div className="flex items-center gap-2">
+  <div className="flex flex-col gap-2 md:flex-row md:items-center">
     <InputLabel
       text={label}
       isRequired={isRequired}
       className="min-w-20 text-base text-primary"
       {...props}
     />
-    {children}
+    <div className="flex grow flex-col flex-wrap gap-1 md:flex-row">
+      {children}
+    </div>
   </div>
 );
 
@@ -41,7 +43,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull p-4 text-black shadow md:px-12">
-      <div className="flex gap-6">
+      <div className="flex flex-col gap-6 md:flex-row">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
           <div className="text-small text-red-light">
@@ -51,13 +53,13 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
       </div>
       {isShow && (
         <>
-          <div className="flex grow gap-9">
+          <div className="flex flex-col gap-9 md:flex-row">
             <InfoLabel label="예약자" htmlFor="name">
               <Input
                 id="name"
                 disabled
                 defaultValue={user.userName}
-                className="border-gray-middle"
+                className="w-40 border-gray-middle"
               />
             </InfoLabel>
             <InfoLabel label="연락처" htmlFor="telNo">
@@ -98,17 +100,15 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
               />
             </InfoLabel>
           </div>
-          <div className="flex grow gap-6">
-            <InfoLabel label="사용 목적" isRequired htmlFor="purpose">
-              <Input
-                id="purpose"
-                placeholder="사용 목적을 입력하세요 (최대 15자)"
-                maxLength={15}
-                className="w-[31rem] border-gray-middle"
-                {...register("purpose", { required: true, maxLength: 15 })}
-              />
-            </InfoLabel>
-          </div>
+          <InfoLabel label="사용 목적" isRequired htmlFor="purpose">
+            <Input
+              id="purpose"
+              placeholder="사용 목적을 입력하세요 (최대 15자)"
+              maxLength={15}
+              className="border-gray-middle md:w-60"
+              {...register("purpose", { required: true, maxLength: 15 })}
+            />
+          </InfoLabel>
         </>
       )}
     </div>

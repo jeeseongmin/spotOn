@@ -43,7 +43,7 @@ const Bottom = ({
   isLabel = false,
 }: LayoutProps) => (
   <div className="flex flex-col gap-2 p-4 md:px-12">
-    <div className="flex gap-6">
+    <div className="flex flex-col gap-6 md:flex-row">
       <ReservationLabel>{title}</ReservationLabel>
       {children ? (
         isLabel && (
