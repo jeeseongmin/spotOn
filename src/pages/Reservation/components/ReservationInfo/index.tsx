@@ -18,11 +18,11 @@ const InfoLabel = ({
   isRequired = false,
   ...props
 }: InfoInput) => (
-  <div className="flex items-center gap-2">
+  <div className="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
     <InputLabel
       text={label}
       isRequired={isRequired}
-      className="min-w-20 text-base text-primary"
+      className="text-base text-primary md:min-w-20"
       {...props}
     />
     {children}
@@ -40,7 +40,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
   const isShow = getValues("time").length !== 0 && getValues("place");
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull p-4 text-black shadow md:px-12">
+    <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull p-4 text-black shadow lg:px-12">
       <div className="flex gap-6">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
@@ -51,7 +51,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
       </div>
       {isShow && (
         <>
-          <div className="flex grow gap-9">
+          <div className="flex grow flex-col items-start gap-9 lg:flex-row lg:items-center">
             <InfoLabel label="예약자" htmlFor="name">
               <Input
                 id="name"
@@ -61,14 +61,14 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
               />
             </InfoLabel>
             <InfoLabel label="연락처" htmlFor="telNo">
-              <div className="flex items-center gap-1">
+              <div className="flex flex-col items-start gap-1 lg:flex-row lg:items-center">
                 {user.telNo.split("-").map((number, index, origin) => (
                   <Fragment key={number}>
                     <Input
                       id="telNo"
                       disabled
                       defaultValue={number}
-                      className="w-14 border-gray-middle"
+                      className="w-full border-gray-middle lg:w-14"
                     />
                     {index !== origin.length - 1 && <div>-</div>}
                   </Fragment>
@@ -76,25 +76,25 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
               </div>
             </InfoLabel>
           </div>
-          <div className="flex grow gap-6">
+          <div className="flex grow flex-col items-start gap-6 lg:flex-row lg:items-center">
             <InfoLabel label="소속" htmlFor="community">
               <Input
                 id="cmtCd"
                 disabled
                 defaultValue={user.cmtNm}
-                className="w-40 border-gray-middle"
+                className="w-full border-gray-middle lg:w-40"
               />
               <Input
                 id="garCd"
                 disabled
                 defaultValue={user.garNm}
-                className="w-40 border-gray-middle"
+                className="w-full border-gray-middle lg:w-40"
               />
               <Input
                 id="leafCd"
                 disabled
                 defaultValue={user.leafNm}
-                className="w-40 border-gray-middle"
+                className="w-full border-gray-middle lg:w-40"
               />
             </InfoLabel>
           </div>
@@ -104,7 +104,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
                 id="purpose"
                 placeholder="사용 목적을 입력하세요 (최대 15자)"
                 maxLength={15}
-                className="w-[31rem] border-gray-middle"
+                className="w-full border-gray-middle lg:w-[31rem]"
                 {...register("purpose", { required: true, maxLength: 15 })}
               />
             </InfoLabel>
