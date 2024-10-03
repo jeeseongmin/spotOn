@@ -43,11 +43,11 @@ const Bottom = ({
   isLabel = false,
 }: LayoutProps) => (
   <div className="flex flex-col gap-2 p-4 md:px-12">
-    <div className="flex gap-6">
+    <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
       <ReservationLabel>{title}</ReservationLabel>
       {children ? (
         isLabel && (
-          <div className="flex flex-1 justify-end gap-4 text-small font-light">
+          <div className="mb-4 flex flex-1 justify-start gap-4 text-small font-light lg:mb-0 lg:justify-end">
             <div className="flex flex-row items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-red-light"></div>
               <div>예약 불가</div>
