@@ -17,11 +17,15 @@ const Header = ({ children }: PropsWithRequiredChildren) => (
 );
 
 const Content = ({ children, className }: ModalContentProps) => (
-  <div className={cn("p-4", className)}>{children}</div>
+  <div className={cn("max-h-[70vh] overflow-y-scroll p-4", className)}>
+    {children}
+  </div>
 );
 
 const Footer = ({ children }: PropsWithRequiredChildren) => (
-  <div className="flex items-center justify-center gap-4 pb-8">{children}</div>
+  <div className="flex h-fit items-center justify-center gap-4 pb-8 pt-4">
+    {children}
+  </div>
 );
 
 const ReservationModal = ({ children, onClose }: ReservationModalProps) => {
@@ -30,7 +34,7 @@ const ReservationModal = ({ children, onClose }: ReservationModalProps) => {
 
   return (
     <ModalLayout variant="primary" onClose={onClose}>
-      <div className="w-[507px]">
+      <div className="flex h-full min-w-60 flex-col md:w-[507px]">
         {headerChildren}
         {contentChildren}
         {footerChildren}

@@ -25,7 +25,9 @@ const InfoLabel = ({
       className="text-base text-primary md:min-w-20"
       {...props}
     />
-    {children}
+    <div className="flex grow flex-col flex-wrap gap-1 md:flex-row">
+      {children}
+    </div>
   </div>
 );
 
@@ -57,7 +59,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
                 id="name"
                 disabled
                 defaultValue={user.userName}
-                className="border-gray-middle"
+                className="w-40 border-gray-middle"
               />
             </InfoLabel>
             <InfoLabel label="연락처" htmlFor="telNo">
