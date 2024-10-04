@@ -1,9 +1,17 @@
 import { ComponentPropsWithRef } from "react";
 
 import { VariantProps, cva } from "class-variance-authority";
+import ReactDOM from "react-dom";
 
 import BGInModal from "@/components/Modal/BGInModal";
+import { PropsWithRequiredChildren } from "@/types/common";
 import { cn } from "@/utils/cn";
+
+const ModalPortal = ({ children }: PropsWithRequiredChildren) => {
+  const element = document.getElementById("modal-root") as HTMLElement;
+
+  return ReactDOM.createPortal(children, element);
+};
 
 const modalCSS = cva("", {
   variants: {
@@ -34,13 +42,15 @@ const ModalLayout = ({
   const { variant } = props;
 
   return (
-    <div
-      className="fixed left-0 top-0 z-50 h-full max-h-screen w-full transition delay-150 ease-in-out"
-      {...props}
-    >
-      <div className={cn(modalCSS({ variant }), className)}>{children}</div>
-      <BGInModal onClick={onClose} />
-    </div>
+    <ModalPortal>
+      <div
+        className="fixed left-0 top-0 z-50 h-full max-h-screen w-full transition delay-150 ease-in-out"
+        {...props}
+      >
+        <div className={cn(modalCSS({ variant }), className)}>{children}</div>
+        <BGInModal onClick={onClose} />
+      </div>
+    </ModalPortal>
   );
 };
 
