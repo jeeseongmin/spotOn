@@ -158,7 +158,7 @@ const MyInfo = () => {
   return (
     <MyPageWrapper>
       <form
-        className="flex w-96 flex-col gap-4 py-24"
+        className="flex w-96 flex-col gap-4 px-8 py-24 md:px-0"
         onSubmit={handleSubmit(data => {
           console.log(data);
           console.log("모달 오픈 이벤트");
@@ -203,8 +203,12 @@ const MyInfo = () => {
           />
         </div>
         <div className="flex w-full flex-col gap-2">
-          <InputLabel text="소속" htmlFor="belong" isRequired={true} />
-          <div className="grid grid-cols-3 gap-2">
+          <InputLabel
+            text="소속 (공동체-다락방-순)"
+            htmlFor="belong"
+            isRequired={true}
+          />
+          <div className="grid grid-rows-3 gap-2 md:grid-cols-3">
             <Controller
               control={control}
               name="cmt"
@@ -237,22 +241,25 @@ const MyInfo = () => {
                 />
               )}
             />
-            <Controller
-              control={control}
-              name="leaf"
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, value } }) => (
-                <Dropdown
-                  category="leaf"
-                  options={leafList}
-                  disabled={isDisabled || leafList.length === 0}
-                  onChangeOption={onChange}
-                  selectedOption={value.name}
-                />
-              )}
-            />
+            {/* 보여지는 조건 : 수정모드여야 한다. or leafNm이 존재해야한다. */}
+            {(!isDisabled || leafNm !== "") && (
+              <Controller
+                control={control}
+                name="leaf"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <Dropdown
+                    category="leaf"
+                    options={leafList}
+                    disabled={isDisabled || leafList.length === 0}
+                    onChangeOption={onChange}
+                    selectedOption={value.name}
+                  />
+                )}
+              />
+            )}
           </div>
         </div>
         <div className="mt-12 text-center">

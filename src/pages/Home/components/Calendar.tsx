@@ -101,7 +101,7 @@ const Calendar = () => {
   );
 
   return (
-    <table className="flex h-full w-full border-collapse flex-col">
+    <table className="flex h-full w-full border-collapse flex-col overflow-x-auto">
       <CalendarHead />
       <tbody className="flex flex-1 flex-col">
         {getWeeks(firstDayOfMonth).map(week => (

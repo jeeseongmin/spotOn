@@ -51,16 +51,16 @@ const Schedule = () => {
   }, [firstDayOfMonth]);
 
   return (
-    <div className="h-[622px] flex-1 overflow-hidden rounded-[2px] border border-gray-light px-4 py-6">
-      <div className="relative flex h-full w-full flex-col gap-6">
+    <div className="h-[622px] flex-1 overflow-hidden rounded-[2px] border border-gray-light px-4 py-3 md:py-6">
+      <div className="relative flex h-full w-full flex-col gap-3 md:gap-6">
         {/* Date Select Action */}
-        <div className="flex h-8 items-center justify-center gap-12">
+        <div className="flex h-8 items-center justify-center gap-2 lg:gap-12">
           <Button variant="custom" onClick={goPreviousMonth}>
-            <SlArrowLeft size={13} />
+            <SlArrowLeft className="text-xs md:text-small" />
           </Button>
           <DropdownYearMonthPicker
             years={scheduleYears}
-            className="flex text-xl font-light leading-5"
+            className="flex text-base font-light leading-5 md:text-xl"
             onClick={setDate}
           />
           <Button variant="custom" onClick={goNextMonth}>
@@ -71,7 +71,7 @@ const Schedule = () => {
             <Button
               variant="custom"
               onClick={resetCalendar}
-              className="h-8 border border-primary px-4 text-primary drop-shadow-none hover:bg-primary hover:text-white"
+              className="h-8 border border-primary px-2 text-small text-primary drop-shadow-none hover:bg-primary hover:text-white md:text-base lg:px-4"
             >
               오늘
             </Button>

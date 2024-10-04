@@ -25,7 +25,7 @@ const DatePicker = ({ startDate, date, limit, onChange }: DatePickerProps) => {
     setFirstDayOfMonth(firstDayOfMonth.date(firstDayOfMonth.daysInMonth() + 1));
 
   return (
-    <div className="flex w-full select-none flex-col gap-2 text-small">
+    <div className="flex w-full select-none flex-col gap-2 overflow-x-auto text-small">
       <div className="flex items-center justify-center gap-2">
         <Button variant="custom" onClick={goPreviousMonth}>
           <SlArrowLeft size={10} />

@@ -22,7 +22,7 @@ const PlacePicker = ({
       : false;
 
   return (
-    <div className="overflow-auto rounded-sm bg-white px-4">
+    <div className="h-full overflow-y-scroll rounded-sm bg-white px-4">
       {placesByFloor.map(({ floor, places }, index) => (
         <div
           key={floor}

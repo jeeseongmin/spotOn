@@ -10,8 +10,8 @@ const LoginLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="mx-auto my-auto flex h-screen w-max items-center justify-center overflow-scroll">
-      <section className="flex h-[641px] w-[953px] flex-row rounded-[5px] border border-gray-light shadow-md">
-        <div className="relative h-full w-[466px] ">
+      <section className="flex h-[641px] w-auto flex-row rounded-[5px] border border-gray-light shadow-md lg:w-[953px]">
+        <div className="relative hidden h-full w-[466px] lg:block">
           <img
             src={login}
             className="h-full w-full rounded-l-[5px] object-cover"
@@ -32,7 +32,7 @@ const LoginLayout = ({ children }: PropsWithChildren) => {
           </div>
         </div>
 
-        <div className="flex h-full w-1/2 flex-col items-center justify-center px-12">
+        <div className="flex h-full w-auto flex-col items-center justify-center px-12 lg:w-1/2">
           {children}
         </div>
       </section>

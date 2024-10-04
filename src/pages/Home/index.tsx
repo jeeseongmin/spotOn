@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="flex flex-row justify-between gap-6 pb-32">
+      <div className="flex flex-col justify-between gap-6 pb-32 md:flex-row">
         <Schedule />
         <RightPanel />
       </div>
