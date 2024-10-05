@@ -51,7 +51,7 @@ const Schedule = () => {
   }, [firstDayOfMonth]);
 
   return (
-    <div className="h-[622px] flex-1 overflow-hidden rounded-[2px] border border-gray-light px-4 py-3 md:py-6">
+    <div className="h-[622px] rounded-[2px] border border-gray-light px-4 py-3 md:flex-1 md:py-6">
       <div className="relative flex h-full w-full flex-col gap-3 md:gap-6">
         {/* Date Select Action */}
         <div className="flex h-8 items-center justify-center gap-2 lg:gap-12">
