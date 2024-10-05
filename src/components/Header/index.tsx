@@ -47,7 +47,7 @@ const Header = ({ onOpen }: HeaderProps) => {
   };
 
   return (
-    <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-12 shadow-sm md:px-20 lg:px-32 xl:px-60">
+    <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-4 shadow-sm sm:px-12 md:px-20 lg:px-32 xl:px-60">
       <Button
         variant="custom"
         className="h-[45px] w-[96px]"

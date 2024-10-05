@@ -31,7 +31,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div className="relative h-full">
       <Header onOpen={menuModal.onOpen} />
-      <div className="3xl:px-96 px-12 pt-8 md:px-20 lg:px-32 xl:px-60">
+      <div className="3xl:px-96 px-4 pt-8 sm:px-12 md:px-20 lg:px-32 xl:px-60">
         <div className="mb-10 flex flex-col gap-2">
           <MainTitle>{mainTitle}</MainTitle>
           <SubTitle>{subTitle}</SubTitle>
