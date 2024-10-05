@@ -14,7 +14,7 @@ const Left = ({ children, title }: LayoutProps) => {
   return (
     <div
       className={cn(
-        "flex w-full flex-col gap-2 border-b border-gray-middle p-4 md:w-1/2 md:border-b-0 md:border-r md:px-12",
+        "flex w-full flex-col gap-2 border-b border-gray-middle p-4 md:w-1/2 md:border-b-0 md:border-r lg:px-12",
       )}
     >
       <ReservationLabel>{title}</ReservationLabel>
@@ -27,7 +27,7 @@ const Right = ({ children, title }: LayoutProps) => {
   return (
     <div
       className={cn(
-        "flex max-h-96 w-full flex-col gap-2 p-4 md:z-0 md:w-1/2 md:px-12",
+        "flex max-h-96 w-full flex-col gap-2 p-4 md:z-0 md:w-1/2 lg:px-12",
       )}
     >
       <ReservationLabel>{title}</ReservationLabel>
@@ -42,7 +42,7 @@ const Bottom = ({
   errorMessage,
   isLabel = false,
 }: LayoutProps) => (
-  <div className="flex flex-col gap-2 p-4 md:px-12">
+  <div className="flex h-fit flex-col p-4 lg:px-12">
     <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
       <ReservationLabel>{title}</ReservationLabel>
       {children ? (

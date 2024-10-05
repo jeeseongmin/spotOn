@@ -43,7 +43,7 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
 
   return (
     <div className="flex w-full flex-col gap-4 rounded-sm border border-gray-middle bg-white-dull p-4 text-black shadow lg:px-12">
-      <div className="flex gap-6">
+      <div className="flex flex-col gap-2 lg:flex-row lg:gap-6">
         <ReservationLabel>예약자 정보 입력</ReservationLabel>
         {!isShow && (
           <div className="text-small text-red-light">
@@ -63,14 +63,14 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
               />
             </InfoLabel>
             <InfoLabel label="연락처" htmlFor="telNo">
-              <div className="flex flex-col items-start gap-1 lg:flex-row lg:items-center">
+              <div className="flex items-center gap-1">
                 {user.telNo.split("-").map((number, index, origin) => (
                   <Fragment key={number}>
                     <Input
                       id="telNo"
                       disabled
                       defaultValue={number}
-                      className="w-full border-gray-middle lg:w-14"
+                      className="w-[80px] border-gray-middle lg:w-14"
                     />
                     {index !== origin.length - 1 && <div>-</div>}
                   </Fragment>
