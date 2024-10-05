@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { HiUserCircle } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
 import Logo from "@/assets/images/logo.png";
 import Button from "@/components/Button";
@@ -26,7 +27,9 @@ const Header = ({ onOpen }: HeaderProps) => {
   const navigate = useNavigate();
 
   const { logout } = useLoginStore();
-  const { resetUserInfo } = useUserStore();
+  const [resetUserInfo, roleId] = useUserStore(
+    useShallow(state => [state.resetUserInfo, state.roleId]),
+  );
 
   const profileRef = useRef<HTMLDivElement>(null);
   const profileModal = useModal();
@@ -44,7 +47,7 @@ const Header = ({ onOpen }: HeaderProps) => {
   };
 
   return (
-    <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-12 shadow-sm md:px-20 lg:px-32 xl:px-60 2xl:px-96">
+    <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-12 shadow-sm md:px-20 lg:px-32 xl:px-60">
       <Button
         variant="custom"
         className="h-[45px] w-[96px]"
@@ -61,14 +64,15 @@ const Header = ({ onOpen }: HeaderProps) => {
         >
           예약하기
         </Button>
-        <Button
-          variant="custom"
-          className="text-gray-500"
-          onClick={() => navigate(ADMIN_MAIN_URL)}
-        >
-          통합관리
-        </Button>
-
+        {roleId === "ROLE_ADMIN" && (
+          <Button
+            variant="custom"
+            className="text-gray-500"
+            onClick={() => navigate(ADMIN_MAIN_URL)}
+          >
+            통합관리
+          </Button>
+        )}
         <div ref={profileRef} className="relative">
           <Button
             onClick={profileModal.onToggle}

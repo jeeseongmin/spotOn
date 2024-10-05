@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { TfiClose } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
 import Button from "@/components/Button";
 import ModalLayout from "@/components/Layout/ModalLayout";
@@ -21,7 +22,9 @@ type MenuModalProps = {
 const MenuModal = ({ onClose }: MenuModalProps) => {
   const navigate = useNavigate();
   const { logout } = useLoginStore();
-  const { resetUserInfo } = useUserStore();
+  const [resetUserInfo, roleId] = useUserStore(
+    useShallow(state => [state.resetUserInfo, state.roleId]),
+  );
   const [alertMessage] = useState("정말 로그아웃하시겠습니까?");
   const confirmModal = useModal();
 
@@ -50,13 +53,15 @@ const MenuModal = ({ onClose }: MenuModalProps) => {
       >
         예약하기
       </Button>
-      <Button
-        variant="custom"
-        onClick={() => navigate(ADMIN_MAIN_URL)}
-        className="delay-50 h-14 w-full border-b border-gray-200 px-4 text-left text-gray-500 transition ease-in-out hover:bg-gray-300 hover:text-white"
-      >
-        통합 관리
-      </Button>
+      {roleId === "ROLE_ADMIN" && (
+        <Button
+          variant="custom"
+          onClick={() => navigate(ADMIN_MAIN_URL)}
+          className="delay-50 h-14 w-full border-b border-gray-200 px-4 text-left text-gray-500 transition ease-in-out hover:bg-gray-300 hover:text-white"
+        >
+          통합 관리
+        </Button>
+      )}
       <Button
         variant="custom"
         onClick={() => {
