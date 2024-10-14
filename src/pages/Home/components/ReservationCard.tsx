@@ -1,4 +1,7 @@
+import { useShallow } from "zustand/react/shallow";
+
 import { RESERVATION_STATE } from "@/constants/common";
+import useUserStore from "@/store/userStore";
 import type { DailyReservationData } from "@/types/reservation";
 import { convertTimeToHourMinuteText } from "@/utils/time";
 
@@ -8,6 +11,8 @@ type ReservationCardProps = {
 };
 
 const ReservationCard = ({ date, reservationList }: ReservationCardProps) => {
+  const [roleId] = useUserStore(useShallow(state => state.roleId));
+
   const CardHeader = () => {
     return (
       <div className="flex h-[33px] items-center rounded-t-[5px] bg-primary px-4 text-[15px] text-white">
@@ -52,9 +57,12 @@ const ReservationCard = ({ date, reservationList }: ReservationCardProps) => {
                   <td className="flex min-h-[94px] flex-col gap-1 p-2">
                     <p className="font-semibold">{plcNm}</p>
                     <p className="font-light text-gray-dark">{useCnts}</p>
-                    <p className="font-light text-gray-dark">
-                      {userName} / {telNo}
-                    </p>
+
+                    {roleId === "ROLE_ADMIN" && (
+                      <p className="font-light text-gray-dark">
+                        {userName} / {telNo}
+                      </p>
+                    )}
                   </td>
                 </tr>
               );
