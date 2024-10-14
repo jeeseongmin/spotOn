@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { useShallow } from "zustand/react/shallow";
@@ -19,6 +19,7 @@ const Schedule = () => {
     setFirstDayOfMonth,
     resetCalendar,
     setMonthlyReservations,
+    monthlyReservations,
   ] = useCalendarStore(
     useShallow(state => [
       state.date,
@@ -27,15 +28,32 @@ const Schedule = () => {
       state.setFirstDayOfMonth,
       state.resetCalendar,
       state.setMonthlyReservations,
+      state.monthlyReservations,
     ]),
   );
 
+  const [totalCount, setTotalCount] = useState(0);
+
+  useEffect(() => {
+    if (monthlyReservations.length > 0) {
+      let sum = 0;
+      monthlyReservations.map(elem => {
+        sum += elem.data.length;
+      });
+      setTotalCount(sum);
+    } else {
+      setTotalCount(0);
+    }
+  }, [monthlyReservations]);
+
   const goPreviousMonth = () => {
+    setMonthlyReservations([]);
     setFirstDayOfMonth(date.date(0).date(1));
     setDate(date.date(0).date(1));
   };
 
   const goNextMonth = () => {
+    setMonthlyReservations([]);
     setFirstDayOfMonth(date.date(date.daysInMonth() + 1));
     setDate(date.date(date.daysInMonth() + 1));
   };
@@ -78,8 +96,9 @@ const Schedule = () => {
           </div>
         </div>
         {/* tip */}
-        <div className="flex w-full justify-end">
+        <div className="flex w-full justify-between">
           <Reservation>장소 예약건</Reservation>
+          {totalCount !== 0 && <p className="text-small">총 {totalCount}건</p>}
         </div>
 
         {/* Calendar */}
