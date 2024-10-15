@@ -72,19 +72,16 @@ const KakaoLogin = () => {
       let cmtNm, garNm, leafNm;
       (await fetchCommunity()).map((elem: any) => {
         if (elem.cmtCd === cmtCd) {
-          console.log("cmtNm", elem.cmtNm);
           cmtNm = elem.cmtNm;
         }
       });
       (await fetchGarret(cmtCd)).map((elem: any) => {
         if (elem.garCd === garCd) {
-          console.log("garNm", elem.garNm);
           garNm = elem.garNm;
         }
       });
       (await fetchLeaf(cmtCd, garCd)).map((elem: any) => {
         if (elem.leafCd === leafCd) {
-          console.log("leafNm", elem.leafNm);
           leafNm = elem.leafNm;
         }
       });

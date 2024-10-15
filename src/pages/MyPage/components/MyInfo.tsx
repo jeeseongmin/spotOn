@@ -160,8 +160,6 @@ const MyInfo = () => {
       <form
         className="flex w-96 flex-col gap-4 px-8 py-24 md:px-0"
         onSubmit={handleSubmit(data => {
-          console.log(data);
-          console.log("모달 오픈 이벤트");
           updateInfo({
             provider: "kakao",
             userName: data.name,

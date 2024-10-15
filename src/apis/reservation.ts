@@ -19,12 +19,10 @@ export const fetchReservation = async (date: string, place: string) => {
 
 export const reservation = async (reservationRequest: ReservationRequest) => {
   try {
-    const res = await axiosInstance.post(
+    await axiosInstance.post(
       `/portal-service/api/v1/reservation/insert`,
       reservationRequest,
     );
-
-    console.log("reservation : ", res);
   } catch (error) {
     console.log(error);
   }
