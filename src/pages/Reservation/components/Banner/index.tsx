@@ -11,7 +11,7 @@ const Banner = () => {
   const buttonText = isOpen ? "접기" : "더보기";
 
   return (
-    <div className="flex w-full flex-col gap-1 bg-gray-middle px-12 text-small text-black">
+    <div className="flex w-full flex-col gap-1 bg-gray-middle px-4 text-small text-black md:px-12">
       <div
         className={cn(
           "flex flex-col gap-4 pt-4",

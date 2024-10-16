@@ -76,7 +76,7 @@ const ReservationPage = () => {
     <Layout>
       <FormProvider {...methods}>
         <form
-          className="flex flex-col items-center gap-8"
+          className="flex min-w-60 flex-col items-center gap-8"
           onSubmit={handleSubmit(data => {
             const reservationRequest: ReservationRequest = {
               useCnts: data.purpose,

@@ -29,9 +29,9 @@ const Layout = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-full min-w-80">
       <Header onOpen={menuModal.onOpen} />
-      <div className="3xl:px-96 px-12 pt-8 md:px-20 lg:px-32 xl:px-60 2xl:px-96">
+      <div className="px-4 pt-8 sm:px-12 md:px-20 lg:px-32 xl:px-60">
         <div className="mb-10 flex flex-col gap-2">
           <MainTitle>{mainTitle}</MainTitle>
           <SubTitle>{subTitle}</SubTitle>

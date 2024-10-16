@@ -54,6 +54,7 @@ const LoginMain = () => {
       <div className="flex flex-col items-center justify-center gap-[31px]">
         <h1 className="text-[32px] font-bold">Kakao</h1>
         <div className="text-center text-[15px]">
+          <p className="block lg:hidden">평택온누리교회 장소예약 시스템을</p>
           <p>계정과 비밀번호 입력없이</p>
           <p>카카오톡으로 로그인 해보세요.</p>
         </div>

@@ -131,7 +131,10 @@ const Dropdown = ({
   };
 
   return (
-    <div ref={dropdownRef} className="relative h-10">
+    <div
+      ref={dropdownRef}
+      className="relative h-10 min-w-fit flex-1 whitespace-nowrap"
+    >
       <div className="absolute left-0 top-11 z-40 -m-4 flex w-fit flex-col overflow-hidden p-4">
         <div
           className={cn(
@@ -167,7 +170,7 @@ const Dropdown = ({
       <button
         type="button"
         className={cn(
-          "absolute top-0 z-30 flex h-10 w-[223px] select-none items-center justify-between gap-4 rounded-sm border border-gray-middle bg-white px-3 py-2.5 text-small",
+          "absolute top-0 z-30 flex h-10 w-full select-none items-center justify-between gap-2 rounded-sm border border-gray-middle bg-white px-3 py-2.5 text-small",
           selectedOption ? "text-black" : "text-gray-dull",
         )}
         onClick={handleClickDropdown}

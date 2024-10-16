@@ -48,7 +48,7 @@ const CalendarItem = ({
   return (
     <td
       className={cn(
-        "relative flex w-full cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-base font-light text-black last-of-type:border-none",
+        "relative flex w-[14.285%] cursor-pointer flex-col items-center justify-start gap-1 border-r border-gray-light px-1 text-base font-light text-black last-of-type:border-none",
         isHeader && "h-10 items-center",
         isBody && "pt-1",
         isInactive && "text-opacity-30",

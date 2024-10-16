@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { join } from "@/apis/login";
@@ -39,12 +40,14 @@ const LoginSignUp = () => {
           id: "",
           name: "",
         },
+        isAgree: "off",
       },
     });
 
   const [communityList, setCommunityList] = useState([]);
   const [garretList, setGarretList] = useState([]);
   const [leafList, setLeafList] = useState([]);
+  const [isDetailClick, setIsDetailClick] = useState(false);
 
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -142,7 +145,6 @@ const LoginSignUp = () => {
       <form
         className="flex h-full w-96 flex-col items-center justify-between py-12 "
         onSubmit={handleSubmit(data => {
-          console.log(JSON.stringify(data));
           joinCheck({
             ...data,
             cmt: data.cmt.id,
@@ -151,7 +153,7 @@ const LoginSignUp = () => {
           });
         })}
       >
-        <div className="mb-12 flex flex-col gap-2 text-center">
+        <div className="mb-4 flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-bold">회원가입</h1>
           <p className="text-base">회원 정보를 입력해주세요.</p>
         </div>
@@ -233,9 +235,90 @@ const LoginSignUp = () => {
               />
             </div>
           </div>
+          <div className="flex w-full flex-col gap-2">
+            <div className="flex flex-col items-start justify-start">
+              <Controller
+                control={control}
+                name="isAgree"
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <div className="flex flex-row items-start gap-4 text-small">
+                    <input
+                      type="checkbox"
+                      id="private-check"
+                      className="mt-1"
+                      checked={value === "on"}
+                      disabled={!isDetailClick}
+                      onChange={() => onChange(value === "on" ? "off" : "on")}
+                    />
+                    <div>
+                      {isDetailClick ? (
+                        <div
+                          onClick={() => setIsDetailClick(false)}
+                          className="flex cursor-pointer flex-row items-start"
+                        >
+                          <div>
+                            <span className="font-bold text-primary">
+                              [개인정보 수집과 이용에 대한 동의]{" "}
+                            </span>
+                            예약자 확인을 위한 개인정보 수집과 이용에
+                            동의합니다.
+                          </div>
+                          <SlArrowUp
+                            size={16}
+                            className="ml-2 mt-1 py-0 text-xl text-gray-600"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          onClick={() => setIsDetailClick(true)}
+                          className="flex cursor-pointer flex-row items-start"
+                        >
+                          <div>
+                            <span className="font-bold text-primary">
+                              [개인정보 수집과 이용에 대한 동의]{" "}
+                            </span>
+                            예약자 확인을 위한 개인정보 수집과 이용에
+                            동의합니다.
+                          </div>
+                          <SlArrowDown
+                            size={16}
+                            className="ml-2 mt-1 py-0 text-xl text-gray-600"
+                          />
+                        </div>
+                      )}
+
+                      {isDetailClick && (
+                        <>
+                          <hr className="my-2 mr-5" />
+                          <div className="leading-5">
+                            - 수집 목적 : 예약자 확인 및 예약 정보 발송
+                          </div>
+                          <div className="leading-5">
+                            - 수집 항목 : 이름, 휴대폰 번호, 소속, 카카오톡
+                            프로필 정보
+                          </div>
+                          <div className="leading-5">
+                            - 보유 및 이용 기간 : 회원 탈퇴 시까지
+                          </div>
+                          <hr className="my-2 mr-5" />
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
+              />
+            </div>
+          </div>
         </div>
 
-        <Button variant="primary" type="submit">
+        <Button
+          variant="primary"
+          type="submit"
+          disabled={watch("isAgree") === "off"}
+        >
           회원가입
         </Button>
       </form>

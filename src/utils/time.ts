@@ -34,9 +34,11 @@ export const convertTimeToText = (time: number) => {
 };
 
 export const convertTimeToHourMinuteText = (time: string) => {
+  const convertedTime = String(time).padStart(6, "0");
+
   const [hour, minute] = [
-    time.split("").slice(0, 2).join(""),
-    time.split("").slice(2, 4).join(""),
+    convertedTime.split("").slice(0, 2).join(""),
+    convertedTime.split("").slice(2, 4).join(""),
   ];
 
   return `${hour}:${minute}`;

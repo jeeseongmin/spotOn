@@ -1,11 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { HiUserCircle } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
 import Logo from "@/assets/images/logo.png";
 import Button from "@/components/Button";
+import ConfirmModal from "@/components/Modal/ConfirmModal";
 import {
   ADMIN_MAIN_URL,
   HOME_MAIN_URL,
@@ -25,16 +27,19 @@ const Header = ({ onOpen }: HeaderProps) => {
   const navigate = useNavigate();
 
   const { logout } = useLoginStore();
-  const { resetUserInfo } = useUserStore();
+  const [resetUserInfo, roleId] = useUserStore(
+    useShallow(state => [state.resetUserInfo, state.roleId]),
+  );
 
   const profileRef = useRef<HTMLDivElement>(null);
   const profileModal = useModal();
+  const [alertMessage] = useState("정말 로그아웃하시겠습니까?");
+  const confirmModal = useModal();
 
   useOutSideClick(profileRef, () => profileModal.onClose());
 
   const spotOnLogout = () => {
-    // 나중에 팝업 만들기
-    alert("로그아웃됩니다.");
+    confirmModal.onOpen();
     // 유저 정보 지우기
     resetUserInfo();
     // 서비스 로그아웃
@@ -42,7 +47,7 @@ const Header = ({ onOpen }: HeaderProps) => {
   };
 
   return (
-    <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-12 shadow-sm md:px-20 lg:px-32 xl:px-60 2xl:px-96">
+    <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-4 shadow-sm sm:px-12 md:px-20 lg:px-32 xl:px-60">
       <Button
         variant="custom"
         className="h-[45px] w-[96px]"
@@ -59,14 +64,15 @@ const Header = ({ onOpen }: HeaderProps) => {
         >
           예약하기
         </Button>
-        <Button
-          variant="custom"
-          className="text-gray-500"
-          onClick={() => navigate(ADMIN_MAIN_URL)}
-        >
-          통합관리
-        </Button>
-
+        {roleId === "ROLE_ADMIN" && (
+          <Button
+            variant="custom"
+            className="text-gray-500"
+            onClick={() => navigate(ADMIN_MAIN_URL)}
+          >
+            통합관리
+          </Button>
+        )}
         <div ref={profileRef} className="relative">
           <Button
             onClick={profileModal.onToggle}
@@ -87,7 +93,7 @@ const Header = ({ onOpen }: HeaderProps) => {
               <Button
                 variant="custom"
                 className="h-10 w-28 text-small text-gray-500 hover:bg-primary hover:text-white"
-                onClick={() => spotOnLogout()}
+                onClick={() => confirmModal.onOpen()}
               >
                 로그아웃
               </Button>
@@ -101,6 +107,15 @@ const Header = ({ onOpen }: HeaderProps) => {
           <RxHamburgerMenu size={26} />
         </Button>
       </div>
+      {confirmModal.isOpen && (
+        <ConfirmModal
+          title="로그아웃"
+          onConfirm={spotOnLogout}
+          onClose={confirmModal.onClose}
+        >
+          {alertMessage}
+        </ConfirmModal>
+      )}
     </nav>
   );
 };

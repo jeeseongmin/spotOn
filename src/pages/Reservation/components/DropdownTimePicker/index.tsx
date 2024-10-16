@@ -51,7 +51,7 @@ const DropdownTimePicker = ({
 
   return (
     <div className="mt-6 flex flex-col gap-6">
-      <div className="flex w-full items-center gap-10">
+      <div className="flex h-20 w-full flex-col gap-4 md:h-auto md:flex-row md:items-center md:gap-8">
         <div>시작 시간</div>
         <Dropdown
           selectedOption={selectedTimes[0]}
@@ -60,7 +60,7 @@ const DropdownTimePicker = ({
           endTime={23}
         />
       </div>
-      <div className="flex w-full items-center gap-10">
+      <div className="flex h-20 w-full flex-col gap-4 md:h-auto md:flex-row md:items-center md:gap-8">
         <div>종료 시간</div>
         <Dropdown
           selectedOption={selectedTimes[1]}

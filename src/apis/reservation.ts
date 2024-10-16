@@ -19,12 +19,10 @@ export const fetchReservation = async (date: string, place: string) => {
 
 export const reservation = async (reservationRequest: ReservationRequest) => {
   try {
-    const res = await axiosInstance.post(
+    await axiosInstance.post(
       `/portal-service/api/v1/reservation/insert`,
       reservationRequest,
     );
-
-    console.log("reservation : ", res);
   } catch (error) {
     console.log(error);
   }
@@ -111,5 +109,27 @@ export const postReservationsByState = async (
     return res.data;
   } catch (error) {
     console.error(error);
+  }
+};
+
+// 사용자 별 예약 목록 가져오기
+export const getReservationByUsers = async (
+  page: number = 0,
+  size: number = 10,
+  userId: string = "",
+) => {
+  try {
+    const res = await axiosInstance.post(
+      `/portal-service/api/v1/reservation/list/page?page=${page}&size=${size}`,
+      {
+        cpsCd: "PTK",
+        sttCd: "",
+        userId,
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
