@@ -111,6 +111,17 @@ const ReservationInfo = ({ user }: ReservationInfoProps) => {
               />
             </InfoLabel>
           </div>
+          <div className="flex grow gap-6">
+            <InfoLabel label="사용 인원" isRequired htmlFor="headcount">
+              <Input
+                id="headcount"
+                type="number"
+                placeholder="예상 사용 인원 수를 적어주세요"
+                className="w-full border-gray-middle lg:w-[31rem]"
+                {...register("headcount", { required: true, maxLength: 15 })}
+              />
+            </InfoLabel>
+          </div>
         </>
       )}
     </div>

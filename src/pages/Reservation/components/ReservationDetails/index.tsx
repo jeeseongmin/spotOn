@@ -55,7 +55,10 @@ const ReservationDetails = ({ user }: ReservationDetailsProps) => {
       <ReservationField label="공동체" value={userInfo.cmtNm} />
       <ReservationField label="다락방" value={userInfo.garNm} />
       <ReservationField label="순" value={userInfo.leafNm} />
-      <ReservationField label="사용목적" value={getValues("purpose")} />
+      <ReservationField
+        label="사용목적"
+        value={`${getValues("purpose")} (사용 인원 : ${getValues("headcount")}명)`}
+      />
     </>
   );
 };

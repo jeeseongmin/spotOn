@@ -37,6 +37,7 @@ interface ReservationFormValues {
   time: number[];
   userId: string;
   purpose: string;
+  headcount: null | number;
 }
 
 const ReservationPage = () => {
@@ -63,6 +64,7 @@ const ReservationPage = () => {
       time: [],
       userId: user.id.toString(),
       purpose: "",
+      headcount: null,
     },
   });
   const { formState, reset, getValues, handleSubmit } = methods;
@@ -79,7 +81,7 @@ const ReservationPage = () => {
           className="flex min-w-60 flex-col items-center gap-8"
           onSubmit={handleSubmit(data => {
             const reservationRequest: ReservationRequest = {
-              useCnts: data.purpose,
+              useCnts: `${data.purpose} (사용 인원 : ${data.headcount}명)`,
               cpsCd: "PTK",
               bldCd: "PTK_PTK",
               plcCd: data.place.plcCd,
