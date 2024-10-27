@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import { fetchPlace } from "@/apis/place";
@@ -11,7 +12,9 @@ import PlacePicker from "@/pages/Reservation/components/PlacePicker";
 import TimeTablePicker from "@/pages/Reservation/components/ReservationTab/PlaceSearchTab/TimeTablePicker";
 import ReservationTabLayout from "@/pages/Reservation/components/ReservationTab/ReservationTabLayout";
 import useCalendarStore from "@/store/calendarStore";
+import useUserStore from "@/store/userStore";
 import { Place } from "@/types/place";
+import { getDaysUntilNextMonth } from "@/utils/calendar";
 
 const PlaceSearchTab = () => {
   const [placeList, setPlaceList] = useState<PlacesByFloor[]>([]);
@@ -21,6 +24,9 @@ const PlaceSearchTab = () => {
   const resetFirstDayOfMonth = useCalendarStore(
     state => state.resetFirstDayOfMonth,
   );
+  const roleId = useUserStore(state => state.roleId);
+  console.log("dayjs().daysInMonth()", dayjs().daysInMonth());
+  console.log("roleId", roleId);
 
   const timeSelectErrorMessage = getValues("place")
     ? ""
@@ -48,6 +54,7 @@ const PlaceSearchTab = () => {
     if (date && place) {
       getReservationList(date, place);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch("date"), watch("place")]);
 
   const getReservationList = async (date: Dayjs, place: Place) => {
@@ -71,7 +78,17 @@ const PlaceSearchTab = () => {
               resetField("purpose");
             };
 
-            return <DatePicker date={value} onChange={handleChangeDate} />;
+            return (
+              <DatePicker
+                date={value}
+                onChange={handleChangeDate}
+                limit={
+                  roleId === "ROLE_ADMIN" || roleId === "ROLE_MINISTRY"
+                    ? undefined
+                    : getDaysUntilNextMonth()
+                }
+              />
+            );
           }}
         />
       </ReservationTabLayout.Left>

@@ -6,6 +6,14 @@ import AlertModal from "@/components/Modal/AlertModal";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
 import ReservationModal from "@/components/Modal/ReservationModal";
 import Table from "@/components/Table";
+import {
+  APPROVE_RESERVATION_MESSAGE,
+  CONFIRM_APPROVE_RESERVATION_MESSAGE,
+  CONFIRM_REJECT_RESERVATION_MESSAGE,
+  EMPTY_RESERVATION_LIST_MESSAGE,
+  REJECT_RESERVATION_MESSAGE,
+} from "@/constants/messages/admin";
+import { REQUEST_ERROR_MESSAGE } from "@/constants/messages/common";
 import useModal from "@/hooks/useModal";
 import ReservationDetails from "@/pages/Admin/components/ReservationInfo/ReservationDetails";
 import type {
@@ -61,10 +69,10 @@ const ReservationTable = ({
 
   const handleConfirmApprove = () => {
     if (!selectedReservation) {
-      setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
+      setAlertMessage(REQUEST_ERROR_MESSAGE);
     } else {
       changeReservationState(selectedReservation?.rsvtId, "approve");
-      setAlertMessage("예약이 승인되었습니다.");
+      setAlertMessage(APPROVE_RESERVATION_MESSAGE);
     }
 
     alertModal.onOpen();
@@ -73,10 +81,10 @@ const ReservationTable = ({
 
   const handleConfirmReject = () => {
     if (!selectedReservation) {
-      setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
+      setAlertMessage(REQUEST_ERROR_MESSAGE);
     } else {
       changeReservationState(selectedReservation?.rsvtId, "reject");
-      setAlertMessage("예약이 반려되었습니다.");
+      setAlertMessage(REJECT_RESERVATION_MESSAGE);
     }
 
     alertModal.onOpen();
@@ -120,7 +128,7 @@ const ReservationTable = ({
   if (reservations.length === 0 && !alertModal.isOpen) {
     return (
       <div className="flex h-20 items-center justify-center">
-        <div>예약 내역이 없습니다.</div>
+        <div>{EMPTY_RESERVATION_LIST_MESSAGE}</div>
       </div>
     );
   }
@@ -149,7 +157,7 @@ const ReservationTable = ({
           onConfirm={handleConfirmApprove}
           onClose={confirmApproveModal.onClose}
         >
-          해당 예약을 승인하려면 확인 버튼을 클릭하세요.
+          {CONFIRM_APPROVE_RESERVATION_MESSAGE}
         </ConfirmModal>
       )}
       {confirmRejectModal.isOpen && (
@@ -158,7 +166,7 @@ const ReservationTable = ({
           onConfirm={handleConfirmReject}
           onClose={confirmRejectModal.onClose}
         >
-          해당 예약을 반려하려면 확인 버튼을 클릭하세요.
+          {CONFIRM_REJECT_RESERVATION_MESSAGE}
         </ConfirmModal>
       )}
       {alertModal.isOpen && (

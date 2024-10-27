@@ -4,7 +4,7 @@ import { postUsersByState } from "@/apis/user";
 import Pagination from "@/components/Pagination";
 import TableFilterButton from "@/pages/Admin/components/TableFilterButton";
 import UserTable from "@/pages/Admin/components/UserInfo/UserTable";
-import { ReservationStateCode } from "@/types/reservation";
+import { UserStateCode } from "@/types/user";
 
 const filterButtons = [
   { name: "승인 요청", type: "00" },
@@ -13,33 +13,41 @@ const filterButtons = [
 
 const UserInfo = () => {
   const [users, setUsers] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState<
-    ReservationStateCode | ""
-  >("");
+  const [selectedFilter, setSelectedFilter] = useState<UserStateCode | "">("");
   const [page, setPage] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [requestCount, setRequestCount] = useState(0);
 
+  // TODO: API 응답 결과 수정되는 대로 numberOfElements -> totalElements 수정
   const getUsers = async () => {
-    const { content, totalElements, totalPages } = await postUsersByState(
+    // const { content, totalElements, totalPages } = await postUsersByState(
+    //   page,
+    //   10,
+    //   selectedFilter,
+    // );
+    const { content, numberOfElements, totalPages } = await postUsersByState(
       page,
       10,
       selectedFilter,
     );
+
     setUsers(content);
     setPageCount(totalPages);
-    selectedFilter === "request" && setRequestCount(totalElements);
+    // selectedFilter === "00" && setRequestCount(totalElements);
+    selectedFilter === "00" && setRequestCount(numberOfElements);
   };
 
+  // TODO: API 응답 결과 수정되는 대로 numberOfElements -> totalElements 수정
   const getRequestCount = async () => {
-    const { totalElements } = await postUsersByState(page, 10, "00");
-    setRequestCount(totalElements);
+    // const { totalElements } = await postUsersByState(page, 10, "00");
+    // setRequestCount(totalElements);
+
+    const { numberOfElements } = await postUsersByState(page, 10, "00");
+    setRequestCount(numberOfElements);
   };
 
   const handleClickFilterButton = (e: MouseEvent<HTMLButtonElement>) => {
-    const filterType = e.currentTarget.dataset.filter as
-      | ReservationStateCode
-      | "";
+    const filterType = e.currentTarget.dataset.filter as UserStateCode | "";
 
     setSelectedFilter(filterType);
     setPage(0);
@@ -75,7 +83,8 @@ const UserInfo = () => {
             data-filter={type}
             className="px-2 text-small"
             isActive={selectedFilter === type}
-            isNew={type === "request" && requestCount > 0}
+            // isNew={type === "00" && requestCount > 0}
+            isNew={type === "00" && requestCount > 0}
             onClick={handleClickFilterButton}
           >
             {name}

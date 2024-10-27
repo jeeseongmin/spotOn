@@ -6,6 +6,14 @@ import AlertModal from "@/components/Modal/AlertModal";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
 import UserModal from "@/components/Modal/UserModal";
 import Table from "@/components/Table";
+import {
+  APPROVE_USER_MESSAGE,
+  CONFIRM_APPROVE_USER_MESSAGE,
+  CONFIRM_REJECT_USER_MESSAGE,
+  EMPTY_USER_LIST_MESSAGE,
+  REJECT_USER_MESSAGE,
+} from "@/constants/messages/admin";
+import { REQUEST_ERROR_MESSAGE } from "@/constants/messages/common";
 import useModal from "@/hooks/useModal";
 import UserDetails from "@/pages/Admin/components/UserInfo/UserDetails";
 import { CellInfo } from "@/types/table";
@@ -45,10 +53,10 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
   };
   const handleConfirmApprove = () => {
     if (!selectedUser) {
-      setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
+      setAlertMessage(REQUEST_ERROR_MESSAGE);
     } else {
       changeUserState("01", selectedUser?.userId);
-      setAlertMessage("가입이 승인되었습니다.");
+      setAlertMessage(APPROVE_USER_MESSAGE);
     }
 
     alertModal.onOpen();
@@ -57,10 +65,10 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
 
   const handleConfirmReject = () => {
     if (!selectedUser) {
-      setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
+      setAlertMessage(REQUEST_ERROR_MESSAGE);
     } else {
       changeUserState("00", selectedUser?.userId);
-      setAlertMessage("가입이 반려되었습니다.");
+      setAlertMessage(REJECT_USER_MESSAGE);
     }
 
     alertModal.onOpen();
@@ -91,6 +99,14 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
+  if (users.length === 0 && !alertModal.isOpen) {
+    return (
+      <div className="flex h-20 items-center justify-center">
+        <div>{EMPTY_USER_LIST_MESSAGE}</div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Table header={header} body={userBody} />
@@ -114,7 +130,7 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
           onConfirm={handleConfirmApprove}
           onClose={confirmApproveModal.onClose}
         >
-          해당 회원을 승인하려면 확인 버튼을 클릭하세요.
+          {CONFIRM_APPROVE_USER_MESSAGE}
         </ConfirmModal>
       )}
       {confirmRejectModal.isOpen && (
@@ -123,7 +139,7 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
           onConfirm={handleConfirmReject}
           onClose={confirmRejectModal.onClose}
         >
-          해당 회원을 반려하려면 확인 버튼을 클릭하세요.
+          {CONFIRM_REJECT_USER_MESSAGE}
         </ConfirmModal>
       )}
       {alertModal.isOpen && (
