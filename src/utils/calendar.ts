@@ -43,3 +43,6 @@ export const getWeekOrder = (day: Dayjs = dayjs()) => {
     } else cnt++;
   }
 };
+
+export const getDaysUntilNextMonth = (date: Dayjs = dayjs()) =>
+  dayjs(date).add(1, "month").diff(date, "day");
