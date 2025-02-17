@@ -154,10 +154,12 @@ export const getUserBodyData = (
         return [
           { data: "승인", method: approveMethod },
           { data: "거절", method: rejectMethod },
-          roleId === "USER" && {
-            data: "리더 권한",
-            method: updateLeaderMethod,
-          },
+          roleId === "USER"
+            ? {
+                data: "리더 권한",
+                method: updateLeaderMethod,
+              }
+            : {},
         ];
 
       // 정상 (승인 완료)
@@ -168,10 +170,12 @@ export const getUserBodyData = (
             data: <RiDeleteBin6Line size={16} className="text-red" />,
             method: rejectMethod,
           },
-          roleId === "USER" && {
-            data: "리더 권한",
-            method: updateLeaderMethod,
-          },
+          roleId === "USER"
+            ? {
+                data: "리더 권한",
+                method: updateLeaderMethod,
+              }
+            : {},
         ];
       default:
         return [{ data: "" }, { data: "" }, { data: "" }];

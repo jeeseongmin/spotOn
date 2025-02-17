@@ -45,7 +45,6 @@ const Admin = () => {
     } else {
       // 2차 확인
       const res = await getUserInfo(loginInfo.tokenId);
-      console.log("res : ", res);
       if (res.roleId !== "ROLE_ADMIN") {
         alertModal.onOpen();
 

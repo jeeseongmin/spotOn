@@ -9,7 +9,7 @@ import Table from "@/components/Table";
 import useModal from "@/hooks/useModal";
 import UserDetails from "@/pages/Admin/components/UserInfo/UserDetails";
 import { CellInfo } from "@/types/table";
-import { UpdateUserInfoRequest, UserByState } from "@/types/user";
+import { UserByState } from "@/types/user";
 import { getTableBody, getTableHeader, getUserBodyData } from "@/utils/table";
 
 const userTableHeader = [
@@ -49,12 +49,12 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
 
   // 일반 유저의 권한을 리더로 업데이트하는 함수
   const updateLeader = async (tokenId: string, users: UserByState) => {
-    // await updateUserInfo(tokenId, {
-    //   ...users,
-    //   roleId: "LEADER",
-    //   provider: "kakao",
-    //   token: "",
-    // });
+    await updateUserInfo(tokenId, {
+      ...users,
+      roleId: "LEADER",
+      provider: "kakao",
+      token: "",
+    });
   };
 
   const handleConfirmApprove = () => {
