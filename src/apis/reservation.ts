@@ -68,7 +68,7 @@ export const getReservedPlaces = async ({
   }
 };
 
-export const getMonthlyReservation = async (date: string, plcCd: string) => {
+export const getMonthlyReservation = async (date: string, plcCd?: string) => {
   try {
     const res = await axiosInstance.get(
       "/portal-service/api/v1/reservation/list/month",

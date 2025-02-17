@@ -12,7 +12,7 @@ import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
 type ScheduleProps = {
-  plcCd: string;
+  plcCd?: string;
 };
 
 const Schedule = ({ plcCd }: ScheduleProps) => {
