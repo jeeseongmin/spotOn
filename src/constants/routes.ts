@@ -10,3 +10,4 @@ export const RESERVATION_MAIN_URL = "/reservation/main";
 
 export const ADMIN_MAIN_URL = "/admin/main";
 export const REDIRECT_URI = "/kakao/auth";
+export const VIEW_URI = "/view/main/:plcCd";

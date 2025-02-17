@@ -28,6 +28,10 @@ export const pageTitle: PageTitleProps = {
     mainTitle: "Admin",
     subTitle: "통합관리",
   },
+  view: {
+    mainTitle: "Reservation",
+    subTitle: "월별 예약 내역",
+  },
 };
 
 export const RESERVATION_STATE: { [key: string]: string } = {

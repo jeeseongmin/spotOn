@@ -17,7 +17,10 @@ const useLoginCheck = (kakaoToken: string) => {
   const { saveSpotOnToken, saveTokenId } = useLoginStore();
 
   useEffect(() => {
-    if (location.pathname !== "/kakao/auth") {
+    if (
+      location.pathname !== "/kakao/auth" &&
+      !location.pathname.includes("/view/main")
+    ) {
       if (kakaoToken.length > 0) {
         loginCheck();
       } else if (location.pathname !== "/login/main") {

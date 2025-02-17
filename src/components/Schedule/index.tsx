@@ -11,7 +11,11 @@ import { scheduleYears } from "@/constants/calendar";
 import Calendar from "@/pages/Home/components/Calendar";
 import useCalendarStore from "@/store/calendarStore";
 
-const Schedule = () => {
+type ScheduleProps = {
+  plcCd: string;
+};
+
+const Schedule = ({ plcCd }: ScheduleProps) => {
   const [
     date,
     setDate,
@@ -59,7 +63,10 @@ const Schedule = () => {
   };
 
   const getReservations = async () => {
-    const reservations = await getMonthlyReservation(date.format("YYYYMM"));
+    const reservations = await getMonthlyReservation(
+      date.format("YYYYMM"),
+      plcCd,
+    );
     setMonthlyReservations(reservations);
   };
 

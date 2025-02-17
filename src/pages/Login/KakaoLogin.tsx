@@ -69,7 +69,9 @@ const KakaoLogin = () => {
     else if (status === 200) {
       const info = await getUserInfo(tokenId);
       const { cmtCd, garCd, leafCd } = info;
+
       let cmtNm, garNm, leafNm;
+
       (await fetchCommunity()).map((elem: any) => {
         if (elem.cmtCd === cmtCd) {
           cmtNm = elem.cmtNm;

@@ -21,7 +21,7 @@ const UserDetails = ({ user }: UserDetailsProps) => {
     <>
       {/* TODO: 고정 예약 포맷에 맞춰 날짜 수정 */}
       <ReservationField
-        label="날짜"
+        label="가입일자"
         value={dayjs(createdDate)
           .locale("ko")
           .format("YYYY년 MM월 DD일 (ddd요일)")}

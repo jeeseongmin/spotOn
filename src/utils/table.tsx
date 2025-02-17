@@ -133,14 +133,16 @@ export const getUserBodyData = (
   detailsMethod?: () => void,
   approveMethod?: () => void,
   rejectMethod?: () => void,
+  updateLeaderMethod?: () => void,
 ) => {
   const {
     createdDate,
     userName,
-    telNo,
+    // telNo,
     cmtNm,
-    garNm,
-    leafNm,
+    // garNm,
+    // leafNm,
+    roleId,
     userStateCodeName,
     userStateCode,
   } = user;
@@ -152,6 +154,10 @@ export const getUserBodyData = (
         return [
           { data: "승인", method: approveMethod },
           { data: "거절", method: rejectMethod },
+          roleId === "USER" && {
+            data: "리더 권한",
+            method: updateLeaderMethod,
+          },
         ];
 
       // 정상 (승인 완료)
@@ -162,18 +168,23 @@ export const getUserBodyData = (
             data: <RiDeleteBin6Line size={16} className="text-red" />,
             method: rejectMethod,
           },
+          roleId === "USER" && {
+            data: "리더 권한",
+            method: updateLeaderMethod,
+          },
         ];
       default:
-        return [{ data: "" }, { data: "" }];
+        return [{ data: "" }, { data: "" }, { data: "" }];
     }
   };
 
   return [
     { data: userName },
     { data: cmtNm },
-    { data: garNm },
-    { data: leafNm },
-    { data: telNo },
+    // { data: garNm },
+    // { data: leafNm },
+    // { data: telNo }, // 상세에서 볼 수 있으므로 주석 처리
+    { data: roleId },
     { data: userStateCodeName },
     { data: dayjs(createdDate).locale("ko").format("YYYY / MM / DD (ddd)") },
     ...getMethodColumn(userStateCode),

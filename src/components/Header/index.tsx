@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 
 import { HiUserCircle } from "react-icons/hi2";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 
 import Logo from "@/assets/images/logo.png";
@@ -25,6 +25,7 @@ type HeaderProps = {
 
 const Header = ({ onOpen }: HeaderProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { logout } = useLoginStore();
   const [resetUserInfo, roleId] = useUserStore(
@@ -48,73 +49,85 @@ const Header = ({ onOpen }: HeaderProps) => {
 
   return (
     <nav className="flex h-20 flex-row items-center justify-between border-b border-gray-middle px-4 shadow-sm sm:px-12 md:px-20 lg:px-32 xl:px-60">
-      <Button
-        variant="custom"
-        className="h-[45px] w-[96px]"
-        onClick={() => navigate(HOME_MAIN_URL)}
-      >
-        <img src={Logo} className="h-full w-full object-contain" />
-      </Button>
-
-      <div className="hidden flex-row items-center gap-10 md:flex">
+      {!location.pathname.includes("/view") ? (
         <Button
           variant="custom"
-          className="text-gray-500"
-          onClick={() => navigate(RESERVATION_MAIN_URL)}
+          className="h-[45px] w-[96px]"
+          onClick={() => navigate(HOME_MAIN_URL)}
         >
-          예약하기
+          <img src={Logo} className="h-full w-full object-contain" />
         </Button>
-        {roleId === "ROLE_ADMIN" && (
-          <Button
-            variant="custom"
-            className="text-gray-500"
-            onClick={() => navigate(ADMIN_MAIN_URL)}
-          >
-            통합관리
-          </Button>
-        )}
-        <div ref={profileRef} className="relative">
-          <Button
-            onClick={profileModal.onToggle}
-            variant="custom"
-            className="text-gray-400"
-          >
-            <HiUserCircle size={40} />
-          </Button>
-          {profileModal.isOpen && (
-            <div className="absolute right-0 flex h-auto w-auto flex-col items-center rounded-md border border-gray-middle bg-white shadow-sm">
-              <Button
-                variant="custom"
-                className="h-10 w-28 border-b border-gray-middle text-small text-gray-500 hover:bg-primary hover:text-white"
-                onClick={() => navigate(MYPAGE_MAIN_URL)}
-              >
-                마이페이지
-              </Button>
-              <Button
-                variant="custom"
-                className="h-10 w-28 text-small text-gray-500 hover:bg-primary hover:text-white"
-                onClick={() => confirmModal.onOpen()}
-              >
-                로그아웃
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
+      ) : (
+        <Button variant="custom" className="h-[45px] w-[96px]">
+          <img src={Logo} className="h-full w-full object-contain" />
+        </Button>
+      )}
 
-      <div className="flex md:hidden">
-        <Button variant="custom" onClick={onOpen}>
-          <RxHamburgerMenu size={26} />
-        </Button>
-      </div>
-      {confirmModal.isOpen && (
-        <ConfirmModal
-          title="로그아웃"
-          onConfirm={spotOnLogout}
-          onClose={confirmModal.onClose}
-        >
-          {alertMessage}
-        </ConfirmModal>
+      {!location.pathname.includes("/view") ? (
+        <>
+          <div className="hidden flex-row items-center gap-10 md:flex">
+            <Button
+              variant="custom"
+              className="text-gray-500"
+              onClick={() => navigate(RESERVATION_MAIN_URL)}
+            >
+              예약 요청
+            </Button>
+            {roleId === "ROLE_ADMIN" && (
+              <Button
+                variant="custom"
+                className="text-gray-500"
+                onClick={() => navigate(ADMIN_MAIN_URL)}
+              >
+                통합관리
+              </Button>
+            )}
+            <div ref={profileRef} className="relative">
+              <Button
+                onClick={profileModal.onToggle}
+                variant="custom"
+                className="text-gray-400"
+              >
+                <HiUserCircle size={40} />
+              </Button>
+              {profileModal.isOpen && (
+                <div className="absolute right-0 flex h-auto w-auto flex-col items-center rounded-md border border-gray-middle bg-white shadow-sm">
+                  <Button
+                    variant="custom"
+                    className="h-10 w-28 border-b border-gray-middle text-small text-gray-500 hover:bg-primary hover:text-white"
+                    onClick={() => navigate(MYPAGE_MAIN_URL)}
+                  >
+                    마이페이지
+                  </Button>
+                  <Button
+                    variant="custom"
+                    className="h-10 w-28 text-small text-gray-500 hover:bg-primary hover:text-white"
+                    onClick={() => confirmModal.onOpen()}
+                  >
+                    로그아웃
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex md:hidden">
+            <Button variant="custom" onClick={onOpen}>
+              <RxHamburgerMenu size={26} />
+            </Button>
+          </div>
+          {confirmModal.isOpen && (
+            <ConfirmModal
+              title="로그아웃"
+              onConfirm={spotOnLogout}
+              onClose={confirmModal.onClose}
+            >
+              {alertMessage}
+            </ConfirmModal>
+          )}
+        </>
+      ) : (
+        <></>
       )}
     </nav>
   );

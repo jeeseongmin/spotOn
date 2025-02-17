@@ -56,7 +56,7 @@ export const Subtitle: Story = {
     return (
       <>
         <Button variant="primary" onClick={modal.onOpen}>
-          예약하기
+          예약 요청되었습니다
         </Button>
         {modal.isOpen && (
           <ReservationModal onClose={modal.onClose}>

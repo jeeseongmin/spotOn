@@ -70,6 +70,13 @@ const Table = ({ header, body }: TableProps) => {
               </tr>
             );
           })}
+          {body.length === 0 && (
+            <tr className=" border-red-500">
+              <td colSpan={10} className="h-36 border bg-gray-100 text-center">
+                데이터가 없습니다.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

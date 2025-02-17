@@ -55,7 +55,7 @@ const ReservationCard = ({ date, reservationList }: ReservationCardProps) => {
                     <p>{`${convertTimeToHourMinuteText(startTime)} ~ ${convertTimeToHourMinuteText(endTime)}`}</p>
                   </td>
                   <td className="flex min-h-[94px] flex-col gap-1 p-2">
-                    <p className="font-semibold">{plcNm}</p>
+                    <p className="font-semibold">[{plcNm}]</p>
                     <p className="font-light text-gray-dark">{useCnts}</p>
 
                     {roleId === "ROLE_ADMIN" && (

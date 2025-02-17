@@ -56,6 +56,7 @@ export interface UserByState
   garNm: string;
   leafCd: string;
   leafNm: string;
+  roleId: string;
 }
 
 export interface UpdateUserInfoRequest {
@@ -71,4 +72,5 @@ export interface UpdateUserInfoRequest {
   cmtNm: string; // "FAITH";
   garNm: string; // "MATTHEW";
   leafNm: string; // "MATTHEW_01";
+  roleId?: string; // ex) ROLE_LEADER
 }

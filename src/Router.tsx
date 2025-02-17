@@ -11,6 +11,7 @@ import {
   MYPAGE_MAIN_URL,
   REDIRECT_URI,
   RESERVATION_MAIN_URL,
+  VIEW_URI,
 } from "@/constants/routes";
 import Admin from "@/pages/Admin";
 import Home from "@/pages/Home";
@@ -20,6 +21,7 @@ import LoginSignUp from "@/pages/Login/LoginSignUp";
 import LoginWait from "@/pages/Login/LoginWait";
 import MyPage from "@/pages/MyPage";
 import ReservationPage from "@/pages/Reservation";
+import View from "@/pages/View";
 
 //type RouterProps = {};
 
@@ -34,6 +36,7 @@ const Router: FC = () => {
       <Route path={LOGIN_QR_URL} element={<LoginWait />} />
       <Route path={RESERVATION_MAIN_URL} element={<ReservationPage />} />
       <Route path={HOME_MAIN_URL} element={<Home />} />
+      <Route path={VIEW_URI} element={<View />} />
       <Route path={MYPAGE_MAIN_URL} element={<MyPage />} />
       <Route path={REDIRECT_URI} element={<KakaoLogin />} />
       <Route path={ADMIN_MAIN_URL} element={<Admin />} />

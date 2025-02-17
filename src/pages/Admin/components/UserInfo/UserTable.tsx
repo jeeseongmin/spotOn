@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { putUserState } from "@/apis/user";
+import { putUserState, updateUserInfo } from "@/apis/user";
 import Button from "@/components/Button";
 import AlertModal from "@/components/Modal/AlertModal";
 import ConfirmModal from "@/components/Modal/ConfirmModal";
@@ -9,19 +9,21 @@ import Table from "@/components/Table";
 import useModal from "@/hooks/useModal";
 import UserDetails from "@/pages/Admin/components/UserInfo/UserDetails";
 import { CellInfo } from "@/types/table";
-import { UserByState } from "@/types/user";
+import { UpdateUserInfoRequest, UserByState } from "@/types/user";
 import { getTableBody, getTableHeader, getUserBodyData } from "@/utils/table";
 
 const userTableHeader = [
   "이름",
   "공동체",
-  "다락방",
-  "순",
-  "연락처",
+  // "다락방",
+  // "순",
+  // "연락처", // 상세에서 볼 수 있으므로 주석 처리
+  "권한",
   "가입 여부",
   "가입일자",
-  "",
-  "",
+  "", // 상세
+  "", // 삭제
+  "", // 권한 변경
 ];
 const header = getTableHeader(userTableHeader);
 
@@ -38,11 +40,23 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
   const userModal = useModal();
   const confirmApproveModal = useModal();
   const confirmRejectModal = useModal();
+  const confirmUpdateLeaderModal = useModal();
 
   const changeUserState = async (userStateCode: string, userId: string) => {
     await putUserState({ userStateCode, userId });
     updateUsers();
   };
+
+  // 일반 유저의 권한을 리더로 업데이트하는 함수
+  const updateLeader = async (tokenId: string, users: UserByState) => {
+    // await updateUserInfo(tokenId, {
+    //   ...users,
+    //   roleId: "LEADER",
+    //   provider: "kakao",
+    //   token: "",
+    // });
+  };
+
   const handleConfirmApprove = () => {
     if (!selectedUser) {
       setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
@@ -67,6 +81,18 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
     confirmRejectModal.onClose();
   };
 
+  const handleConfirmUpdateLeader = () => {
+    if (!selectedUser) {
+      setAlertMessage("요청을 처리할 수 없습니다. 다시 시도해 주세요.");
+    } else {
+      updateLeader(selectedUser?.userId, selectedUser);
+      setAlertMessage("해당 유저의 리더 권한이 승인되었습니다.");
+    }
+
+    alertModal.onOpen();
+    confirmUpdateLeaderModal.onClose();
+  };
+
   useEffect(() => {
     const reservationTableBody = users.map(user => {
       const showUserModal = () => {
@@ -84,7 +110,19 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
         confirmRejectModal.onOpen();
       };
 
-      return getUserBodyData(user, showUserModal, approveUser, rejectUser);
+      // 일반 유저를 리더 권한으로 업데이트하는 함수
+      const updateLeaderMethod = () => {
+        setSelectedUser(user);
+        confirmUpdateLeaderModal.onOpen();
+      };
+
+      return getUserBodyData(
+        user,
+        showUserModal,
+        approveUser,
+        rejectUser,
+        updateLeaderMethod,
+      );
     });
 
     setUserBody(getTableBody(userTableHeader, reservationTableBody));
@@ -124,6 +162,15 @@ const UserTable = ({ users, updateUsers }: UserTable) => {
           onClose={confirmRejectModal.onClose}
         >
           해당 회원을 반려하려면 확인 버튼을 클릭하세요.
+        </ConfirmModal>
+      )}
+      {confirmUpdateLeaderModal.isOpen && (
+        <ConfirmModal
+          title="리더 권한 부여"
+          onConfirm={handleConfirmUpdateLeader}
+          onClose={confirmUpdateLeaderModal.onClose}
+        >
+          해당 유저의 권한을 리더로 변경하려면 확인 버튼을 클릭하세요.
         </ConfirmModal>
       )}
       {alertModal.isOpen && (
