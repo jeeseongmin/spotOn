@@ -73,7 +73,7 @@ const Schedule = ({ plcCd }: ScheduleProps) => {
   useEffect(() => {
     getReservations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstDayOfMonth]);
+  }, [plcCd, firstDayOfMonth]);
 
   return (
     <div className="h-[622px] rounded-[2px] border border-gray-light px-4 py-3 md:flex-1 md:py-6">

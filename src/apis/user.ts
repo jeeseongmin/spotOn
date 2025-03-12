@@ -33,6 +33,7 @@ export const updateUserInfo = async (
   try {
     await axiosInstance.put(
       `/user-service/api/v1/users/info/${tokenId}`,
+      // `/user-service/api/v1/users/info/${tokenId}`,
       updateUserInfoRequest,
     );
   } catch (error) {

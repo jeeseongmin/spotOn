@@ -99,6 +99,77 @@ export const reservedPlaces = [
   },
 ];
 
+export const ptonnuriPlaceByFloor = [
+  {
+    floor: "2층",
+    places: [
+      {
+        plcCd: "PTK_PTK_0200",
+        plcNm: "본당",
+      },
+      {
+        plcCd: "PTK_PTK_0201",
+        plcNm: "새가족실",
+      },
+      {
+        plcCd: "PTK_PTK_0202",
+        plcNm: "운영위원회실",
+      },
+      {
+        plcCd: "PTK_PTK_0203",
+        plcNm: "구)목회지원실",
+      },
+    ],
+  },
+  {
+    floor: "3층",
+    places: [
+      {
+        plcCd: "PTK_PTK_0301",
+        plcNm: "파워웨이브",
+      },
+      {
+        plcCd: "PTK_PTK_0302",
+        plcNm: "예꿈",
+      },
+      {
+        plcCd: "PTK_PTK_0303",
+        plcNm: "꿈땅",
+      },
+    ],
+  },
+  {
+    floor: "4층",
+    places: [
+      {
+        plcCd: "PTK_PTK_0401",
+        plcNm: "성가대실",
+      },
+      {
+        plcCd: "PTK_PTK_0402",
+        plcNm: "키즈방방-홀",
+      },
+      {
+        plcCd: "PTK_PTK_0403",
+        plcNm: "키즈방방-회의실",
+      },
+    ],
+  },
+  {
+    floor: "5층",
+    places: [
+      {
+        plcCd: "PTK_PTK_0501",
+        plcNm: "샤이닝글로리",
+      },
+      {
+        plcCd: "PTK_PTK_0502",
+        plcNm: "태권도장",
+      },
+    ],
+  },
+];
+
 export const ptonnuriPlace = [
   {
     plcCd: "PTK_PTK_0203",
