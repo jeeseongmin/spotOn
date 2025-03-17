@@ -91,7 +91,7 @@ export const placesByFloor = [
 
 export const reservedPlaces = [
   {
-    plcCd: "PTK_PTK_0201",
+    plcCd: "PTK_PTK_02NFR",
     plcNm: "새가족실",
     plcF: 2,
     cpsCd: "PTK",
@@ -101,23 +101,32 @@ export const reservedPlaces = [
 
 export const ptonnuriPlaceByFloor = [
   {
-    floor: "2층",
+    floor: "1층",
     places: [
       {
-        plcCd: "PTK_PTK_0200",
-        plcNm: "본당",
+        plcCd: "PTK_PTK_0101",
+        plcNm: "찬양사역팀실",
       },
+    ],
+  },
+  {
+    floor: "2층",
+    places: [
+      // {
+      //   plcCd: "PTK_PTK_0200",
+      //   plcNm: "본당",
+      // },
       {
-        plcCd: "PTK_PTK_0201",
+        plcCd: "PTK_PTK_02NFR",
         plcNm: "새가족실",
       },
       {
-        plcCd: "PTK_PTK_0202",
+        plcCd: "PTK_PTK_0201",
         plcNm: "운영위원회실",
       },
       {
         plcCd: "PTK_PTK_0203",
-        plcNm: "구)목회지원실",
+        plcNm: "203호",
       },
     ],
   },
@@ -141,10 +150,6 @@ export const ptonnuriPlaceByFloor = [
   {
     floor: "4층",
     places: [
-      {
-        plcCd: "PTK_PTK_0401",
-        plcNm: "성가대실",
-      },
       {
         plcCd: "PTK_PTK_0402",
         plcNm: "키즈방방-홀",
@@ -172,8 +177,17 @@ export const ptonnuriPlaceByFloor = [
 
 export const ptonnuriPlace = [
   {
+    plcCd: "PTK_PTK_0101",
+    plcNm: "찬양사역팀실",
+    plcF: 1,
+    cpsCd: "PTK",
+    bldCd: "PTK_PTK",
+    crtId: "1",
+    updId: "1",
+  },
+  {
     plcCd: "PTK_PTK_0203",
-    plcNm: "구목회지원실",
+    plcNm: "203호",
     plcF: 2,
     cpsCd: "PTK",
     bldCd: "PTK_PTK",
@@ -189,17 +203,17 @@ export const ptonnuriPlace = [
     crtId: "2",
     updId: "2",
   },
+  // {
+  //   plcCd: "PTK_PTK_0200",
+  //   plcNm: "본당",
+  //   plcF: 2,
+  //   cpsCd: "PTK",
+  //   bldCd: "PTK_PTK",
+  //   crtId: "2",
+  //   updId: "2",
+  // },
   {
-    plcCd: "PTK_PTK_0200",
-    plcNm: "본당",
-    plcF: 2,
-    cpsCd: "PTK",
-    bldCd: "PTK_PTK",
-    crtId: "2",
-    updId: "2",
-  },
-  {
-    plcCd: "PTK_PTK_0201",
+    plcCd: "PTK_PTK_02NFR",
     plcNm: "새가족실",
     plcF: 2,
     cpsCd: "PTK",
@@ -217,15 +231,6 @@ export const ptonnuriPlace = [
     updId: "2",
   },
   {
-    plcCd: "PTK_PTK_0401",
-    plcNm: "성가대실",
-    plcF: 4,
-    cpsCd: "PTK",
-    bldCd: "PTK_PTK",
-    crtId: "2",
-    updId: "2",
-  },
-  {
     plcCd: "PTK_PTK_0302",
     plcNm: "예꿈",
     plcF: 3,
@@ -235,7 +240,7 @@ export const ptonnuriPlace = [
     updId: "2",
   },
   {
-    plcCd: "PTK_PTK_0202",
+    plcCd: "PTK_PTK_0201",
     plcNm: "운영위원회실",
     plcF: 2,
     cpsCd: "PTK",

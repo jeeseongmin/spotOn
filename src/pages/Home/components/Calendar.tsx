@@ -70,7 +70,7 @@ const CalendarItem = ({
         <div className="z-40 h-4 w-full">
           {dailyReservation.length > 0 && (
             <Reservation reservations={dailyReservation}>
-              {dailyReservation[0].data[0].plcNm}
+              {dailyReservation[0].data[0].useCnts}
             </Reservation>
           )}
         </div>
