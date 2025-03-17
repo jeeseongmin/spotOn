@@ -27,7 +27,7 @@ const ConfirmModal = ({
         </div>
         <div className="flex flex-col gap-2 pb-8 text-center">
           <p className="text-xl text-primary">{title}</p>
-          <p>{children}</p>
+          <p className="break-keep">{children}</p>
         </div>
 
         <div className="fixed bottom-6 flex flex-row gap-4">

@@ -18,7 +18,9 @@ const AlertModal = ({ children, onClose }: AlertModalProps) => {
             <AiOutlineClose size={18} onClick={onClose} />
           </Button>
         </div>
-        <p className="pb-4 text-xl font-light text-primary">{children}</p>
+        <p className="break-keep pb-4 text-xl font-light text-primary">
+          {children}
+        </p>
         <div className="fixed bottom-6">
           <Button variant="primary" onClick={onClose}>
             확인

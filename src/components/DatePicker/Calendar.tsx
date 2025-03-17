@@ -84,7 +84,7 @@ const Calendar = ({
           className="flex items-center justify-around"
         >
           {week.map(day => {
-            const today = startDate ? startDate : dayjs();
+            const today = startDate ? dayjs(startDate) : dayjs();
             const isBefore = day.isBefore(today, "day");
             const isLimitPassed = limit
               ? day.isAfter(today.add(limit, "day"), "day")
