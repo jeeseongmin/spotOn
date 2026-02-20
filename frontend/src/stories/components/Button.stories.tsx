@@ -11,7 +11,7 @@ const meta: Meta<typeof Button> = {
       description:
         "상황에 따라 원하는 버튼 스타일을 선택 사용할 수 있는 상태값입니다.",
       table: {
-        type: { summary: "string", reuqired: true },
+        type: { summary: "string" },
       },
       control: {
         type: "radio",
