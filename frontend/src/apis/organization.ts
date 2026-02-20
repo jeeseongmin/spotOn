@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/apis/core";
+import { IS_DEMO_MODE, demoCommunities, demoGarrets, demoLeafs } from "@/dummy/demo";
 
 /**
  * 조직 구성 : 캠퍼스(Campus) / 공동체(Community) / 다락방(garret) / 순(leaf)
@@ -7,12 +8,14 @@ import { axiosInstance } from "@/apis/core";
 
 // 캠퍼스 별 공동체 리스트 가져오기
 export const fetchCommunity = async () => {
+  if (IS_DEMO_MODE) {
+    return demoCommunities;
+  }
+
   try {
     const res = await axiosInstance.get(
       `/user-service/api/v1/community/list?cpsCd=PTK`,
     );
-
-    // console.log('result====>',res.data); // 2025.05.10 추가
 
     return res.data;
   } catch (error) {
@@ -22,13 +25,15 @@ export const fetchCommunity = async () => {
 
 // 공동체 별 다락방 목록 가져오기
 export const fetchGarret = async (cmtCd: string) => {
+  if (IS_DEMO_MODE) {
+    return demoGarrets.filter(g => g.cmtCd === cmtCd);
+  }
+
   try {
     const res = await axiosInstance.get(
       `/user-service/api/v1/garret/list?cpsCd=PTK&cmtCd=${cmtCd}`,
     );
 
-    // console.log('result====>',res.data); // 2025.05.10 추가
-    
     return res.data;
   } catch (error) {
     console.log(error);
@@ -37,6 +42,10 @@ export const fetchGarret = async (cmtCd: string) => {
 
 // 다락방 별 순 목록 가져오기
 export const fetchLeaf = async (cmtCd: string, garCd: string) => {
+  if (IS_DEMO_MODE) {
+    return demoLeafs.filter(l => l.cmtCd === cmtCd && l.garCd === garCd);
+  }
+
   try {
     const res = await axiosInstance.get(
       `/user-service/api/v1/leaf/list?cpsCd=PTK&cmtCd=${cmtCd}&garCd=${garCd}`,

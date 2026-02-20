@@ -47,8 +47,8 @@ const VehicleReservationForm = ({
       drivingTime: "",
       purpose: "",
       destination: "",
-      driverName: "",
-      driverPhone: "",
+      driverName: userName || "",
+      driverPhone: telNo || "",
     },
   });
 
