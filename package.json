@@ -6,7 +6,7 @@
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f mysql",
-    "dev": "npm run db:up && concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev": "npm run db:up && sleep 3 && concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run start:dev",
     "build:frontend": "cd frontend && npm run build:prd",
